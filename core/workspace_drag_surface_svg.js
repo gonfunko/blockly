@@ -113,7 +113,7 @@ class WorkspaceDragSurfaceSvg {
   /**
    * Reports the surface translation in scaled workspace coordinates.
    * Use this when finishing a drag to return blocks to the correct position.
-   * @return {!Coordinate} Current translation of the surface
+   * @return {!Blockly.utils.Coordinate} Current translation of the surface
    * @package
    */
   getSurfaceTranslation() {

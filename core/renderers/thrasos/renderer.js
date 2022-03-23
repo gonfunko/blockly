@@ -24,7 +24,7 @@ const {Renderer: BaseRenderer} = goog.require('Blockly.blockRendering.Renderer')
 
 /**
  * The thrasos renderer.
- * @extends {BaseRenderer}
+ * @extends {Blockly.blockRendering.Renderer}
  * @alias Blockly.thrasos.Renderer
  */
 class Renderer extends BaseRenderer {
@@ -38,8 +38,8 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's render info object.
-   * @param {!BlockSvg} block The block to measure.
-   * @return {!RenderInfo} The render info object.
+   * @param {!Blockly.BlockSvg} block The block to measure.
+   * @return {!Blockly.thrasos.RenderInfo} The render info object.
    * @protected
    * @override
    */

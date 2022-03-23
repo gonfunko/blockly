@@ -34,7 +34,7 @@ const {Theme} = goog.requireType('Blockly.Theme');
 
 /**
  * The geras renderer.
- * @extends {BaseRenderer}
+ * @extends {Blockly.blockRendering.Renderer}
  * @alias Blockly.geras.Renderer
  */
 class Renderer extends BaseRenderer {
@@ -47,7 +47,7 @@ class Renderer extends BaseRenderer {
 
     /**
      * The renderer's highlight constant provider.
-     * @type {HighlightConstantProvider}
+     * @type {Blockly.geras.HighlightConstantProvider}
      * @private
      */
     this.highlightConstants_ = null;
@@ -82,8 +82,8 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's render info object.
-   * @param {!BlockSvg} block The block to measure.
-   * @return {!RenderInfo} The render info object.
+   * @param {!Blockly.BlockSvg} block The block to measure.
+   * @return {!Blockly.geras.RenderInfo} The render info object.
    * @protected
    * @override
    */
@@ -93,53 +93,53 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's drawer.
-   * @param {!BlockSvg} block The block to render.
-   * @param {!BaseRenderInfo} info An object containing all information needed
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!BaseBlockly.geras.RenderInfo} info An object containing all information needed
    *     to render this block.
-   * @return {!Drawer} The drawer.
+   * @return {!Blockly.geras.Drawer} The drawer.
    * @protected
    * @override
    */
   makeDrawer_(block, info) {
     return new Drawer(
         block,
-        /** @type {!RenderInfo} */ (info));
+        /** @type {!Blockly.geras.RenderInfo} */ (info));
   }
 
   /**
    * Create a new instance of a renderer path object.
    * @param {!SVGElement} root The root SVG element.
-   * @param {!Theme.BlockStyle} style The style object to use for colouring.
-   * @return {!PathObject} The renderer path object.
+   * @param {!Blockly.Theme.BlockStyle} style The style object to use for colouring.
+   * @return {!Blockly.geras.PathObject} The renderer path object.
    * @package
    * @override
    */
   makePathObject(root, style) {
     return new PathObject(
         root, style,
-        /** @type {!ConstantProvider} */ (this.getConstants()));
+        /** @type {!Blockly.geras.ConstantProvider} */ (this.getConstants()));
   }
 
   /**
    * Create a new instance of the renderer's highlight constant provider.
-   * @return {!HighlightConstantProvider} The highlight constant provider.
+   * @return {!Blockly.geras.HighlightConstantProvider} The highlight constant provider.
    * @protected
    */
   makeHighlightConstants_() {
     return new HighlightConstantProvider(
-        /** @type {!BaseConstantProvider} */
+        /** @type {!BaseBlockly.geras.ConstantProvider} */
         (this.getConstants()));
   }
 
   /**
    * Get the renderer's highlight constant provider.  We assume that when this
    * is called, the renderer has already been initialized.
-   * @return {!HighlightConstantProvider} The highlight constant provider.
+   * @return {!Blockly.geras.HighlightConstantProvider} The highlight constant provider.
    * @package
    */
   getHighlightConstants() {
     return (
-        /** @type {!HighlightConstantProvider} */
+        /** @type {!HighlightBlockly.geras.ConstantProvider} */
         (this.highlightConstants_));
   }
 }

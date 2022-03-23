@@ -26,7 +26,7 @@ const {Abstract: AbstractEvent} = goog.require('Blockly.Events.Abstract');
  * editing to work (e.g. scrolling the workspace, zooming, opening toolbox
  * categories).
  * UI events do not undo or redo.
- * @extends {AbstractEvent}
+ * @extends {Blockly.Events.Abstract}
  * @alias Blockly.Events.UiBase
  */
 class UiBase extends AbstractEvent {

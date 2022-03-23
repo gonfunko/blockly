@@ -294,7 +294,7 @@ exports.TOOLBOX_AT_RIGHT = toolbox.Position.RIGHT;
  * See workspace.resizeContents to resize the workspace when the contents
  * change (e.g. when a block is added or removed).
  * Record the height/width of the SVG image.
- * @param {!WorkspaceSvg} workspace Any workspace in the SVG.
+ * @param {!Blockly.WorkspaceSvg} workspace Any workspace in the SVG.
  * @see Blockly.common.svgResize
  * @alias Blockly.svgResize
  */
@@ -307,7 +307,7 @@ exports.svgResize = common.svgResize;
  * @alias Blockly.hideChaff
  */
 const hideChaff = function(opt_onlyClosePopups) {
-  /** @type {!WorkspaceSvg} */ (common.getMainWorkspace())
+  /** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace())
       .hideChaff(opt_onlyClosePopups);
 };
 exports.hideChaff = hideChaff;
@@ -316,7 +316,7 @@ exports.hideChaff = hideChaff;
  * Returns the main workspace.  Returns the last used main workspace (based on
  * focus).  Try not to use this function, particularly if there are multiple
  * Blockly instances on a page.
- * @return {!Workspace} The main workspace.
+ * @return {!Blockly.Workspace} The main workspace.
  * @see Blockly.common.getMainWorkspace
  * @alias Blockly.getMainWorkspace
  */
@@ -397,7 +397,7 @@ Object.defineProperties(exports, {
    * The main workspace most recently used.
    * Set by Blockly.WorkspaceSvg.prototype.markFocused
    * @name Blockly.mainWorkspace
-   * @type {Workspace}
+   * @type {Blockly.Workspace}
    * @suppress {checkTypes}
    */
   mainWorkspace: {
@@ -435,7 +435,7 @@ Object.defineProperties(exports, {
   /**
    * Currently selected block.
    * @name Blockly.selected
-   * @type {?ICopyable}
+   * @type {?Blockly.ICopyable}
    * @suppress {checkTypes}
    */
   selected: {
@@ -491,7 +491,7 @@ exports.svgSize = svgMath.svgSize;
 /**
  * Size the workspace when the contents change.  This also updates
  * scrollbars accordingly.
- * @param {!WorkspaceSvg} workspace The workspace to resize.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace to resize.
  * @deprecated Use workspace.resizeContents. (2021 December)
  * @see Blockly.WorkspaceSvg.resizeContents
  * @alias Blockly.resizeSvgContents
@@ -506,7 +506,7 @@ exports.resizeSvgContents = resizeSvgContentsLocal;
 
 /**
  * Copy a block or workspace comment onto the local clipboard.
- * @param {!ICopyable} toCopy Block or Workspace Comment to be copied.
+ * @param {!Blockly.ICopyable} toCopy Block or Workspace Comment to be copied.
  * @deprecated Use Blockly.clipboard.copy(). (2021 December)
  * @see Blockly.clipboard.copy
  * @alias Blockly.copy
@@ -536,7 +536,7 @@ exports.paste = paste;
 
 /**
  * Duplicate this block and its children, or a workspace comment.
- * @param {!ICopyable} toDuplicate Block or Workspace Comment to be
+ * @param {!Blockly.ICopyable} toDuplicate Block or Workspace Comment to be
  *     copied.
  * @deprecated Use Blockly.clipboard.duplicate(). (2021 December)
  * @see Blockly.clipboard.duplicate

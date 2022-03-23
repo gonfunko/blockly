@@ -145,7 +145,7 @@ exports.State = State;
  * Similar to Closure's goog.a11y.aria
  *
  * @param {!Element} element DOM node to set role of.
- * @param {!Role} roleName Role name.
+ * @param {!Blockly.utils.aria.Role} roleName Role name.
  * @alias Blockly.utils.aria.setRole
  */
 const setRole = function(element, roleName) {
@@ -157,7 +157,7 @@ exports.setRole = setRole;
  * Sets the state or property of an element.
  * Copied from Closure's goog.a11y.aria
  * @param {!Element} element DOM node where we set state.
- * @param {!State} stateName State attribute being set.
+ * @param {!Blockly.utils.aria.State} stateName State attribute being set.
  *     Automatically adds prefix 'aria-' to the state name if the attribute is
  *     not an extra attribute.
  * @param {string|boolean|number|!Array<string>} value Value

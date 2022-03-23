@@ -111,7 +111,7 @@ class Abstract {
 
   /**
    * Get workspace the event belongs to.
-   * @return {!Workspace} The workspace the event belongs to.
+   * @return {!Blockly.Workspace} The workspace the event belongs to.
    * @throws {Error} if workspace is null.
    * @protected
    */

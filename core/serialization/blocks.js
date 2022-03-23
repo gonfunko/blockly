@@ -73,7 +73,7 @@ exports.State = State;
 
 /**
  * Returns the state of the given block as a plain JavaScript object.
- * @param {!Block} block The block to serialize.
+ * @param {!Blockly.Block} block The block to serialize.
  * @param {{addCoordinates: (boolean|undefined), addInputBlocks:
  *     (boolean|undefined), addNextBlocks: (boolean|undefined),
  *     doFullSerialization: (boolean|undefined)}=} param1
@@ -128,7 +128,7 @@ exports.save = save;
 /**
  * Adds attributes to the given state object based on the state of the block.
  * Eg collapsed, disabled, inline, etc.
- * @param {!Block} block The block to base the attributes on.
+ * @param {!Blockly.Block} block The block to base the attributes on.
  * @param {!State} state The state object to append to.
  */
 const saveAttributes = function(block, state) {
@@ -150,7 +150,7 @@ const saveAttributes = function(block, state) {
 
 /**
  * Adds the coordinates of the given block to the given state object.
- * @param {!Block} block The block to base the coordinates on.
+ * @param {!Blockly.Block} block The block to base the coordinates on.
  * @param {!State} state The state object to append to.
  */
 const saveCoords = function(block, state) {
@@ -162,7 +162,7 @@ const saveCoords = function(block, state) {
 
 /**
  * Adds any extra state the block may provide to the given state object.
- * @param {!Block} block The block to serialize the extra state of.
+ * @param {!Blockly.Block} block The block to serialize the extra state of.
  * @param {!State} state The state object to append to.
  */
 const saveExtraState = function(block, state) {
@@ -184,7 +184,7 @@ const saveExtraState = function(block, state) {
 
 /**
  * Adds the state of all of the icons on the block to the given state object.
- * @param {!Block} block The block to serialize the icon state of.
+ * @param {!Blockly.Block} block The block to serialize the icon state of.
  * @param {!State} state The state object to append to.
  */
 const saveIcons = function(block, state) {
@@ -203,7 +203,7 @@ const saveIcons = function(block, state) {
 
 /**
  * Adds the state of all of the fields on the block to the given state object.
- * @param {!Block} block The block to serialize the field state of.
+ * @param {!Blockly.Block} block The block to serialize the field state of.
  * @param {!State} state The state object to append to.
  * @param {boolean} doFullSerialization Whether or not to serialize the full
  *     state of the field (rather than possibly saving a reference to some
@@ -228,7 +228,7 @@ const saveFields = function(block, state, doFullSerialization) {
 /**
  * Adds the state of all of the child blocks of the given block (which are
  * connected to inputs) to the given state object.
- * @param {!Block} block The block to serialize the input blocks of.
+ * @param {!Blockly.Block} block The block to serialize the input blocks of.
  * @param {!State} state The state object to append to.
  * @param {boolean} doFullSerialization Whether or not to do full serialization.
  */
@@ -240,7 +240,7 @@ const saveInputBlocks = function(block, state, doFullSerialization) {
       continue;
     }
     const connectionState = saveConnection(
-        /** @type {!Connection} */ (input.connection), doFullSerialization);
+        /** @type {!Blockly.Connection} */ (input.connection), doFullSerialization);
     if (connectionState) {
       inputs[input.name] = connectionState;
     }
@@ -254,7 +254,7 @@ const saveInputBlocks = function(block, state, doFullSerialization) {
 /**
  * Adds the state of all of the next blocks of the given block to the given
  * state object.
- * @param {!Block} block The block to serialize the next blocks of.
+ * @param {!Blockly.Block} block The block to serialize the next blocks of.
  * @param {!State} state The state object to append to.
  * @param {boolean} doFullSerialization Whether or not to do full serialization.
  */
@@ -272,7 +272,7 @@ const saveNextBlocks = function(block, state, doFullSerialization) {
 /**
  * Returns the state of the given connection (ie the state of any connected
  * shadow or real blocks).
- * @param {!Connection} connection The connection to serialize the connected
+ * @param {!Blockly.Connection} connection The connection to serialize the connected
  *     blocks of.
  * @return {?ConnectionState} An object containing the state of any connected
  *     shadow block, or any connected real block.
@@ -297,11 +297,11 @@ const saveConnection = function(connection, doFullSerialization) {
 /**
  * Loads the block represented by the given state into the given workspace.
  * @param {!State} state The state of a block to deserialize into the workspace.
- * @param {!Workspace} workspace The workspace to add the block to.
+ * @param {!Blockly.Workspace} workspace The workspace to add the block to.
  * @param {{recordUndo: (boolean|undefined)}=} param1
  *     recordUndo: If true, events triggered by this function will be undo-able
  *       by the user. False by default.
- * @return {!Block} The block that was just loaded.
+ * @return {!Blockly.Block} The block that was just loaded.
  * @alias Blockly.serialization.blocks.append
  */
 const append = function(state, workspace, {recordUndo = false} = {}) {
@@ -316,8 +316,8 @@ exports.append = append;
  * But it is exported so that other places within Blockly can call it directly
  * with the extra parameters.
  * @param {!State} state The state of a block to deserialize into the workspace.
- * @param {!Workspace} workspace The workspace to add the block to.
- * @param {{parentConnection: (!Connection|undefined), isShadow:
+ * @param {!Blockly.Workspace} workspace The workspace to add the block to.
+ * @param {{parentConnection: (!Blockly.Connection|undefined), isShadow:
  *     (boolean|undefined), recordUndo: (boolean|undefined)}=} param1
  *     parentConnection: If provided, the system will attempt to connect the
  *       block to this connection after it is created. Undefined by default.
@@ -325,7 +325,7 @@ exports.append = append;
  *       created. False by default.
  *     recordUndo: If true, events triggered by this function will be undo-able
  *       by the user. False by default.
- * @return {!Block} The block that was just appended.
+ * @return {!Blockly.Block} The block that was just appended.
  * @alias Blockly.serialization.blocks.appendInternal
  * @package
  */
@@ -352,7 +352,7 @@ const appendInternal = function(state, workspace, {
   // Adding connections to the connection db is expensive. This defers that
   // operation to decrease load time.
   if (workspace.rendered) {
-    const blockSvg = /** @type {!BlockSvg} */ (block);
+    const blockSvg = /** @type {!Blockly.BlockSvg} */ (block);
     setTimeout(() => {
       if (!blockSvg.disposed) {
         blockSvg.setConnectionTracking(true);
@@ -370,14 +370,14 @@ exports.appendInternal = appendInternal;
  * eroneous events. Events (and other things we only want to occur on the top
  * block) are handled by appendInternal.
  * @param {!State} state The state of a block to deserialize into the workspace.
- * @param {!Workspace} workspace The workspace to add the block to.
- * @param {{parentConnection: (!Connection|undefined),
+ * @param {!Blockly.Workspace} workspace The workspace to add the block to.
+ * @param {{parentConnection: (!Blockly.Connection|undefined),
  *     isShadow: (boolean|undefined)}=} param1
  *     parentConnection: If provided, the system will attempt to connect the
  *       block to this connection after it is created. Undefined by default.
  *     isShadow: The block will be set to a shadow block after it is created.
  *       False by default.
- * @return {!Block} The block that was just appended.
+ * @return {!Blockly.Block} The block that was just appended.
  */
 const appendPrivate = function(state, workspace, {
   parentConnection = undefined,
@@ -405,7 +405,7 @@ const appendPrivate = function(state, workspace, {
 /**
  * Applies any coordinate information available on the state object to the
  * block.
- * @param {!Block} block The block to set the position of.
+ * @param {!Blockly.Block} block The block to set the position of.
  * @param {!State} state The state object to reference.
  */
 const loadCoords = function(block, state) {
@@ -420,7 +420,7 @@ const loadCoords = function(block, state) {
 
 /**
  * Applies any attribute information available on the state object to the block.
- * @param {!Block} block The block to set the attributes of.
+ * @param {!Blockly.Block} block The block to set the attributes of.
  * @param {!State} state The state object to reference.
  */
 const loadAttributes = function(block, state) {
@@ -441,7 +441,7 @@ const loadAttributes = function(block, state) {
 /**
  * Applies any extra state information available on the state object to the
  * block.
- * @param {!Block} block The block to set the extra state of.
+ * @param {!Blockly.Block} block The block to set the extra state of.
  * @param {!State} state The state object to reference.
  */
 const loadExtraState = function(block, state) {
@@ -457,9 +457,9 @@ const loadExtraState = function(block, state) {
 
 /**
  * Attempts to connect the block to the parent connection, if it exists.
- * @param {(!Connection|undefined)} parentConnection The parent connection to
+ * @param {(!Blockly.Connection|undefined)} parentConnection The parent connection to
  *     try to connect the block to.
- * @param {!Block} child The block to try to connect to the parent.
+ * @param {!Blockly.Block} child The block to try to connect to the parent.
  * @param {!State} state The state which defines the given block
  */
 const tryToConnectParent = function(parentConnection, child, state) {
@@ -503,7 +503,7 @@ const tryToConnectParent = function(parentConnection, child, state) {
 /**
  * Applies icon state to the icons on the block, based on the given state
  * object.
- * @param {!Block} block The block to set the icon state of.
+ * @param {!Blockly.Block} block The block to set the icon state of.
  * @param {!State} state The state object to reference.
  */
 const loadIcons = function(block, state) {
@@ -518,7 +518,7 @@ const loadIcons = function(block, state) {
     block.commentModel.size = new Size(comment['width'], comment['height']);
     if (comment['pinned'] && block.rendered && !block.isInFlyout) {
       // Give the block a chance to be positioned and rendered before showing.
-      const blockSvg = /** @type {!BlockSvg} */ (block);
+      const blockSvg = /** @type {!Blockly.BlockSvg} */ (block);
       setTimeout(() => blockSvg.getCommentIcon().setVisible(true), 1);
     }
   }
@@ -526,7 +526,7 @@ const loadIcons = function(block, state) {
 
 /**
  * Applies any field information available on the state object to the block.
- * @param {!Block} block The block to set the field state of.
+ * @param {!Blockly.Block} block The block to set the field state of.
  * @param {!State} state The state object to reference.
  */
 const loadFields = function(block, state) {
@@ -550,7 +550,7 @@ const loadFields = function(block, state) {
 /**
  * Creates any child blocks (attached to inputs) defined by the given state
  * and attaches them to the given block.
- * @param {!Block} block The block to attach input blocks to.
+ * @param {!Blockly.Block} block The block to attach input blocks to.
  * @param {!State} state The state object to reference.
  */
 const loadInputBlocks = function(block, state) {
@@ -571,7 +571,7 @@ const loadInputBlocks = function(block, state) {
 /**
  * Creates any next blocks defined by the given state and attaches them to the
  * given block.
- * @param {!Block} block The block to attach next blocks to.
+ * @param {!Blockly.Block} block The block to attach next blocks to.
  * @param {!State} state The state object to reference.
  */
 const loadNextBlocks = function(block, state) {
@@ -587,7 +587,7 @@ const loadNextBlocks = function(block, state) {
 /**
  * Applies the state defined by connectionState to the given connection, ie
  * assigns shadows and attaches child blocks.
- * @param {!Connection} connection The connection to deserialize the
+ * @param {!Blockly.Connection} connection The connection to deserialize the
  *     connected blocks of.
  * @param {!ConnectionState} connectionState The object containing the state of
  *     any connected shadow block, or any connected real block.
@@ -606,12 +606,12 @@ const loadConnection = function(connection, connectionState) {
 // TODO(#5146): Remove this from the serialization system.
 /**
  * Initializes the give block, eg init the model, inits the svg, renders, etc.
- * @param {!Block} block The block to initialize.
+ * @param {!Blockly.Block} block The block to initialize.
  * @param {boolean} rendered Whether the block is a rendered or headless block.
  */
 const initBlock = function(block, rendered) {
   if (rendered) {
-    const blockSvg = /** @type {!BlockSvg} */ (block);
+    const blockSvg = /** @type {!Blockly.BlockSvg} */ (block);
     // Adding connections to the connection db is expensive. This defers that
     // operation to decrease load time.
     blockSvg.setConnectionTracking(false);
@@ -628,7 +628,7 @@ const saveBlock = save;
 
 /**
  * Serializer for saving and loading block state.
- * @implements {ISerializer}
+ * @implements {Blockly.serialization.ISerializer}
  * @alias Blockly.serialization.blocks.BlockSerializer
  */
 class BlockSerializer {
@@ -643,7 +643,7 @@ class BlockSerializer {
 
   /**
    * Serializes the blocks of the given workspace.
-   * @param {!Workspace} workspace The workspace to save the blocks of.
+   * @param {!Blockly.Workspace} workspace The workspace to save the blocks of.
    * @return {?{languageVersion: number, blocks:!Array<!State>}} The state of
    *     the workspace's blocks, or null if there are no blocks.
    */
@@ -670,7 +670,7 @@ class BlockSerializer {
    * workspace.
    * @param {{languageVersion: number, blocks:!Array<!State>}} state The state
    *     of the blocks to deserialize.
-   * @param {!Workspace} workspace The workspace to deserialize into.
+   * @param {!Blockly.Workspace} workspace The workspace to deserialize into.
    */
   load(state, workspace) {
     const blockStates = state['blocks'];
@@ -681,7 +681,7 @@ class BlockSerializer {
 
   /**
    * Disposes of any blocks that exist on the workspace.
-   * @param {!Workspace} workspace The workspace to clear the blocks of.
+   * @param {!Blockly.Workspace} workspace The workspace to clear the blocks of.
    */
   clear(workspace) {
     // Cannot use workspace.clear() because that also removes variables.

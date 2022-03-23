@@ -42,7 +42,7 @@ goog.requireType('Blockly.WorkspaceCommentSvg');
 
 /**
  * Encode a block tree as XML.
- * @param {!Workspace} workspace The workspace containing blocks.
+ * @param {!Blockly.Workspace} workspace The workspace containing blocks.
  * @param {boolean=} opt_noId True if the encoder should skip the block IDs.
  * @return {!Element} XML DOM element.
  * @alias Blockly.Xml.workspaceToDom
@@ -70,7 +70,7 @@ exports.workspaceToDom = workspaceToDom;
 
 /**
  * Encode a list of variables as XML.
- * @param {!Array<!VariableModel>} variableList List of all variable
+ * @param {!Array<!Blockly.VariableModel>} variableList List of all variable
  *     models.
  * @return {!Element} Tree of XML elements.
  * @alias Blockly.Xml.variablesToDom
@@ -93,7 +93,7 @@ exports.variablesToDom = variablesToDom;
 
 /**
  * Encode a block subtree as XML with XY coordinates.
- * @param {!Block} block The root block to encode.
+ * @param {!Blockly.Block} block The root block to encode.
  * @param {boolean=} opt_noId True if the encoder should skip the block ID.
  * @return {!Element|!DocumentFragment} Tree of XML elements or an empty
  *     document fragment if the block was an insertion marker.
@@ -124,7 +124,7 @@ exports.blockToDomWithXY = blockToDomWithXY;
 
 /**
  * Encode a field as XML.
- * @param {!Field} field The field to encode.
+ * @param {!Blockly.Field} field The field to encode.
  * @return {?Element} XML element, or null if the field did not need to be
  *     serialized.
  */
@@ -140,7 +140,7 @@ const fieldToDom = function(field) {
 /**
  * Encode all of a block's fields as XML and attach them to the given tree of
  * XML elements.
- * @param {!Block} block A block with fields to be encoded.
+ * @param {!Blockly.Block} block A block with fields to be encoded.
  * @param {!Element} element The XML element to which the field DOM should be
  *     attached.
  */
@@ -159,7 +159,7 @@ const allFieldsToDom = function(block, element) {
 
 /**
  * Encode a block subtree as XML.
- * @param {!Block} block The root block to encode.
+ * @param {!Blockly.Block} block The root block to encode.
  * @param {boolean=} opt_noId True if the encoder should skip the block ID.
  * @return {!Element|!DocumentFragment} Tree of XML elements or an empty
  *     document fragment if the block was an insertion marker.
@@ -398,7 +398,7 @@ exports.textToDom = textToDom;
  * Clear the given workspace then decode an XML DOM and
  * create blocks on the workspace.
  * @param {!Element} xml XML DOM.
- * @param {!WorkspaceSvg} workspace The workspace.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace.
  * @return {!Array<string>} An array containing new block IDs.
  * @alias Blockly.Xml.clearWorkspaceAndLoadFromXml
  */
@@ -414,7 +414,7 @@ exports.clearWorkspaceAndLoadFromXml = clearWorkspaceAndLoadFromXml;
 /**
  * Decode an XML DOM and create blocks on the workspace.
  * @param {!Element} xml XML DOM.
- * @param {!Workspace} workspace The workspace.
+ * @param {!Blockly.Workspace} workspace The workspace.
  * @return {!Array<string>} An array containing new block IDs.
  * @suppress {strictModuleDepCheck} Suppress module check while workspace
  *     comments are not bundled in.
@@ -446,8 +446,8 @@ const domToWorkspace = function(xml, workspace) {
 
   // Disable workspace resizes as an optimization.
   // Assume it is rendered so we can check.
-  if (/** @type {!WorkspaceSvg} */ (workspace).setResizesEnabled) {
-    /** @type {!WorkspaceSvg} */ (workspace).setResizesEnabled(false);
+  if (/** @type {!Blockly.WorkspaceSvg} */ (workspace).setResizesEnabled) {
+    /** @type {!Blockly.WorkspaceSvg} */ (workspace).setResizesEnabled(false);
   }
   let variablesFirst = true;
   try {
@@ -484,7 +484,7 @@ const domToWorkspace = function(xml, workspace) {
           } else {
             WorkspaceCommentSvg.fromXmlRendered(
                 xmlChildElement,
-                /** @type {!WorkspaceSvg} */ (workspace), width);
+                /** @type {!Blockly.WorkspaceSvg} */ (workspace), width);
           }
         } else {
           const {WorkspaceComment} =
@@ -516,8 +516,8 @@ const domToWorkspace = function(xml, workspace) {
     dom.stopTextWidthCache();
   }
   // Re-enable workspace resizing.
-  if (/** @type {!WorkspaceSvg} */ (workspace).setResizesEnabled) {
-    /** @type {!WorkspaceSvg} */ (workspace).setResizesEnabled(true);
+  if (/** @type {!Blockly.WorkspaceSvg} */ (workspace).setResizesEnabled) {
+    /** @type {!Blockly.WorkspaceSvg} */ (workspace).setResizesEnabled(true);
   }
   eventUtils.fire(new (eventUtils.get(eventUtils.FINISHED_LOADING))(workspace));
   return newBlockIds;
@@ -528,7 +528,7 @@ exports.domToWorkspace = domToWorkspace;
  * Decode an XML DOM and create blocks on the workspace. Position the new
  * blocks immediately below prior blocks, aligned by their starting edge.
  * @param {!Element} xml The XML DOM.
- * @param {!Workspace} workspace The workspace to add to.
+ * @param {!Blockly.Workspace} workspace The workspace to add to.
  * @return {!Array<string>} An array containing new block IDs.
  * @alias Blockly.Xml.appendDomToWorkspace
  */
@@ -536,11 +536,11 @@ const appendDomToWorkspace = function(xml, workspace) {
   // First check if we have a WorkspaceSvg, otherwise the blocks have no shape
   // and the position does not matter.
   // Assume it is rendered so we can check.
-  if (!/** @type {!WorkspaceSvg} */ (workspace).getBlocksBoundingBox) {
+  if (!/** @type {!Blockly.WorkspaceSvg} */ (workspace).getBlocksBoundingBox) {
     return domToWorkspace(xml, workspace);
   }
 
-  const bbox = /** @type {!WorkspaceSvg} */ (workspace).getBlocksBoundingBox();
+  const bbox = /** @type {!Blockly.WorkspaceSvg} */ (workspace).getBlocksBoundingBox();
   // Load the new blocks into the workspace and get the IDs of the new blocks.
   const newBlockIds = domToWorkspace(xml, workspace);
   if (bbox && bbox.top !== bbox.bottom) {  // check if any previous block
@@ -581,8 +581,8 @@ exports.appendDomToWorkspace = appendDomToWorkspace;
  * Decode an XML block tag and create a block (and possibly sub blocks) on the
  * workspace.
  * @param {!Element} xmlBlock XML block element.
- * @param {!Workspace} workspace The workspace.
- * @return {!Block} The root block created.
+ * @param {!Blockly.Workspace} workspace The workspace.
+ * @return {!Blockly.Block} The root block created.
  * @alias Blockly.Xml.domToBlock
  */
 const domToBlock = function(xmlBlock, workspace) {
@@ -605,7 +605,7 @@ const domToBlock = function(xmlBlock, workspace) {
     topBlock = domToBlockHeadless(xmlBlock, workspace);
     // Generate list of all blocks.
     if (workspace.rendered) {
-      const topBlockSvg = /** @type {!BlockSvg} */ (topBlock);
+      const topBlockSvg = /** @type {!Blockly.BlockSvg} */ (topBlockly.Block);
       const blocks = topBlock.getDescendants(false);
       topBlockSvg.setConnectionTracking(false);
       // Render each block.
@@ -625,7 +625,7 @@ const domToBlock = function(xmlBlock, workspace) {
       topBlockSvg.updateDisabled();
       // Allow the scrollbars to resize and move based on the new contents.
       // TODO(@picklesrus): #387. Remove when domToBlock avoids resizing.
-      /** @type {!WorkspaceSvg} */ (workspace).resizeContents();
+      /** @type {!Blockly.WorkspaceSvg} */ (workspace).resizeContents();
     } else {
       const blocks = topBlock.getDescendants(false);
       for (let i = blocks.length - 1; i >= 0; i--) {
@@ -656,7 +656,7 @@ exports.domToBlock = domToBlock;
 /**
  * Decode an XML list of variables and add the variables to the workspace.
  * @param {!Element} xmlVariables List of XML variable elements.
- * @param {!Workspace} workspace The workspace to which the variable
+ * @param {!Blockly.Workspace} workspace The workspace to which the variable
  *     should be added.
  * @alias Blockly.Xml.domToVariables
  */
@@ -744,7 +744,7 @@ const mapSupportedXmlTags = function(xmlBlock) {
 /**
  * Applies mutation tag child nodes to the given block.
  * @param {!Array<!Element>} xmlChildren Child nodes.
- * @param {!Block} block The block to apply the child nodes on.
+ * @param {!Blockly.Block} block The block to apply the child nodes on.
  * @return {boolean} True if mutation may have added some elements that need
  *    initialization (requiring initSvg call).
  */
@@ -767,7 +767,7 @@ const applyMutationTagNodes = function(xmlChildren, block) {
 /**
  * Applies comment tag child nodes to the given block.
  * @param {!Array<!Element>} xmlChildren Child nodes.
- * @param {!Block} block The block to apply the child nodes on.
+ * @param {!Blockly.Block} block The block to apply the child nodes on.
  */
 const applyCommentTagNodes = function(xmlChildren, block) {
   for (let i = 0; i < xmlChildren.length; i++) {
@@ -784,7 +784,7 @@ const applyCommentTagNodes = function(xmlChildren, block) {
     }
 
     if (pinned && block.getCommentIcon && !block.isInFlyout) {
-      const blockSvg = /** @type {BlockSvg} */ (block);
+      const blockSvg = /** @type {Blockly.BlockSvg} */ (block);
       setTimeout(function() {
         blockSvg.getCommentIcon().setVisible(true);
       }, 1);
@@ -795,7 +795,7 @@ const applyCommentTagNodes = function(xmlChildren, block) {
 /**
  * Applies data tag child nodes to the given block.
  * @param {!Array<!Element>} xmlChildren Child nodes.
- * @param {!Block} block The block to apply the child nodes on.
+ * @param {!Blockly.Block} block The block to apply the child nodes on.
  */
 const applyDataTagNodes = function(xmlChildren, block) {
   for (let i = 0; i < xmlChildren.length; i++) {
@@ -807,7 +807,7 @@ const applyDataTagNodes = function(xmlChildren, block) {
 /**
  * Applies field tag child nodes to the given block.
  * @param {!Array<!Element>} xmlChildren Child nodes.
- * @param {!Block} block The block to apply the child nodes on.
+ * @param {!Blockly.Block} block The block to apply the child nodes on.
  */
 const applyFieldTagNodes = function(xmlChildren, block) {
   for (let i = 0; i < xmlChildren.length; i++) {
@@ -841,9 +841,9 @@ const findChildBlocks = function(xmlNode) {
 /**
  * Applies input child nodes (value or statement) to the given block.
  * @param {!Array<!Element>} xmlChildren Child nodes.
- * @param {!Workspace} workspace The workspace containing the given
+ * @param {!Blockly.Workspace} workspace The workspace containing the given
  *    block.
- * @param {!Block} block The block to apply the child nodes on.
+ * @param {!Blockly.Block} block The block to apply the child nodes on.
  * @param {string} prototypeName The prototype name of the block.
  */
 const applyInputTagNodes = function(
@@ -876,9 +876,9 @@ const applyInputTagNodes = function(
 /**
  * Applies next child nodes to the given block.
  * @param {!Array<!Element>} xmlChildren Child nodes.
- * @param {!Workspace} workspace The workspace containing the given
+ * @param {!Blockly.Workspace} workspace The workspace containing the given
  *    block.
- * @param {!Block} block The block to apply the child nodes on.
+ * @param {!Blockly.Block} block The block to apply the child nodes on.
  */
 const applyNextTagNodes = function(xmlChildren, workspace, block) {
   for (let i = 0; i < xmlChildren.length; i++) {
@@ -909,13 +909,13 @@ const applyNextTagNodes = function(xmlChildren, workspace, block) {
  * Decode an XML block tag and create a block (and possibly sub blocks) on the
  * workspace.
  * @param {!Element} xmlBlock XML block element.
- * @param {!Workspace} workspace The workspace.
- * @param {!Connection=} parentConnection The parent connection to
+ * @param {!Blockly.Workspace} workspace The workspace.
+ * @param {!Blockly.Connection=} parentConnection The parent connection to
  *    to connect this block to after instantiating.
  * @param {boolean=} connectedToParentNext Whether the provided parent
  *     connection
  *    is a next connection, rather than output or statement.
- * @return {!Block} The root block created.
+ * @return {!Blockly.Block} The root block created.
  */
 const domToBlockHeadless = function(
     xmlBlock, workspace, parentConnection, connectedToParentNext) {
@@ -964,7 +964,7 @@ const domToBlockHeadless = function(
     // (ref: https://github.com/google/blockly/pull/4296#issuecomment-884226021
     // But the XML serializer/deserializer is iceboxed so I'm not going to fix
     // it.
-    (/** @type {!BlockSvg} */ (block)).initSvg();
+    (/** @type {!Blockly.BlockSvg} */ (block)).initSvg();
   }
 
   const inline = xmlBlock.getAttribute('inline');
@@ -1011,7 +1011,7 @@ const domToBlockHeadless = function(
 
 /**
  * Decode an XML field tag and set the value of that field on the given block.
- * @param {!Block} block The block that is currently being deserialized.
+ * @param {!Blockly.Block} block The block that is currently being deserialized.
  * @param {string} fieldName The name of the field on the block.
  * @param {!Element} xml The field tag to decode.
  */

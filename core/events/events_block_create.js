@@ -26,12 +26,12 @@ const {Block} = goog.requireType('Blockly.Block');
 
 /**
  * Class for a block creation event.
- * @extends {BlockBase}
+ * @extends {Blockly.Events.BlockBase}
  * @alias Blockly.Events.BlockCreate
  */
 class BlockCreate extends BlockBase {
   /**
-   * @param {!Block=} opt_block The created block.  Undefined for a blank
+   * @param {!Blockly.Block=} opt_block The created block.  Undefined for a blank
    *     event.
    */
   constructor(opt_block) {
@@ -62,9 +62,9 @@ class BlockCreate extends BlockBase {
 
     /**
      * JSON representation of the block that was just created.
-     * @type {!blocks.State}
+     * @type {!Blockly.serialization.blocks.State}
      */
-    this.json = /** @type {!blocks.State} */ (
+    this.json = /** @type {!Blockly.serialization.blocks.State} */ (
         blocks.save(opt_block, {addCoordinates: true}));
   }
 
@@ -92,7 +92,7 @@ class BlockCreate extends BlockBase {
     super.fromJson(json);
     this.xml = Xml.textToDom(json['xml']);
     this.ids = json['ids'];
-    this.json = /** @type {!blocks.State} */ (json['json']);
+    this.json = /** @type {!Blockly.serialization.blocks.State} */ (json['json']);
     this.ui = !!json['ui'];
     if (json['recordUndo'] !== undefined) {
       this.recordUndo = json['recordUndo'];

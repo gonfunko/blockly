@@ -26,7 +26,7 @@ const {Cursor} = goog.require('Blockly.Cursor');
  * Class for a basic cursor.
  * This will allow the user to get to all nodes in the AST by hitting next or
  * previous.
- * @extends {Cursor}
+ * @extends {Blockly.Cursor}
  * @alias Blockly.BasicCursor
  */
 class BasicCursor extends Cursor {
@@ -39,7 +39,7 @@ class BasicCursor extends Cursor {
 
   /**
    * Find the next node in the pre order traversal.
-   * @return {?ASTNode} The next node, or null if the current node is
+   * @return {?Blockly.ASTNode} The next node, or null if the current node is
    *     not set or there is no next value.
    * @override
    */
@@ -60,7 +60,7 @@ class BasicCursor extends Cursor {
    * For a basic cursor we only have the ability to go next and previous, so
    * in will also allow the user to get to the next node in the pre order
    * traversal.
-   * @return {?ASTNode} The next node, or null if the current node is
+   * @return {?Blockly.ASTNode} The next node, or null if the current node is
    *     not set or there is no next value.
    * @override
    */
@@ -70,7 +70,7 @@ class BasicCursor extends Cursor {
 
   /**
    * Find the previous node in the pre order traversal.
-   * @return {?ASTNode} The previous node, or null if the current node
+   * @return {?Blockly.ASTNode} The previous node, or null if the current node
    *     is not set or there is no previous value.
    * @override
    */
@@ -91,7 +91,7 @@ class BasicCursor extends Cursor {
    * For a basic cursor we only have the ability to go next and previous, so
    * out will allow the user to get to the previous node in the pre order
    * traversal.
-   * @return {?ASTNode} The previous node, or null if the current node is
+   * @return {?Blockly.ASTNode} The previous node, or null if the current node is
    *     not set or there is no previous value.
    * @override
    */
@@ -103,10 +103,10 @@ class BasicCursor extends Cursor {
    * Uses pre order traversal to navigate the Blockly AST. This will allow
    * a user to easily navigate the entire Blockly AST without having to go in
    * and out levels on the tree.
-   * @param {?ASTNode} node The current position in the AST.
-   * @param {!function(ASTNode) : boolean} isValid A function true/false
+   * @param {?Blockly.ASTNode} node The current position in the AST.
+   * @param {!function(Blockly.ASTNode) : boolean} isValid A function true/false
    *     depending on whether the given node should be traversed.
-   * @return {?ASTNode} The next node in the traversal.
+   * @return {?Blockly.ASTNode} The next node in the traversal.
    * @protected
    */
   getNextNode_(node, isValid) {
@@ -132,10 +132,10 @@ class BasicCursor extends Cursor {
    * Reverses the pre order traversal in order to find the previous node. This
    * will allow a user to easily navigate the entire Blockly AST without having
    * to go in and out levels on the tree.
-   * @param {?ASTNode} node The current position in the AST.
-   * @param {!function(ASTNode) : boolean} isValid A function true/false
+   * @param {?Blockly.ASTNode} node The current position in the AST.
+   * @param {!function(Blockly.ASTNode) : boolean} isValid A function true/false
    *     depending on whether the given node should be traversed.
-   * @return {?ASTNode} The previous node in the traversal or null if no
+   * @return {?Blockly.ASTNode} The previous node in the traversal or null if no
    *     previous node exists.
    * @protected
    */
@@ -161,7 +161,7 @@ class BasicCursor extends Cursor {
   /**
    * Decides what nodes to traverse and which ones to skip. Currently, it
    * skips output, stack and workspace nodes.
-   * @param {?ASTNode} node The AST node to check whether it is valid.
+   * @param {?Blockly.ASTNode} node The AST node to check whether it is valid.
    * @return {boolean} True if the node should be visited, false otherwise.
    * @protected
    */
@@ -178,8 +178,8 @@ class BasicCursor extends Cursor {
 
   /**
    * From the given node find either the next valid sibling or parent.
-   * @param {?ASTNode} node The current position in the AST.
-   * @return {?ASTNode} The parent AST node or null if there are no
+   * @param {?Blockly.ASTNode} node The current position in the AST.
+   * @return {?Blockly.ASTNode} The parent AST node or null if there are no
    *     valid parents.
    * @private
    */
@@ -196,8 +196,8 @@ class BasicCursor extends Cursor {
 
   /**
    * Get the right most child of a node.
-   * @param {?ASTNode} node The node to find the right most child of.
-   * @return {?ASTNode} The right most child of the given node, or the node
+   * @param {?Blockly.ASTNode} node The node to find the right most child of.
+   * @return {?Blockly.ASTNode} The right most child of the given node, or the node
    *     if no child exists.
    * @private
    */

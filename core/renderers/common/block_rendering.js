@@ -122,9 +122,9 @@ exports.stopDebugger = stopDebugger;
 /**
  * Initialize anything needed for rendering (constants, etc).
  * @param {!string} name Name of the renderer to initialize.
- * @param {!Theme} theme The workspace theme object.
+ * @param {!Blockly.Theme} theme The workspace theme object.
  * @param {Object=} opt_rendererOverrides Rendering constant overrides.
- * @return {!Renderer} The new instance of a renderer.
+ * @return {!Blockly.blockRendering.Renderer} The new instance of a renderer.
  *     Already initialized.
  * @package
  * @alias Blockly.blockRendering.init

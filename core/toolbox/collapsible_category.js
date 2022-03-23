@@ -31,15 +31,16 @@ const {ToolboxSeparator} = goog.require('Blockly.ToolboxSeparator');
 
 /**
  * Class for a category in a toolbox that can be collapsed.
- * @implements {ICollapsibleToolboxItem}
+ * @implements {Blockly.ICollapsibleToolboxItem}
+ * @extends {Blockly.ToolboxCategory}
  * @alias Blockly.CollapsibleToolboxCategory
  */
 class CollapsibleToolboxCategory extends ToolboxCategory {
   /**
    * @param {!toolbox.CategoryInfo} categoryDef The information needed
    *     to create a category in the toolbox.
-   * @param {!IToolbox} toolbox The parent toolbox for the category.
-   * @param {ICollapsibleToolboxItem=} opt_parent The parent category or null if
+   * @param {!Blockly.IToolbox} toolbox The parent toolbox for the category.
+   * @param {Blockly.ICollapsibleToolboxItem=} opt_parent The parent category or null if
    *     the category does not have a parent.
    */
   constructor(categoryDef, toolbox, opt_parent) {
@@ -61,7 +62,7 @@ class CollapsibleToolboxCategory extends ToolboxCategory {
 
     /**
      * The child toolbox items for this category.
-     * @type {!Array<!IToolboxItem>}
+     * @type {!Array<!Blockly.IToolboxItem>}
      * @protected
      */
     this.toolboxItems_ = [];
@@ -94,7 +95,7 @@ class CollapsibleToolboxCategory extends ToolboxCategory {
             (itemDef['kind'].toLowerCase() ===
                  ToolboxSeparator.registrationName &&
              prevIsFlyoutItem)) {
-          const flyoutItem = /** @type {toolbox.FlyoutItemInfo} */ (itemDef);
+          const flyoutItem = /** @type {Blockly.utils.toolbox.FlyoutItemInfo} */ (itemDef);
           this.flyoutItems_.push(flyoutItem);
           prevIsFlyoutItem = true;
         } else {
@@ -169,7 +170,7 @@ class CollapsibleToolboxCategory extends ToolboxCategory {
 
   /**
    * Create the DOM for all subcategories.
-   * @param {!Array<!IToolboxItem>} subcategories The subcategories.
+   * @param {!Array<!Blockly.IToolboxItem>} subcategories The subcategories.
    * @return {!HTMLDivElement} The div holding all the subcategories.
    * @protected
    */
@@ -272,7 +273,7 @@ class CollapsibleToolboxCategory extends ToolboxCategory {
 
   /**
    * Gets any children toolbox items. (ex. Gets the subcategories)
-   * @return {!Array<!IToolboxItem>} The child toolbox items.
+   * @return {!Array<!Blockly.IToolboxItem>} The child toolbox items.
    */
   getChildToolboxItems() {
     return this.toolboxItems_;

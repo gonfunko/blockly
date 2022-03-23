@@ -38,7 +38,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * The zelos renderer.
- * @extends {BaseRenderer}
+ * @extends {Blockly.blockRendering.Renderer}
  * @alias Blockly.zelos.Renderer
  */
 class Renderer extends BaseRenderer {
@@ -52,7 +52,7 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's constant provider.
-   * @return {!ConstantProvider} The constant provider.
+   * @return {!Blockly.zelos.ConstantProvider} The constant provider.
    * @protected
    * @override
    */
@@ -62,8 +62,8 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's render info object.
-   * @param {!BlockSvg} block The block to measure.
-   * @return {!RenderInfo} The render info object.
+   * @param {!Blockly.BlockSvg} block The block to measure.
+   * @return {!Blockly.zelos.RenderInfo} The render info object.
    * @protected
    * @override
    */
@@ -73,24 +73,24 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's drawer.
-   * @param {!BlockSvg} block The block to render.
-   * @param {!BaseRenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!BaseBlockly.zelos.RenderInfo} info An object containing all
    *   information needed to render this block.
-   * @return {!Drawer} The drawer.
+   * @return {!Blockly.zelos.Drawer} The drawer.
    * @protected
    * @override
    */
   makeDrawer_(block, info) {
     return new Drawer(
         block,
-        /** @type {!RenderInfo} */ (info));
+        /** @type {!Blockly.zelos.RenderInfo} */ (info));
   }
 
   /**
    * Create a new instance of the renderer's cursor drawer.
-   * @param {!WorkspaceSvg} workspace The workspace the cursor belongs to.
-   * @param {!Marker} marker The marker.
-   * @return {!MarkerSvg} The object in charge of drawing
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace the cursor belongs to.
+   * @param {!Blockly.Marker} marker The marker.
+   * @return {!Blockly.zelos.MarkerSvg} The object in charge of drawing
    *     the marker.
    * @package
    * @override
@@ -102,16 +102,16 @@ class Renderer extends BaseRenderer {
   /**
    * Create a new instance of a renderer path object.
    * @param {!SVGElement} root The root SVG element.
-   * @param {!Theme.BlockStyle} style The style object to use for
+   * @param {!Blockly.Theme.BlockStyle} style The style object to use for
    *     colouring.
-   * @return {!PathObject} The renderer path object.
+   * @return {!Blockly.zelos.PathObject} The renderer path object.
    * @package
    * @override
    */
   makePathObject(root, style) {
     return new PathObject(
         root, style,
-        /** @type {!ConstantProvider} */ (this.getConstants()));
+        /** @type {!Blockly.zelos.ConstantProvider} */ (this.getConstants()));
   }
 
   /**

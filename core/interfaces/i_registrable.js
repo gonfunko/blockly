@@ -14,7 +14,7 @@
 /**
  * The interface for a Blockly component that can be registered.
  *    (Ex. Toolbox, Fields, Renderers)
- * @namespace Blockly.IRegistrable
+
  */
 goog.module('Blockly.IRegistrable');
 

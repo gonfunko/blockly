@@ -22,7 +22,7 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a selected event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.Selected
  */
 class Selected extends UiBase {

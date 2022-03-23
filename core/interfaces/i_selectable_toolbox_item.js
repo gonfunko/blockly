@@ -12,7 +12,7 @@
 
 /**
  * The interface for a selectable toolbox item.
- * @namespace Blockly.ISelectableToolboxItem
+
  */
 goog.module('Blockly.ISelectableToolboxItem');
 
@@ -24,7 +24,7 @@ const {IToolboxItem} = goog.require('Blockly.IToolboxItem');
 
 /**
  * Interface for an item in the toolbox that can be selected.
- * @extends {IToolboxItem}
+ * @extends {Blockly.IToolboxItem}
  * @interface
  * @alias Blockly.ISelectableToolboxItem
  */
@@ -40,7 +40,7 @@ ISelectableToolboxItem.prototype.getName;
 /**
  * Gets the contents of the toolbox item. These are items that are meant to be
  * displayed in the flyout.
- * @return {!toolbox.FlyoutItemInfoArray|string} The definition
+ * @return {!Blockly.utils.toolbox.FlyoutItemInfoArray|string} The definition
  *     of items to be displayed in the flyout.
  * @public
  */

@@ -43,7 +43,7 @@ class ShortcutRegistry {
   reset() {
     /**
      * Registry of all keyboard shortcuts, keyed by name of shortcut.
-     * @type {!Object<string, !ShortcutRegistry.KeyboardShortcut>}
+     * @type {!Object<string, !Blockly.ShortcutRegistry.KeyboardShortcut>}
      * @private
      */
     this.registry_ = Object.create(null);
@@ -58,7 +58,7 @@ class ShortcutRegistry {
 
   /**
    * Registers a keyboard shortcut.
-   * @param {!ShortcutRegistry.KeyboardShortcut} shortcut The
+   * @param {!Blockly.ShortcutRegistry.KeyboardShortcut} shortcut The
    *     shortcut for this key code.
    * @param {boolean=} opt_allowOverrides True to prevent a warning when
    *     overriding an already registered item.
@@ -98,7 +98,7 @@ class ShortcutRegistry {
 
   /**
    * Adds a mapping between a keycode and a keyboard shortcut.
-   * @param {string|KeyCodes} keyCode The key code for the keyboard
+   * @param {string|Blockly.utils.KeyCodes} keyCode The key code for the keyboard
    *     shortcut. If registering a key code with a modifier (ex: ctrl+c) use
    *     ShortcutRegistry.registry.createSerializedKey;
    * @param {string} shortcutName The name of the shortcut to execute when the
@@ -187,7 +187,7 @@ class ShortcutRegistry {
 
   /**
    * Gets the current key map.
-   * @return {!Object<string,!Array<!ShortcutRegistry.KeyboardShortcut>>}
+   * @return {!Object<string,!Array<!Blockly.ShortcutRegistry.KeyboardShortcut>>}
    *     The object holding key codes to ShortcutRegistry.KeyboardShortcut.
    * @public
    */
@@ -197,7 +197,7 @@ class ShortcutRegistry {
 
   /**
    * Gets the registry of keyboard shortcuts.
-   * @return {!Object<string, !ShortcutRegistry.KeyboardShortcut>}
+   * @return {!Object<string, !Blockly.ShortcutRegistry.KeyboardShortcut>}
    *     The registry of keyboard shortcuts.
    * @public
    */
@@ -207,7 +207,7 @@ class ShortcutRegistry {
 
   /**
    * Handles key down events.
-   * @param {!Workspace} workspace The main workspace where the event was
+   * @param {!Blockly.Workspace} workspace The main workspace where the event was
    *     captured.
    * @param {!Event} e The key down event.
    * @return {boolean} True if the event was handled, false otherwise.
@@ -338,7 +338,7 @@ class ShortcutRegistry {
 
 /**
  * Enum of valid modifiers.
- * @enum {!KeyCodes}
+ * @enum {!Blockly.utils.KeyCodes}
  */
 ShortcutRegistry.modifierKeys = {
   'Shift': KeyCodes.SHIFT,
@@ -351,9 +351,9 @@ ShortcutRegistry.modifierKeys = {
  * A keyboard shortcut.
  * @typedef {{
  *    callback: ((function(!Workspace, Event,
- * !ShortcutRegistry.KeyboardShortcut):boolean)|undefined),
+ * !Blockly.ShortcutRegistry.KeyboardShortcut):boolean)|undefined),
  *    name: string,
- *    preconditionFn: ((function(!Workspace):boolean)|undefined),
+ *    preconditionFn: ((function(!Blockly.Workspace):boolean)|undefined),
  *    metadata: (Object|undefined)
  * }}
  */

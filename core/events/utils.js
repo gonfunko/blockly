@@ -292,8 +292,8 @@ exports.FINISHED_LOADING = FINISHED_LOADING;
  *
  * Not to be confused with bumping so that disconnected connections do not
  * appear connected.
- * @typedef {!BlockCreate|!BlockMove|
- * !CommentCreate|!CommentMove}
+ * @typedef {!Blockly.Events.BlockCreate|!Blockly.Events.BlockMove|
+ * !Blockly.Events.CommentCreate|!Blockly.Events.CommentMove}
  * @alias Blockly.Events.utils.BumpEvent
  */
 let BumpEvent;
@@ -313,13 +313,13 @@ exports.BUMP_EVENTS = BUMP_EVENTS;
 
 /**
  * List of events queued for firing.
- * @type {!Array<!Abstract>}
+ * @type {!Array<!Blockly.Events.Abstract>}
  */
 const FIRE_QUEUE = [];
 
 /**
  * Create a custom event and fire it.
- * @param {!Abstract} event Custom data for event.
+ * @param {!Blockly.Events.Abstract} event Custom data for event.
  * @alias Blockly.Events.utils.fire
  */
 const fire = function(event) {
@@ -354,9 +354,9 @@ const fireNow = function() {
 
 /**
  * Filter the queued events and merge duplicates.
- * @param {!Array<!Abstract>} queueIn Array of events.
+ * @param {!Array<!Blockly.Events.Abstract>} queueIn Array of events.
  * @param {boolean} forward True if forward (redo), false if backward (undo).
- * @return {!Array<!Abstract>} Array of filtered events.
+ * @return {!Array<!Blockly.Events.Abstract>} Array of filtered events.
  * @alias Blockly.Events.utils.filter
  */
 const filter = function(queueIn, forward) {
@@ -385,7 +385,7 @@ const filter = function(queueIn, forward) {
         hash[key] = {event: event, index: i};
         mergedQueue.push(event);
       } else if (event.type === MOVE && lastEntry.index === i - 1) {
-        const moveEvent = /** @type {!BlockMove} */ (event);
+        const moveEvent = /** @type {!Blockly.Events.BlockMove} */ (event);
         // Merge move events.
         lastEvent.newParentId = moveEvent.newParentId;
         lastEvent.newInputName = moveEvent.newInputName;
@@ -394,11 +394,11 @@ const filter = function(queueIn, forward) {
       } else if (
           event.type === CHANGE && event.element === lastEvent.element &&
           event.name === lastEvent.name) {
-        const changeEvent = /** @type {!BlockChange} */ (event);
+        const changeEvent = /** @type {!Blockly.Events.BlockChange} */ (event);
         // Merge change events.
         lastEvent.newValue = changeEvent.newValue;
       } else if (event.type === VIEWPORT_CHANGE) {
-        const viewportEvent = /** @type {!ViewportChange} */ (event);
+        const viewportEvent = /** @type {!Blockly.Events.ViewportChange} */ (event);
         // Merge viewport change events.
         lastEvent.viewTop = viewportEvent.viewTop;
         lastEvent.viewLeft = viewportEvent.viewLeft;
@@ -501,7 +501,7 @@ exports.setGroup = setGroup;
 
 /**
  * Compute a list of the IDs of the specified block and all its descendants.
- * @param {!Block} block The root block.
+ * @param {!Blockly.Block} block The root block.
  * @return {!Array<string>} List of block IDs.
  * @alias Blockly.Events.utils.getDescendantIds
  * @package
@@ -519,8 +519,8 @@ exports.getDescendantIds = getDescendantIds;
 /**
  * Decode the JSON into an event.
  * @param {!Object} json JSON representation.
- * @param {!Workspace} workspace Target workspace for event.
- * @return {!Abstract} The event represented by the JSON.
+ * @param {!Blockly.Workspace} workspace Target workspace for event.
+ * @return {!Blockly.Events.Abstract} The event represented by the JSON.
  * @throws {Error} if an event type is not found in the registry.
  * @alias Blockly.Events.utils.fromJson
  */
@@ -539,7 +539,7 @@ exports.fromJson = fromJson;
 /**
  * Gets the class for a specific event type from the registry.
  * @param {string} eventType The type of the event to get.
- * @return {?function(new:Abstract, ...?)} The event class with
+ * @return {?function(new:Blockly.Events.Abstract, ...?)} The event class with
  *     the given type or null if none exists.
  * @alias Blockly.Events.utils.get
  */
@@ -553,18 +553,18 @@ exports.get = get;
  * Use this on applications where all blocks should be connected to a top block.
  * Recommend setting the 'disable' option to 'false' in the config so that
  * users don't try to re-enable disabled orphan blocks.
- * @param {!Abstract} event Custom data for event.
+ * @param {!Blockly.Events.Abstract} event Custom data for event.
  * @alias Blockly.Events.utils.disableOrphans
  */
 const disableOrphans = function(event) {
   if (event.type === MOVE || event.type === CREATE) {
-    const blockEvent = /** @type {!BlockMove|!BlockCreate} */ (event);
+    const blockEvent = /** @type {!Blockly.Events.BlockMove|!Blockly.Events.BlockCreate} */ (event);
     if (!blockEvent.workspaceId) {
       return;
     }
     const {Workspace} = goog.module.get('Blockly.Workspace');
     const eventWorkspace =
-        /** @type {!WorkspaceSvg} */ (
+        /** @type {!Blockly.WorkspaceSvg} */ (
             Workspace.getById(blockEvent.workspaceId));
     let block = eventWorkspace.getBlockById(blockEvent.blockId);
     if (block) {

@@ -34,12 +34,12 @@ const {Svg} = goog.require('Blockly.utils.Svg');
  */
 class Icon {
   /**
-   * @param {BlockSvg} block The block associated with this icon.
+   * @param {Blockly.BlockSvg} block The block associated with this icon.
    */
   constructor(block) {
     /**
      * The block this icon is attached to.
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @protected
      */
     this.block_ = block;
@@ -64,14 +64,14 @@ class Icon {
 
     /**
      * Bubble UI (if visible).
-     * @type {?Bubble}
+     * @type {?Blockly.Bubble}
      * @protected
      */
     this.bubble_ = null;
 
     /**
      * Absolute coordinate of icon's center.
-     * @type {?Coordinate}
+     * @type {?Blockly.utils.Coordinate}
      * @protected
      */
     this.iconXY_ = null;
@@ -158,7 +158,7 @@ class Icon {
 
   /**
    * Notification that the icon has moved.  Update the arrow accordingly.
-   * @param {!Coordinate} xy Absolute location in workspace coordinates.
+   * @param {!Blockly.utils.Coordinate} xy Absolute location in workspace coordinates.
    */
   setIconLocation(xy) {
     this.iconXY_ = xy;
@@ -186,7 +186,7 @@ class Icon {
 
   /**
    * Returns the center of the block's icon relative to the surface.
-   * @return {?Coordinate} Object with x and y properties in
+   * @return {?Blockly.utils.Coordinate} Object with x and y properties in
    *     workspace coordinates.
    */
   getIconLocation() {
@@ -197,7 +197,7 @@ class Icon {
    * Get the size of the icon as used for rendering.
    * This differs from the actual size of the icon, because it bulges slightly
    * out of its row rather than increasing the height of its row.
-   * @return {!Size} Height and width.
+   * @return {!Blockly.utils.Size} Height and width.
    */
   getCorrectedSize() {
     // TODO (#2562): Remove getCorrectedSize.

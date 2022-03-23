@@ -99,51 +99,51 @@ class Type {
 exports.Type = Type;
 
 
-/** @type {!Type<IConnectionChecker>} */
+/** @type {!Blockly.registry.Type<Blockly.IConnectionChecker>} */
 Type.CONNECTION_CHECKER = new Type('connectionChecker');
 
-/** @type {!Type<Cursor>} */
+/** @type {!Blockly.registry.Type<Blockly.Cursor>} */
 Type.CURSOR = new Type('cursor');
 
-/** @type {!Type<Abstract>} */
+/** @type {!Blockly.registry.Type<Blockly.Events.Abstract>} */
 Type.EVENT = new Type('event');
 
-/** @type {!Type<Field>} */
+/** @type {!Blockly.registry.Type<Blockly.Field>} */
 Type.FIELD = new Type('field');
 
-/** @type {!Type<Renderer>} */
+/** @type {!Blockly.registry.Type<Blockly.blockRendering.Renderer>} */
 Type.RENDERER = new Type('renderer');
 
-/** @type {!Type<IToolbox>} */
+/** @type {!Blockly.registry.Type<Blockly.IToolbox>} */
 Type.TOOLBOX = new Type('toolbox');
 
-/** @type {!Type<Theme>} */
+/** @type {!Blockly.registry.Type<Blockly.Theme>} */
 Type.THEME = new Type('theme');
 
-/** @type {!Type<ToolboxItem>} */
+/** @type {!Blockly.registry.Type<Blockly.ToolboxItem>} */
 Type.TOOLBOX_ITEM = new Type('toolboxItem');
 
-/** @type {!Type<IFlyout>} */
+/** @type {!Blockly.registry.Type<Blockly.IFlyout>} */
 Type.FLYOUTS_VERTICAL_TOOLBOX = new Type('flyoutsVerticalToolbox');
 
-/** @type {!Type<IFlyout>} */
+/** @type {!Blockly.registry.Type<Blockly.IFlyout>} */
 Type.FLYOUTS_HORIZONTAL_TOOLBOX = new Type('flyoutsHorizontalToolbox');
 
-/** @type {!Type<IMetricsManager>} */
+/** @type {!Blockly.registry.Type<Blockly.IMetricsManager>} */
 Type.METRICS_MANAGER = new Type('metricsManager');
 
-/** @type {!Type<IBlockDragger>} */
+/** @type {!Blockly.registry.Type<Blockly.IBlockDragger>} */
 Type.BLOCK_DRAGGER = new Type('blockDragger');
 
 /**
- * @type {!Type<ISerializer>}
+ * @type {!Blockly.registry.Type<Blockly.serialization.ISerializer>}
  * @package
  */
 Type.SERIALIZER = new Type('serializer');
 
 /**
  * Registers a class based on a type and name.
- * @param {string|!Type<T>} type The type of the plugin.
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin.
  *     (e.g. Field, Renderer)
  * @param {string} name The plugin's name. (Ex. field_angle, geras)
  * @param {?function(new:T, ...?)|Object} registryItem The class or object to
@@ -177,7 +177,7 @@ const register = function(type, name, registryItem, opt_allowOverrides) {
   let typeRegistry = typeMap[type];
   let nameRegistry = nameMap[type];
   // If the type registry has not been created, create it.
-  if (!typeRegistry) {
+  if (!Blockly.registry.TypeRegistry) {
     typeRegistry = typeMap[type] = Object.create(null);
     nameRegistry = nameMap[type] = Object.create(null);
   }
@@ -199,7 +199,7 @@ exports.register = register;
 /**
  * Checks the given registry item for properties that are required based on the
  * type.
- * @param {string} type The type of the plugin. (e.g. Field, Renderer)
+ * @param {string} type The type of the plugin. (e.g. Blockly.Field, Blockly.blockRendering.Renderer)
  * @param {Function|Object} registryItem A class or object that we are checking
  *     for the required properties.
  */
@@ -215,7 +215,7 @@ const validate = function(type, registryItem) {
 
 /**
  * Unregisters the registry item with the given type and name.
- * @param {string|!Type<T>} type The type of the plugin.
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin.
  *     (e.g. Field, Renderer)
  * @param {string} name The plugin's name. (Ex. field_angle, geras)
  * @template T
@@ -225,7 +225,7 @@ const unregister = function(type, name) {
   type = String(type).toLowerCase();
   name = name.toLowerCase();
   const typeRegistry = typeMap[type];
-  if (!typeRegistry || !typeRegistry[name]) {
+  if (!Blockly.registry.TypeRegistry || !Blockly.registry.TypeRegistry[name]) {
     console.warn(
         'Unable to unregister [' + name + '][' + type + '] from the ' +
         'registry.');
@@ -239,7 +239,7 @@ exports.unregister = unregister;
 /**
  * Gets the registry item for the given name and type. This can be either a
  * class or an object.
- * @param {string|!Type<T>} type The type of the plugin.
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin.
  *     (e.g. Field, Renderer)
  * @param {string} name The plugin's name. (Ex. field_angle, geras)
  * @param {boolean=} opt_throwIfMissing Whether or not to throw an error if we
@@ -252,7 +252,7 @@ const getItem = function(type, name, opt_throwIfMissing) {
   type = String(type).toLowerCase();
   name = name.toLowerCase();
   const typeRegistry = typeMap[type];
-  if (!typeRegistry || !typeRegistry[name]) {
+  if (!Blockly.registry.TypeRegistry || !Blockly.registry.TypeRegistry[name]) {
     const msg = 'Unable to find [' + name + '][' + type + '] in the registry.';
     if (opt_throwIfMissing) {
       throw new Error(
@@ -268,7 +268,7 @@ const getItem = function(type, name, opt_throwIfMissing) {
 /**
  * Returns whether or not the registry contains an item with the given type and
  * name.
- * @param {string|!Type<T>} type The type of the plugin.
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin.
  *     (e.g. Field, Renderer)
  * @param {string} name The plugin's name. (Ex. field_angle, geras)
  * @return {boolean} True if the registry has an item with the given type and
@@ -280,7 +280,7 @@ const hasItem = function(type, name) {
   type = String(type).toLowerCase();
   name = name.toLowerCase();
   const typeRegistry = typeMap[type];
-  if (!typeRegistry) {
+  if (!Blockly.registry.TypeRegistry) {
     return false;
   }
   return !!(typeRegistry[name]);
@@ -289,7 +289,7 @@ exports.hasItem = hasItem;
 
 /**
  * Gets the class for the given name and type.
- * @param {string|!Type<T>} type The type of the plugin.
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin.
  *     (e.g. Field, Renderer)
  * @param {string} name The plugin's name. (Ex. field_angle, geras)
  * @param {boolean=} opt_throwIfMissing Whether or not to throw an error if we
@@ -307,7 +307,7 @@ exports.getClass = getClass;
 
 /**
  * Gets the object for the given name and type.
- * @param {string|!Type<T>} type The type of the plugin.
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin.
  *     (e.g. Category)
  * @param {string} name The plugin's name. (Ex. logic_category)
  * @param {boolean=} opt_throwIfMissing Whether or not to throw an error if we
@@ -323,7 +323,7 @@ exports.getObject = getObject;
 
 /**
  * Returns a map of items registered with the given type.
- * @param {string|!Type<T>} type The type of the plugin. (e.g. Category)
+ * @param {string|!Blockly.registry.Type<T>} type The type of the plugin. (e.g. Category)
  * @param {boolean} opt_cased Whether or not to return a map with cased keys
  *     (rather than caseless keys). False by default.
  * @param {boolean=} opt_throwIfMissing Whether or not to throw an error if we
@@ -336,7 +336,7 @@ exports.getObject = getObject;
 const getAllItems = function(type, opt_cased, opt_throwIfMissing) {
   type = String(type).toLowerCase();
   const typeRegistry = typeMap[type];
-  if (!typeRegistry) {
+  if (!Blockly.registry.TypeRegistry) {
     const msg = `Unable to find [${type}] in the registry.`;
     if (opt_throwIfMissing) {
       throw new Error(`${msg} You must require or register a ${type} plugin.`);
@@ -362,8 +362,8 @@ exports.getAllItems = getAllItems;
 /**
  * Gets the class from Blockly options for the given type.
  * This is used for plugins that override a built in feature. (e.g. Toolbox)
- * @param {!Type<T>} type The type of the plugin.
- * @param {!Options} options The option object to check for the given
+ * @param {!Blockly.registry.Type<T>} type The type of the plugin.
+ * @param {!Blockly.Options} options The option object to check for the given
  *     plugin.
  * @param {boolean=} opt_throwIfMissing Whether or not to throw an error if we
  *     are unable to find the plugin.

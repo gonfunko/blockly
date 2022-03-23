@@ -39,7 +39,7 @@ exports.State = State;
 
 /**
  * Serializer for saving and loading variable state.
- * @implements {ISerializer}
+ * @implements {Blockly.serialization.ISerializer}
  * @alias Blockly.serialization.variables.VariableSerializer
  */
 class VariableSerializer {
@@ -54,7 +54,7 @@ class VariableSerializer {
 
   /**
    * Serializes the variables of the given workspace.
-   * @param {!Workspace} workspace The workspace to save the variables of.
+   * @param {!Blockly.Workspace} workspace The workspace to save the variables of.
    * @return {?Array<!State>} The state of the workspace's variables, or null
    *     if there are no variables.
    */
@@ -77,7 +77,7 @@ class VariableSerializer {
    * Deserializes the variable defined by the given state into the given
    * workspace.
    * @param {!Array<!State>} state The state of the variables to deserialize.
-   * @param {!Workspace} workspace The workspace to deserialize into.
+   * @param {!Blockly.Workspace} workspace The workspace to deserialize into.
    */
   load(state, workspace) {
     for (const varState of state) {
@@ -88,7 +88,7 @@ class VariableSerializer {
 
   /**
    * Disposes of any variables that exist on the workspace.
-   * @param {!Workspace} workspace The workspace to clear the variables of.
+   * @param {!Blockly.Workspace} workspace The workspace to clear the variables of.
    */
   clear(workspace) {
     workspace.getVariableMap().clear();

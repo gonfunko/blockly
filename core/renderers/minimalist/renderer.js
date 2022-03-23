@@ -28,7 +28,7 @@ const {Renderer: BaseRenderer} = goog.require('Blockly.blockRendering.Renderer')
 
 /**
  * The minimalist renderer.
- * @extends {BaseRenderer}
+ * @extends {Blockly.blockRendering.Renderer}
  * @alias Blockly.minimalist.Renderer
  */
 class Renderer extends BaseRenderer {
@@ -42,7 +42,7 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's constant provider.
-   * @return {!ConstantProvider} The constant provider.
+   * @return {!Blockly.minimalist.ConstantProvider} The constant provider.
    * @protected
    * @override
    */
@@ -52,8 +52,8 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's render info object.
-   * @param {!BlockSvg} block The block to measure.
-   * @return {!RenderInfo} The render info object.
+   * @param {!Blockly.BlockSvg} block The block to measure.
+   * @return {!Blockly.minimalist.RenderInfo} The render info object.
    * @protected
    * @override
    */
@@ -63,15 +63,15 @@ class Renderer extends BaseRenderer {
 
   /**
    * Create a new instance of the renderer's drawer.
-   * @param {!BlockSvg} block The block to render.
-   * @param {!BaseRenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!Blockly.minimalist.BaseRenderInfo} info An object containing all
    *   information needed to render this block.
-   * @return {!Drawer} The drawer.
+   * @return {!Blockly.minimalist.Drawer} The drawer.
    * @protected
    * @override
    */
   makeDrawer_(block, info) {
-    return new Drawer(block, /** @type {!RenderInfo} */ (info));
+    return new Drawer(block, /** @type {!Blockly.minimalist.RenderInfo} */ (info));
   }
 }
 

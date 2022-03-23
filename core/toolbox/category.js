@@ -34,15 +34,16 @@ const {ToolboxItem} = goog.require('Blockly.ToolboxItem');
 
 /**
  * Class for a category in a toolbox.
- * @implements {ISelectableToolboxItem}
+ * @implements {ISelectableBlockly.ToolboxItem}
+ * @extends {Blockly.ToolboxItem}
  * @alias Blockly.ToolboxCategory
  */
 class ToolboxCategory extends ToolboxItem {
   /**
-   * @param {!toolbox.CategoryInfo} categoryDef The information needed
+   * @param {!Blockly.utils.toolbox.CategoryInfo} categoryDef The information needed
    *     to create a category in the toolbox.
-   * @param {!IToolbox} toolbox The parent toolbox for the category.
-   * @param {ICollapsibleToolboxItem=} opt_parent The parent category or null if
+   * @param {!Blockly.IToolbox} toolbox The parent toolbox for the category.
+   * @param {Blockly.ICollapsibleToolboxItem=} opt_parent The parent category or null if
    *     the category does not have a parent.
    */
   constructor(categoryDef, toolbox, opt_parent) {
@@ -123,7 +124,7 @@ class ToolboxCategory extends ToolboxItem {
 
     /**
      * The flyout items for this category.
-     * @type {string|!toolbox.FlyoutItemInfoArray}
+     * @type {string|!Blockly.utils.toolbox.FlyoutItemInfoArray}
      * @protected
      */
     this.flyoutItems_ = [];
@@ -170,7 +171,7 @@ class ToolboxCategory extends ToolboxItem {
   /**
    * Parses the contents array depending on if the category is a dynamic
    * category, or if its contents are meant to be shown in the flyout.
-   * @param {!toolbox.CategoryInfo} categoryDef The information needed
+   * @param {!Blockly.utils.toolbox.CategoryInfo} categoryDef The information needed
    *     to create a category.
    * @protected
    */
@@ -191,7 +192,7 @@ class ToolboxCategory extends ToolboxItem {
 
   /**
    * Parses the non-contents parts of the category def.
-   * @param {!toolbox.CategoryInfo} categoryDef The information needed to create
+   * @param {!Blockly.utils.toolbox.CategoryInfo} categoryDef The information needed to create
    *     a category.
    * @protected
    */
@@ -341,7 +342,7 @@ class ToolboxCategory extends ToolboxItem {
 
   /**
    * Gets either the colour or the style for a category.
-   * @param {!toolbox.CategoryInfo} categoryDef The object holding
+   * @param {!Blockly.utils.toolbox.CategoryInfo} categoryDef The object holding
    *    information on the category.
    * @return {string} The hex colour for the category.
    * @protected
@@ -587,7 +588,7 @@ class ToolboxCategory extends ToolboxItem {
   /**
    * Gets the contents of the category. These are items that are meant to be
    * displayed in the flyout.
-   * @return {!toolbox.FlyoutItemInfoArray|string} The definition
+   * @return {!Blockly.utils.toolbox.FlyoutItemInfoArray|string} The definition
    *     of items to be displayed in the flyout.
    * @public
    */
@@ -599,7 +600,7 @@ class ToolboxCategory extends ToolboxItem {
    * Updates the contents to be displayed in the flyout.
    * If the flyout is open when the contents are updated, refreshSelection on
    * the toolbox must also be called.
-   * @param {!toolbox.FlyoutDefinition|string} contents The contents
+   * @param {!Blockly.utils.toolbox.FlyoutDefinition|string} contents The contents
    *     to be displayed in the flyout. A string can be supplied to create a
    *     dynamic category.
    * @public

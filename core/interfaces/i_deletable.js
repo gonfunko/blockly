@@ -12,7 +12,7 @@
 
 /**
  * The interface for an object that is deletable.
- * @namespace Blockly.IDeletable
+
  */
 goog.module('Blockly.IDeletable');
 

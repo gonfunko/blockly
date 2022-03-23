@@ -35,13 +35,13 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 
 /**
  * An object that draws a block based on the given rendering information.
- * @extends {BaseDrawer}
+ * @extends {Blockly.blockRendering.Drawer}
  * @alias Blockly.zelos.Drawer
  */
 class Drawer extends BaseDrawer {
   /**
-   * @param {!BlockSvg} block The block to render.
-   * @param {!RenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!Blockly.zelos.RenderInfo} info An object containing all
    *   information needed to render this block.
    * @package
    */
@@ -49,7 +49,7 @@ class Drawer extends BaseDrawer {
     super(block, info);
 
     /**
-     * @type {!RenderInfo}
+     * @type {!Blockly.zelos.RenderInfo}
      */
     this.info_;
   }
@@ -59,7 +59,7 @@ class Drawer extends BaseDrawer {
    */
   draw() {
     const pathObject =
-        /** @type {!PathObject} */ (this.block_.pathObject);
+        /** @type {!Blockly.zelos.PathObject} */ (this.block_.pathObject);
     pathObject.beginDrawing();
     this.hideHiddenIcons_();
     this.drawOutline_();
@@ -113,7 +113,7 @@ class Drawer extends BaseDrawer {
   /**
    * Add steps for the right side of a row that does not have value or
    * statement input connections.
-   * @param {!Row} row The row to draw the
+   * @param {!Blockly.blockRendering.Row} row The row to draw the
    *     side of.
    * @protected
    */
@@ -122,7 +122,7 @@ class Drawer extends BaseDrawer {
       return;
     }
     if (Types.isSpacer(row)) {
-      const spacerRow = /** @type {!SpacerRow} */ (row);
+      const spacerRow = /** @type {!SpacerBlockly.blockRendering.Row} */ (row);
       if (spacerRow.precedesStatement || spacerRow.followsStatement) {
         const cornerHeight = this.constants_.INSIDE_CORNERS.rightHeight;
         const remainingHeight =
@@ -222,7 +222,7 @@ class Drawer extends BaseDrawer {
    * @override
    */
   drawStatementInput_(row) {
-    const input = /** @type {!StatementInput} */ (row.getLastInput());
+    const input = /** @type {!Blockly.zelos.StatementInput} */ (row.getLastInput());
     // Where to start drawing the notch, which is on the right side in LTR.
     const x = input.xPos + input.notchOffset + input.shape.width;
 

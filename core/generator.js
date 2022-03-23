@@ -129,7 +129,7 @@ class Generator {
 
     /**
      * A database of variable and procedure names.
-     * @type {!Names|undefined}
+     * @type {!Blockly.Names|undefined}
      * @protected
      */
     this.nameDB_ = undefined;
@@ -137,7 +137,7 @@ class Generator {
 
   /**
    * Generate code for all blocks in the workspace to the specified language.
-   * @param {!Workspace=} workspace Workspace to generate code from.
+   * @param {!Blockly.Workspace=} workspace Workspace to generate code from.
    * @return {string} Generated code.
    */
   workspaceToCode(workspace) {
@@ -198,7 +198,7 @@ class Generator {
 
   /**
    * Recursively spider a tree of blocks, returning all their comments.
-   * @param {!Block} block The block from which to start spidering.
+   * @param {!Blockly.Block} block The block from which to start spidering.
    * @return {string} Concatenated list of comments.
    */
   allNestedComments(block) {
@@ -220,7 +220,7 @@ class Generator {
   /**
    * Generate code for the specified block (and attached blocks).
    * The generator must be initialized before calling this function.
-   * @param {?Block} block The block to generate code for.
+   * @param {?Blockly.Block} block The block to generate code for.
    * @param {boolean=} opt_thisOnly True to generate code for only this
    *     statement.
    * @return {string|!Array} For statement blocks, the generated code.
@@ -279,7 +279,7 @@ class Generator {
 
   /**
    * Generate code representing the specified value input.
-   * @param {!Block} block The block containing the input.
+   * @param {!Blockly.Block} block The block containing the input.
    * @param {string} name The name of the input.
    * @param {number} outerOrder The maximum binding strength (minimum order
    *     value) of any operators adjacent to "block".
@@ -353,7 +353,7 @@ class Generator {
    * statement input. Indent the code.
    * This is mainly used in generators. When trying to generate code to evaluate
    * look at using workspaceToCode or blockToCode.
-   * @param {!Block} block The block containing the input.
+   * @param {!Blockly.Block} block The block containing the input.
    * @param {string} name The name of the input.
    * @return {string} Generated code or '' if no blocks are connected.
    */
@@ -379,7 +379,7 @@ class Generator {
    * statement executes), and a statement prefix to the end of the loop block
    * (right before the loop statement executes).
    * @param {string} branch Code for loop contents.
-   * @param {!Block} block Enclosing block.
+   * @param {!Blockly.Block} block Enclosing block.
    * @return {string} Loop contents, with infinite loop trap added.
    */
   addLoopTrap(branch, block) {
@@ -405,7 +405,7 @@ class Generator {
    * Inject a block ID into a message to replace '%1'.
    * Used for STATEMENT_PREFIX, STATEMENT_SUFFIX, and INFINITE_LOOP_TRAP.
    * @param {string} msg Code snippet with '%1'.
-   * @param {!Block} block Block which has an ID.
+   * @param {!Blockly.Block} block Block which has an ID.
    * @return {string} Code snippet with ID.
    */
   injectId(msg, block) {
@@ -473,7 +473,7 @@ class Generator {
    * Hook for code to run before code generation starts.
    * Subclasses may override this, e.g. to initialise the database of variable
    * names.
-   * @param {!Workspace} _workspace Workspace to generate code from.
+   * @param {!Blockly.Workspace} _workspace Workspace to generate code from.
    */
   init(_workspace) {
     // Optionally override
@@ -491,7 +491,7 @@ class Generator {
    * Subclasses may override this, e.g. to generate code for statements
    * following the block, or to handle comments for the specified block and any
    * connected value blocks.
-   * @param {!Block} _block The current block.
+   * @param {!Blockly.Block} _block The current block.
    * @param {string} code The code created for this block.
    * @param {boolean=} _opt_thisOnly True to generate code for only this
    *     statement.
@@ -536,7 +536,7 @@ Object.defineProperties(Generator.prototype, {
   /**
    * A database of variable names.
    * @name Blockly.Generator.prototype.variableDB_
-   * @type {!Names|undefined}
+   * @type {!Blockly.Names|undefined}
    * @protected
    * @deprecated 'variableDB_' was renamed to 'nameDB_' (May 2021).
    * @suppress {checkTypes}
@@ -544,7 +544,7 @@ Object.defineProperties(Generator.prototype, {
   variableDB_: {
     /**
      * @this {Generator}
-     * @return {!Names|undefined} Name database.
+     * @return {!Blockly.Names|undefined} Name database.
      */
     get: function() {
       deprecation.warn('variableDB_', 'May 2021', 'May 2026', 'nameDB_');
@@ -552,7 +552,7 @@ Object.defineProperties(Generator.prototype, {
     },
     /**
      * @this {Generator}
-     * @param {!Names|undefined} nameDb New name database.
+     * @param {!Blockly.Names|undefined} nameDb New name database.
      */
     set: function(nameDb) {
       deprecation.warn('variableDB_', 'May 2021', 'May 2026', 'nameDB_');

@@ -12,7 +12,7 @@
 
 /**
  * The interface for a bounded element.
- * @namespace Blockly.IBoundedElement
+
  */
 goog.module('Blockly.IBoundedElement');
 
@@ -31,7 +31,7 @@ const IBoundedElement = function() {};
  * Returns the coordinates of a bounded element describing the dimensions of the
  * element.
  * Coordinate system: workspace coordinates.
- * @return {!Rect} Object with coordinates of the bounded element.
+ * @return {!Blockly.utils.Rect} Object with coordinates of the bounded element.
  */
 IBoundedElement.prototype.getBoundingRectangle;
 

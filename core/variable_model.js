@@ -31,7 +31,7 @@ goog.require('Blockly.Events.VarCreate');
  */
 class VariableModel {
   /**
-   * @param {!Workspace} workspace The variable's workspace.
+   * @param {!Blockly.Workspace} workspace The variable's workspace.
    * @param {string} name The name of the variable.  This is the user-visible
    *     name (e.g. 'my var' or '私の変数'), not the generated name.
    * @param {string=} opt_type The type of the variable like 'int' or 'string'.
@@ -43,7 +43,7 @@ class VariableModel {
   constructor(workspace, name, opt_type, opt_id) {
     /**
      * The workspace the variable is in.
-     * @type {!Workspace}
+     * @type {!Blockly.Workspace}
      */
     this.workspace = workspace;
 
@@ -82,8 +82,8 @@ class VariableModel {
   }
   /**
    * A custom compare function for the VariableModel objects.
-   * @param {VariableModel} var1 First variable to compare.
-   * @param {VariableModel} var2 Second variable to compare.
+   * @param {Blockly.VariableModel} var1 First variable to compare.
+   * @param {Blockly.VariableModel} var2 Second variable to compare.
    * @return {number} -1 if name of var1 is less than name of var2, 0 if equal,
    *     and 1 if greater.
    * @package

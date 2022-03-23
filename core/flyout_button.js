@@ -34,23 +34,23 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
  */
 class FlyoutButton {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace in which to place this
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace in which to place this
    *     button.
-   * @param {!WorkspaceSvg} targetWorkspace The flyout's target workspace.
-   * @param {!toolbox.ButtonOrLabelInfo} json
+   * @param {!Blockly.WorkspaceSvg} targetWorkspace The flyout's target workspace.
+   * @param {!Blockly.utils.toolbox.ButtonOrLabelInfo} json
    *    The JSON specifying the label/button.
    * @param {boolean} isLabel Whether this button should be styled as a label.
    * @package
    */
   constructor(workspace, targetWorkspace, json, isLabel) {
     /**
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
 
     /**
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.targetWorkspace_ = targetWorkspace;
@@ -62,7 +62,7 @@ class FlyoutButton {
     this.text_ = json['text'];
 
     /**
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @private
      */
     this.position_ = new Coordinate(0, 0);
@@ -100,7 +100,7 @@ class FlyoutButton {
 
     /**
      * The JSON specifying the label / button.
-     * @type {!toolbox.ButtonOrLabelInfo}
+     * @type {!Blockly.utils.toolbox.ButtonOrLabelInfo}
      */
     this.info = json;
 
@@ -254,7 +254,7 @@ class FlyoutButton {
 
   /**
    * Location of the button.
-   * @return {!Coordinate} x, y coordinates.
+   * @return {!Blockly.utils.Coordinate} x, y coordinates.
    * @package
    */
   getPosition() {
@@ -270,7 +270,7 @@ class FlyoutButton {
 
   /**
    * Get the button's target workspace.
-   * @return {!WorkspaceSvg} The target workspace of the flyout where this
+   * @return {!Blockly.WorkspaceSvg} The target workspace of the flyout where this
    *     button resides.
    */
   getTargetWorkspace() {

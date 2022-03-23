@@ -67,22 +67,22 @@ const HEIGHT_MULTIPLIER = 3 / 4;
  */
 class MarkerSvg {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace the marker belongs to.
-   * @param {!ConstantProvider} constants The constants for
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace the marker belongs to.
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The constants for
    *     the renderer.
-   * @param {!Marker} marker The marker to draw.
+   * @param {!Blockly.Marker} marker The marker to draw.
    */
   constructor(workspace, constants, marker) {
     /**
      * The workspace the marker belongs to.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
 
     /**
      * The marker to draw.
-     * @type {!Marker}
+     * @type {!Blockly.Marker}
      * @private
      */
     this.marker_ = marker;
@@ -90,14 +90,14 @@ class MarkerSvg {
     /**
      * The workspace, field, or block that the marker SVG element should be
      * attached to.
-     * @type {IASTNodeLocationSvg}
+     * @type {Blockly.IASTNodeLocationSvg}
      * @private
      */
     this.parent_ = null;
 
     /**
      * The constants necessary to draw the marker.
-     * @type {ConstantProvider}
+     * @type {Blockly.blockRendering.ConstantProvider}
      * @protected
      */
     this.constants_ = constants;
@@ -165,7 +165,7 @@ class MarkerSvg {
 
   /**
    * Get the marker.
-   * @return {!Marker} The marker to draw for.
+   * @return {!Blockly.Marker} The marker to draw for.
    */
   getMarker() {
     return this.marker_;
@@ -196,7 +196,7 @@ class MarkerSvg {
 
   /**
    * Attaches the SVG root of the marker to the SVG group of the parent.
-   * @param {!IASTNodeLocationSvg} newParent The workspace, field, or
+   * @param {!Blockly.IASTNodeLocationSvg} newParent The workspace, field, or
    *     block that the marker SVG element should be attached to.
    * @protected
    */
@@ -217,8 +217,8 @@ class MarkerSvg {
 
   /**
    * Update the marker.
-   * @param {ASTNode} oldNode The previous node the marker was on or null.
-   * @param {ASTNode} curNode The node that we want to draw the marker for.
+   * @param {Blockly.ASTNode} oldNode The previous node the marker was on or null.
+   * @param {Blockly.ASTNode} curNode The node that we want to draw the marker for.
    */
   draw(oldNode, curNode) {
     if (!curNode) {
@@ -246,12 +246,12 @@ class MarkerSvg {
 
   /**
    * Update the marker's visible state based on the type of curNode..
-   * @param {!ASTNode} curNode The node that we want to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node that we want to draw the marker for.
    * @protected
    */
   showAtLocation_(curNode) {
     const curNodeAsConnection =
-        /** @type {!Connection} */ (curNode.getLocation());
+        /** @type {!Blockly.Connection} */ (curNode.getLocation());
     const connectionType = curNodeAsConnection.type;
     if (curNode.getType() === ASTNode.types.BLOCK) {
       this.showWithBlock_(curNode);
@@ -279,11 +279,11 @@ class MarkerSvg {
   /**
    * Show the marker as a combination of the previous connection and block,
    * the output connection and block, or just the block.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @private
    */
   showWithBlockPrevOutput_(curNode) {
-    const block = /** @type {!BlockSvg} */ (curNode.getSourceBlock());
+    const block = /** @type {!Blockly.BlockSvg} */ (curNode.getSourceBlock());
     const width = block.width;
     const height = block.height;
     const markerHeight = height * HEIGHT_MULTIPLIER;
@@ -306,7 +306,7 @@ class MarkerSvg {
 
   /**
    * Position and display the marker for a block.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithBlock_(curNode) {
@@ -315,7 +315,7 @@ class MarkerSvg {
 
   /**
    * Position and display the marker for a previous connection.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithPrevious_(curNode) {
@@ -324,7 +324,7 @@ class MarkerSvg {
 
   /**
    * Position and display the marker for an output connection.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithOutput_(curNode) {
@@ -334,7 +334,7 @@ class MarkerSvg {
   /**
    * Position and display the marker for a workspace coordinate.
    * This is a horizontal line.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithCoordinates_(curNode) {
@@ -354,11 +354,11 @@ class MarkerSvg {
   /**
    * Position and display the marker for a field.
    * This is a box around the field.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithField_(curNode) {
-    const field = /** @type {Field} */ (curNode.getLocation());
+    const field = /** @type {Blockly.Field} */ (curNode.getLocation());
     const width = field.getSize().width;
     const height = field.getSize().height;
 
@@ -370,13 +370,13 @@ class MarkerSvg {
   /**
    * Position and display the marker for an input.
    * This is a puzzle piece.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithInput_(curNode) {
-    const connection = /** @type {RenderedConnection} */
+    const connection = /** @type {Blockly.RenderedConnection} */
         (curNode.getLocation());
-    const sourceBlock = /** @type {!BlockSvg} */ (connection.getSourceBlock());
+    const sourceBlock = /** @type {!Blockly.BlockSvg} */ (connection.getSourceBlock());
 
     this.positionInput_(connection);
     this.setParent_(sourceBlock);
@@ -386,14 +386,14 @@ class MarkerSvg {
   /**
    * Position and display the marker for a next connection.
    * This is a horizontal line.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithNext_(curNode) {
     const connection =
-        /** @type {!RenderedConnection} */ (curNode.getLocation());
+        /** @type {!Blockly.RenderedConnection} */ (curNode.getLocation());
     const targetBlock =
-        /** @type {BlockSvg} */ (connection.getSourceBlock());
+        /** @type {Blockly.BlockSvg} */ (connection.getSourceBlock());
     let x = 0;
     const y = connection.getOffsetInBlock().y;
     const width = targetBlock.getHeightWidth().width;
@@ -408,11 +408,11 @@ class MarkerSvg {
   /**
    * Position and display the marker for a stack.
    * This is a box with extra padding around the entire stack of blocks.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @protected
    */
   showWithStack_(curNode) {
-    const block = /** @type {BlockSvg} */ (curNode.getLocation());
+    const block = /** @type {Blockly.BlockSvg} */ (curNode.getLocation());
 
     // Gets the height and width of entire stack.
     const heightWidth = block.getHeightWidth();
@@ -474,7 +474,7 @@ class MarkerSvg {
   /**
    * Position the marker for an input connection.
    * Displays a filled in puzzle piece.
-   * @param {!RenderedConnection} connection The connection to position
+   * @param {!Blockly.RenderedConnection} connection The connection to position
    *     marker around.
    * @protected
    */
@@ -592,8 +592,8 @@ class MarkerSvg {
 
   /**
    * Fire event for the marker or marker.
-   * @param {ASTNode} oldNode The old node the marker used to be on.
-   * @param {!ASTNode} curNode The new node the marker is currently on.
+   * @param {Blockly.ASTNode} oldNode The old node the marker used to be on.
+   * @param {!Blockly.ASTNode} curNode The new node the marker is currently on.
    * @private
    */
   fireMarkerEvent_(oldNode, curNode) {
@@ -690,7 +690,7 @@ class MarkerSvg {
 
   /**
    * Apply the marker's colour.
-   * @param {!ASTNode} _curNode The node that we want to draw the marker
+   * @param {!Blockly.ASTNode} _curNode The node that we want to draw the marker
    *    for.
    * @protected
    */

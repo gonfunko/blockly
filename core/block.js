@@ -64,14 +64,14 @@ goog.require('Blockly.Events.BlockMove');
 /**
  * Class for one block.
  * Not normally called directly, workspace.newBlock() is preferred.
- * @implements {IASTNodeLocation}
- * @implements {IDeletable}
+ * @implements {Blockly.IASTNodeLocation}
+ * @implements {Blockly.IDeletable}
  * @unrestricted
  * @alias Blockly.Block
  */
 class Block {
   /**
-   * @param {!Workspace} workspace The block's workspace.
+   * @param {!Blockly.Workspace} workspace The block's workspace.
    * @param {!string} prototypeName Name of the language object containing
    *     type-specific functions for this block.
    * @param {string=} opt_id Optional ID.  Use this ID if provided, otherwise
@@ -184,13 +184,13 @@ class Block {
         opt_id :
         idGenerator.genUid();
     workspace.setBlockById(this.id, this);
-    /** @type {Connection} */
+    /** @type {Blockly.Connection} */
     this.outputConnection = null;
-    /** @type {Connection} */
+    /** @type {Blockly.Connection} */
     this.nextConnection = null;
-    /** @type {Connection} */
+    /** @type {Blockly.Connection} */
     this.previousConnection = null;
-    /** @type {!Array<!Input>} */
+    /** @type {!Array<!Blockly.Input>} */
     this.inputList = [];
     /** @type {boolean|undefined} */
     this.inputsInline = undefined;
@@ -199,19 +199,19 @@ class Block {
      * @private
      */
     this.disabled = false;
-    /** @type {!Tooltip.TipInfo} */
+    /** @type {!Blockly.Tooltip.TipInfo} */
     this.tooltip = '';
     /** @type {boolean} */
     this.contextMenu = true;
 
     /**
-     * @type {Block}
+     * @type {Blockly.Block}
      * @protected
      */
     this.parentBlock_ = null;
 
     /**
-     * @type {!Array<!Block>}
+     * @type {!Array<!Blockly.Block>}
      * @protected
      */
     this.childBlocks_ = [];
@@ -254,14 +254,14 @@ class Block {
 
     /**
      * A string representing the comment attached to this block.
-     * @type {string|Comment}
+     * @type {string|Blockly.Comment}
      * @deprecated August 2019. Use getCommentText instead.
      */
     this.comment = null;
 
     /**
      * A model of the comment attached to this block.
-     * @type {!Block.CommentModel}
+     * @type {!Blockly.Block.CommentModel}
      * @package
      */
     this.commentModel = {text: null, pinned: false, size: new Size(160, 80)};
@@ -269,12 +269,12 @@ class Block {
     /**
      * The block's position in workspace units.  (0, 0) is at the workspace's
      * origin; scale does not change this value.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @private
      */
     this.xy_ = new Coordinate(0, 0);
 
-    /** @type {!Workspace} */
+    /** @type {!Blockly.Workspace} */
     this.workspace = workspace;
     /** @type {boolean} */
     this.isInFlyout = workspace.isFlyout;
@@ -308,7 +308,7 @@ class Block {
 
     /**
      * A bound callback function to use when the parent workspace changes.
-     * @type {?function(Abstract)}
+     * @type {?function(Blockly.Events.Abstract)}
      * @private
      */
     this.onchangeWrapper_ = null;
@@ -526,7 +526,7 @@ class Block {
    * Since only one block can be displaced and attached to the insertion marker
    * this should only ever return one connection.
    *
-   * @return {?Connection} The connection on the value input, or null.
+   * @return {?Blockly.Connection} The connection on the value input, or null.
    * @private
    */
   getOnlyValueConnection_() {
@@ -577,7 +577,7 @@ class Block {
   /**
    * Returns all connections originating from this block.
    * @param {boolean} _all If true, return all connections even hidden ones.
-   * @return {!Array<!Connection>} Array of connections.
+   * @return {!Array<!Blockly.Connection>} Array of connections.
    * @package
    */
   getConnections_(_all) {
@@ -605,7 +605,7 @@ class Block {
    * @param {boolean} ignoreShadows If true,the last connection on a non-shadow
    *     block will be returned. If false, this will follow shadows to find the
    *     last connection.
-   * @return {?Connection} The last next connection on the stack, or null.
+   * @return {?Blockly.Connection} The last next connection on the stack, or null.
    * @package
    */
   lastConnectionInStack(ignoreShadows) {
@@ -633,7 +633,7 @@ class Block {
    * parent block is either the block connected to the previous connection (for
    * a statement block) or the block connected to the output connection (for a
    * value block).
-   * @return {?Block} The block (if any) that holds the current block.
+   * @return {?Blockly.Block} The block (if any) that holds the current block.
    */
   getParent() {
     return this.parentBlock_;
@@ -641,8 +641,8 @@ class Block {
 
   /**
    * Return the input that connects to the specified block.
-   * @param {!Block} block A block connected to an input on this block.
-   * @return {?Input} The input (if any) that connects to the specified
+   * @param {!Blockly.Block} block A block connected to an input on this block.
+   * @return {?Blockly.Input} The input (if any) that connects to the specified
    *     block.
    */
   getInputWithBlock(block) {
@@ -659,7 +659,7 @@ class Block {
    * block has no surrounding block.  A parent block might just be the previous
    * statement, whereas the surrounding block is an if statement, while loop,
    * etc.
-   * @return {?Block} The block (if any) that surrounds the current block.
+   * @return {?Blockly.Block} The block (if any) that surrounds the current block.
    */
   getSurroundParent() {
     let block = this;
@@ -678,7 +678,7 @@ class Block {
 
   /**
    * Return the next statement block directly connected to this block.
-   * @return {?Block} The next statement block or null.
+   * @return {?Blockly.Block} The next statement block or null.
    */
   getNextBlock() {
     return this.nextConnection && this.nextConnection.targetBlock();
@@ -686,7 +686,7 @@ class Block {
 
   /**
    * Returns the block connected to the previous connection.
-   * @return {?Block} The previous statement block or null.
+   * @return {?Blockly.Block} The previous statement block or null.
    */
   getPreviousBlock() {
     return this.previousConnection && this.previousConnection.targetBlock();
@@ -695,7 +695,7 @@ class Block {
   /**
    * Return the connection on the first statement input on this block, or null
    * if there are none.
-   * @return {?Connection} The first statement connection or null.
+   * @return {?Blockly.Connection} The first statement connection or null.
    * @package
    */
   getFirstStatementConnection() {
@@ -711,7 +711,7 @@ class Block {
   /**
    * Return the top-most block in this block's tree.
    * This will return itself if this block is at the top level.
-   * @return {!Block} The root block.
+   * @return {!Blockly.Block} The root block.
    */
   getRootBlock() {
     let rootBlock;
@@ -727,7 +727,7 @@ class Block {
    * Walk up from the given block up through the stack of blocks to find
    * the top block of the sub stack. If we are nested in a statement input only
    * find the top-most nested block. Do not go all the way to the root block.
-   * @return {!Block} The top block in a stack.
+   * @return {!Blockly.Block} The top block in a stack.
    * @package
    */
   getTopStackBlock() {
@@ -770,7 +770,7 @@ class Block {
 
   /**
    * Set parent of this block to be a new block or null.
-   * @param {Block} newParent New parent block.
+   * @param {Blockly.Block} newParent New parent block.
    * @package
    */
   setParent(newParent) {
@@ -953,9 +953,9 @@ class Block {
    * Find the connection on this block that corresponds to the given connection
    * on the other block.
    * Used to match connections between a block and its insertion marker.
-   * @param {!Block} otherBlock The other block to match against.
-   * @param {!Connection} conn The other connection to match.
-   * @return {?Connection} The matching connection on this block, or null.
+   * @param {!Blockly.Block} otherBlock The other block to match against.
+   * @param {!Blockly.Connection} conn The other connection to match.
+   * @return {?Blockly.Connection} The matching connection on this block, or null.
    * @package
    */
   getMatchingConnection(otherBlock, conn) {
@@ -1047,7 +1047,7 @@ class Block {
    * changes, replacing any prior onchange handler. This is usually only called
    * from the constructor, the block type initializer function, or an extension
    * initializer function.
-   * @param {function(Abstract)} onchangeFn The callback to call
+   * @param {function(Blockly.Events.Abstract)} onchangeFn The callback to call
    *     when the block's workspace changes.
    * @throws {Error} if onchangeFn is not falsey and not a function.
    */
@@ -1068,7 +1068,7 @@ class Block {
   /**
    * Returns the named field from a block.
    * @param {string} name The name of the field.
-   * @return {?Field} Named field, or null if field does not exist.
+   * @return {?Blockly.Field} Named field, or null if field does not exist.
    */
   getField(name) {
     if (typeof name !== 'string') {
@@ -1106,7 +1106,7 @@ class Block {
 
   /**
    * Return all variables referenced by this block.
-   * @return {!Array<!VariableModel>} List of variable models.
+   * @return {!Array<!Blockly.VariableModel>} List of variable models.
    * @package
    */
   getVarModels() {
@@ -1130,7 +1130,7 @@ class Block {
   /**
    * Notification that a variable is renaming but keeping the same ID.  If the
    * variable is in use on this block, rerender to show the new name.
-   * @param {!VariableModel} variable The variable being renamed.
+   * @param {!Blockly.VariableModel} variable The variable being renamed.
    * @package
    */
   updateVarName(variable) {
@@ -1409,7 +1409,7 @@ class Block {
 
     /**
      * Whether or not to add parentheses around an input.
-     * @param {!Connection} connection The connection.
+     * @param {!Blockly.Connection} connection The connection.
      * @return {boolean} True if we should add parentheses around the input.
      */
     function shouldAddParentheses(connection) {
@@ -1435,7 +1435,7 @@ class Block {
     while (node) {
       switch (node.getType()) {
         case ASTNode.types.INPUT: {
-          const connection = /** @type {!Connection} */ (node.getLocation());
+          const connection = /** @type {!Blockly.Connection} */ (node.getLocation());
           if (!node.in()) {
             text.push(emptyFieldPlaceholder);
           } else if (shouldAddParentheses(connection)) {
@@ -1444,7 +1444,7 @@ class Block {
           break;
         }
         case ASTNode.types.FIELD: {
-          const field = /** @type {Field} */ (node.getLocation());
+          const field = /** @type {Blockly.Field} */ (node.getLocation());
           if (field.name !== constants.COLLAPSED_FIELD_NAME) {
             text.push(field.getText());
           }
@@ -1464,7 +1464,7 @@ class Block {
           // If we hit an input on the way up, possibly close out parentheses.
           if (node && node.getType() === ASTNode.types.INPUT &&
               shouldAddParentheses(
-                  /** @type {!Connection} */ (node.getLocation()))) {
+                  /** @type {!Blockly.Connection} */ (node.getLocation()))) {
             text.push(')');
           }
         }
@@ -1508,7 +1508,7 @@ class Block {
    * Shortcut for appending a value input row.
    * @param {string} name Language-neutral identifier which may used to find
    *     this input again.  Should be unique to this block.
-   * @return {!Input} The input object created.
+   * @return {!Blockly.Input} The input object created.
    */
   appendValueInput(name) {
     return this.appendInput_(inputTypes.VALUE, name);
@@ -1518,7 +1518,7 @@ class Block {
    * Shortcut for appending a statement input row.
    * @param {string} name Language-neutral identifier which may used to find
    *     this input again.  Should be unique to this block.
-   * @return {!Input} The input object created.
+   * @return {!Blockly.Input} The input object created.
    */
   appendStatementInput(name) {
     return this.appendInput_(inputTypes.STATEMENT, name);
@@ -1528,7 +1528,7 @@ class Block {
    * Shortcut for appending a dummy input row.
    * @param {string=} opt_name Language-neutral identifier which may used to
    *     find this input again.  Should be unique to this block.
-   * @return {!Input} The input object created.
+   * @return {!Blockly.Input} The input object created.
    */
   appendDummyInput(opt_name) {
     return this.appendInput_(inputTypes.DUMMY, opt_name || '');
@@ -1816,7 +1816,7 @@ class Block {
    * the 'alt' property of the JSON definition (if it exists).
    * @param {{alt:(string|undefined)}} element The element to try to turn into a
    *     field.
-   * @return {?Field} The field defined by the JSON, or null if one
+   * @return {?Blockly.Field} The field defined by the JSON, or null if one
    *     couldn't be created.
    * @private
    */
@@ -1838,7 +1838,7 @@ class Block {
    * @param {!Object} element The JSON to turn into an input.
    * @param {string} warningPrefix The prefix to add to warnings to help the
    *     developer debug.
-   * @return {?Input} The input that has been created, or null if one
+   * @return {?Blockly.Input} The input that has been created, or null if one
    *     could not be created for some reason (should never happen).
    * @private
    */
@@ -1914,10 +1914,10 @@ class Block {
 
   /**
    * Add a value input, statement input or local variable to this block.
-   * @param {number} type One of Blockly.inputTypes.
+   * @param {number} type One of Blockly.Blockly.inputTypes.
    * @param {string} name Language-neutral identifier which may used to find
    *     this input again.  Should be unique to this block.
-   * @return {!Input} The input object created.
+   * @return {!Blockly.Input} The input object created.
    * @protected
    */
   appendInput_(type, name) {
@@ -2026,7 +2026,7 @@ class Block {
   /**
    * Fetches the named input object.
    * @param {string} name The name of the input.
-   * @return {?Input} The input object, or null if input does not exist.
+   * @return {?Blockly.Input} The input object, or null if input does not exist.
    */
   getInput(name) {
     for (let i = 0, input; (input = this.inputList[i]); i++) {
@@ -2041,7 +2041,7 @@ class Block {
   /**
    * Fetches the block attached to the named input.
    * @param {string} name The name of the input.
-   * @return {?Block} The attached value block, or null if the input is
+   * @return {?Blockly.Block} The attached value block, or null if the input is
    *     either disconnected or if the input does not exist.
    */
   getInputTargetBlock(name) {
@@ -2083,7 +2083,7 @@ class Block {
 
   /**
    * Give this block a mutator dialog.
-   * @param {Mutator} _mutator A mutator dialog instance or null to
+   * @param {Blockly.Mutator} _mutator A mutator dialog instance or null to
    *     remove.
    */
   setMutator(_mutator) {
@@ -2093,7 +2093,7 @@ class Block {
   /**
    * Return the coordinates of the top-left corner of this block relative to the
    * drawing surface's origin (0,0), in workspace units.
-   * @return {!Coordinate} Object with .x and .y properties.
+   * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
    */
   getRelativeToSurfaceXY() {
     return this.xy_;
@@ -2108,7 +2108,7 @@ class Block {
     if (this.parentBlock_) {
       throw Error('Block has parent.');
     }
-    const event = /** @type {!BlockMove} */ (
+    const event = /** @type {!Blockly.Events.BlockMove} */ (
         new (eventUtils.get(eventUtils.BLOCK_MOVE))(this));
     this.xy_.translate(dx, dy);
     event.recordNew();
@@ -2118,7 +2118,7 @@ class Block {
   /**
    * Create a connection of the specified type.
    * @param {number} type The type of the connection to create.
-   * @return {!Connection} A new connection of the specified type.
+   * @return {!Blockly.Connection} A new connection of the specified type.
    * @protected
    */
   makeConnection_(type) {
@@ -2193,7 +2193,7 @@ Block.CommentModel;
  * An optional callback method to use whenever the block's parent workspace
  * changes. This is usually only called from the constructor, the block type
  * initializer function, or an extension initializer function.
- * @type {undefined|?function(Abstract)}
+ * @type {undefined|?function(Blockly.Events.Abstract)}
  */
 Block.prototype.onchange;
 

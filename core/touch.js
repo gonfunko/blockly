@@ -88,7 +88,7 @@ let longPid_ = 0;
  * which after about a second opens the context menu.  The tasks is killed
  * if the touch event terminates early.
  * @param {!Event} e Touch start event.
- * @param {Gesture} gesture The gesture that triggered this longStart.
+ * @param {Blockly.Gesture} gesture The gesture that triggered this longStart.
  * @alias Blockly.Touch.longStart
  * @package
  */

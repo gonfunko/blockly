@@ -22,7 +22,7 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a toolbox item select event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.ToolboxItemSelect
  */
 class ToolboxItemSelect extends UiBase {

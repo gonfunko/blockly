@@ -27,7 +27,7 @@ const {WorkspaceSvg} = goog.require('Blockly.WorkspaceSvg');
 
 /**
  * Returns the state of the workspace as a plain JavaScript object.
- * @param {!Workspace} workspace The workspace to serialize.
+ * @param {!Blockly.Workspace} workspace The workspace to serialize.
  * @return {!Object<string, *>} The serialized state of the workspace.
  * @alias Blockly.serialization.workspaces.save
  */
@@ -48,7 +48,7 @@ exports.save = save;
  * Loads the variable represented by the given state into the given workspace.
  * @param {!Object<string, *>} state The state of the workspace to deserialize
  *     into the workspace.
- * @param {!Workspace} workspace The workspace to add the new state to.
+ * @param {!Blockly.Workspace} workspace The workspace to add the new state to.
  * @param {{recordUndo: (boolean|undefined)}=} param1
  *     recordUndo: If true, events triggered by this function will be undo-able
  *       by the user. False by default.

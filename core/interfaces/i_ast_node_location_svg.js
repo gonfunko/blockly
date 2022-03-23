@@ -12,7 +12,6 @@
 
 /**
  * The interface for an AST node location SVG.
- * @namespace Blockly.IASTNodeLocationSvg
  */
 goog.module('Blockly.IASTNodeLocationSvg');
 
@@ -23,7 +22,7 @@ const {IASTNodeLocation} = goog.require('Blockly.IASTNodeLocation');
 /**
  * An AST node location SVG interface.
  * @interface
- * @extends {IASTNodeLocation}
+ * @extends {Blockly.IASTNodeLocation}
  * @alias Blockly.IASTNodeLocationSvg
  */
 const IASTNodeLocationSvg = function() {};

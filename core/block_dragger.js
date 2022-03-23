@@ -42,32 +42,32 @@ goog.require('Blockly.Events.BlockMove');
 /**
  * Class for a block dragger.  It moves blocks around the workspace when they
  * are being dragged by a mouse or touch.
- * @implements {IBlockDragger}
+ * @implements {Blockly.IBlockDragger}
  * @alias Blockly.BlockDragger
  */
 const BlockDragger = class {
   /**
-   * @param {!BlockSvg} block The block to drag.
-   * @param {!WorkspaceSvg} workspace The workspace to drag on.
+   * @param {!Blockly.BlockSvg} block The block to drag.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace to drag on.
    */
   constructor(block, workspace) {
     /**
      * The top block in the stack that is being dragged.
-     * @type {!BlockSvg}
+     * @type {!Blockly.BlockSvg}
      * @protected
      */
     this.draggingBlock_ = block;
 
     /**
      * The workspace on which the block is being dragged.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @protected
      */
     this.workspace_ = workspace;
 
     /**
      * Object that keeps track of connections on dragged blocks.
-     * @type {!InsertionMarkerManager}
+     * @type {!Blockly.InsertionMarkerManager}
      * @protected
      */
     this.draggedConnectionManager_ =
@@ -75,7 +75,7 @@ const BlockDragger = class {
 
     /**
      * Which drag area the mouse pointer is over, if any.
-     * @type {?IDragTarget}
+     * @type {?Blockly.IDragTarget}
      * @private
      */
     this.dragTarget_ = null;
@@ -90,7 +90,7 @@ const BlockDragger = class {
     /**
      * The location of the top left corner of the dragging block at the
      * beginning of the drag in workspace coordinates.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @protected
      */
     this.startXY_ = this.draggingBlock_.getRelativeToSurfaceXY();
@@ -119,7 +119,7 @@ const BlockDragger = class {
 
   /**
    * Start dragging a block.  This includes moving it to the drag surface.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at mouse down, in pixel units.
    * @param {boolean} healStack Whether or not to heal the stack after
    *     disconnecting.
@@ -173,7 +173,7 @@ const BlockDragger = class {
    * Disconnects the block and moves it to a new location.
    * @param {boolean} healStack Whether or not to heal the stack after
    *     disconnecting.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at mouse down, in pixel units.
    * @protected
    */
@@ -201,7 +201,7 @@ const BlockDragger = class {
    * Execute a step of block dragging, based on the given event.  Update the
    * display accordingly.
    * @param {!Event} e The most recent move event.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at the start of the drag, in pixel units.
    * @public
    */
@@ -234,7 +234,7 @@ const BlockDragger = class {
   /**
    * Finish a block drag and put the block back on the workspace.
    * @param {!Event} e The mouseup/touchend event.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at the start of the drag, in pixel units.
    * @public
    */
@@ -250,9 +250,9 @@ const BlockDragger = class {
 
     const preventMove = !!this.dragTarget_ &&
         this.dragTarget_.shouldPreventMove(this.draggingBlock_);
-    /** @type {Coordinate} */
+    /** @type {Blockly.utils.Coordinate} */
     let newLoc;
-    /** @type {Coordinate} */
+    /** @type {Blockly.utils.Coordinate} */
     let delta;
     if (preventMove) {
       newLoc = this.startXY_;
@@ -289,10 +289,10 @@ const BlockDragger = class {
 
   /**
    * Calculates the drag delta and new location values after a block is dragged.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the start of the drag, in pixel units.
-   * @return {{delta: !Coordinate, newLocation:
-   *     !Coordinate}} New location after drag. delta is in
+   * @return {{delta: !Blockly.utils.Coordinate, newLocation:
+   *     !Blockly.utils.Coordinate}} New location after drag. delta is in
    *     workspace units. newLocation is the new coordinate where the block
    * should end up.
    * @protected
@@ -324,7 +324,7 @@ const BlockDragger = class {
 
   /**
    * Updates the necessary information to place a block at a certain location.
-   * @param {!Coordinate} delta The change in location from where
+   * @param {!Blockly.utils.Coordinate} delta The change in location from where
    *     the block started the drag to where it ended the drag.
    * @protected
    */
@@ -378,7 +378,7 @@ const BlockDragger = class {
    * @protected
    */
   fireMoveEvent_() {
-    const event = /** @type {!BlockMove} */
+    const event = /** @type {!Blockly.Events.BlockMove} */
         (new (eventUtils.get(eventUtils.BLOCK_MOVE))(this.draggingBlock_));
     event.oldCoordinate = this.startXY_;
     event.recordNew();
@@ -399,9 +399,9 @@ const BlockDragger = class {
    * correction for mutator workspaces.
    * This function does not consider differing origins.  It simply scales the
    * input's x and y values.
-   * @param {!Coordinate} pixelCoord A coordinate with x and y
+   * @param {!Blockly.utils.Coordinate} pixelCoord A coordinate with x and y
    *     values in CSS pixel units.
-   * @return {!Coordinate} The input coordinate divided by the
+   * @return {!Blockly.utils.Coordinate} The input coordinate divided by the
    *     workspace scale.
    * @protected
    */
@@ -421,7 +421,7 @@ const BlockDragger = class {
 
   /**
    * Move all of the icons connected to this drag.
-   * @param {!Coordinate} dxy How far to move the icons from their
+   * @param {!Blockly.utils.Coordinate} dxy How far to move the icons from their
    *     original positions, in workspace units.
    * @protected
    */
@@ -436,7 +436,7 @@ const BlockDragger = class {
   /**
    * Get a list of the insertion markers that currently exist.  Drags have 0, 1,
    * or 2 insertion markers.
-   * @return {!Array<!BlockSvg>} A possibly empty list of insertion
+   * @return {!Array<!Blockly.BlockSvg>} A possibly empty list of insertion
    *     marker blocks.
    * @public
    */
@@ -454,14 +454,14 @@ const BlockDragger = class {
  * Make a list of all of the icons (comment, warning, and mutator) that are
  * on this block and its descendants.  Moving an icon moves the bubble that
  * extends from it if that bubble is open.
- * @param {!BlockSvg} block The root block that is being dragged.
+ * @param {!Blockly.BlockSvg} block The root block that is being dragged.
  * @return {!Array<!Object>} The list of all icons and their locations.
  */
 const initIconData = function(block) {
   // Build a list of icons that need to be moved and where they started.
   const dragIconData = [];
   const descendants =
-      /** @type {!Array<!BlockSvg>} */ (block.getDescendants(false));
+      /** @type {!Array<!Blockly.BlockSvg>} */ (block.getDescendants(false));
 
   for (let i = 0, descendant; (descendant = descendants[i]); i++) {
     const icons = descendant.getIcons();

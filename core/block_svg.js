@@ -83,16 +83,16 @@ goog.require('Blockly.Touch');
 /**
  * Class for a block's SVG representation.
  * Not normally called directly, workspace.newBlock() is preferred.
- * @extends {Block}
- * @implements {IASTNodeLocationSvg}
- * @implements {IBoundedElement}
- * @implements {ICopyable}
- * @implements {IDraggable}
+ * @extends {Blockly.Block}
+ * @implements {Blockly.IASTNodeLocationSvg}
+ * @implements {Blockly.IBoundedElement}
+ * @implements {Blockly.ICopyable}
+ * @implements {Blockly.IDraggable}
  * @alias Blockly.BlockSvg
  */
 class BlockSvg extends Block {
   /**
-   * @param {!WorkspaceSvg} workspace The block's workspace.
+   * @param {!Blockly.WorkspaceSvg} workspace The block's workspace.
    * @param {string} prototypeName Name of the language object containing
    *     type-specific functions for this block.
    * @param {string=} opt_id Optional ID.  Use this ID if provided, otherwise
@@ -108,7 +108,7 @@ class BlockSvg extends Block {
      * top-level block with any sub-blocks which are appropriate. This method
      * must also be coupled with defining a `compose` method for the default
      * mutation dialog button and UI to appear.
-     * @type {undefined|?function(WorkspaceSvg):!BlockSvg}
+     * @type {undefined|?function(Blockly.WorkspaceSvg):!Blockly.BlockSvg}
      */
     this.decompose = this.decompose;
 
@@ -117,7 +117,7 @@ class BlockSvg extends Block {
      * This function is called to modify the original block according to new
      * settings. This method must also be coupled with defining a `decompose`
      * method for the default mutation dialog button and UI to appear.
-     * @type {undefined|?function(!BlockSvg)}
+     * @type {undefined|?function(!Blockly.BlockSvg)}
      */
     this.compose = this.compose;
 
@@ -125,7 +125,7 @@ class BlockSvg extends Block {
      * An optional method called by the default mutator UI which gives the block
      * a chance to save information about what child blocks are connected to
      * what mutated connections.
-     * @type {undefined|?function(!BlockSvg)}
+     * @type {undefined|?function(!Blockly.BlockSvg)}
      */
     this.saveConnections = this.saveConnections;
 
@@ -137,7 +137,7 @@ class BlockSvg extends Block {
 
     /**
      * An property used internally to reference the block's rendering debugger.
-     * @type {?BlockRenderingDebug}
+     * @type {?Blockly.blockRendering.Debug}
      * @package
      */
     this.renderingDebugger = null;
@@ -166,27 +166,27 @@ class BlockSvg extends Block {
 
     /**
      * Block's mutator icon (if any).
-     * @type {?Mutator}
+     * @type {?Blockly.Mutator}
      */
     this.mutator = null;
 
     /**
      * Block's comment icon (if any).
-     * @type {?Comment}
+     * @type {?Blockly.Comment}
      * @deprecated August 2019. Use getCommentIcon instead.
      */
     this.comment = null;
 
     /**
      * Block's comment icon (if any).
-     * @type {?Comment}
+     * @type {?Blockly.Comment}
      * @private
      */
     this.commentIcon_ = null;
 
     /**
      * Block's warning icon (if any).
-     * @type {?Warning}
+     * @type {?Blockly.Warning}
      */
     this.warning = null;
 
@@ -200,13 +200,13 @@ class BlockSvg extends Block {
 
     /**
      * A block style object.
-     * @type {!Theme.BlockStyle}
+     * @type {!Blockly.Theme.BlockStyle}
      */
     this.style = workspace.getRenderer().getConstants().getBlockStyle(null);
 
     /**
      * The renderer's path object.
-     * @type {IPathObject}
+     * @type {Blockly.blockRendering.IPathObject}
      * @package
      */
     this.pathObject =
@@ -229,13 +229,13 @@ class BlockSvg extends Block {
      */
     this.eventsInit_ = false;
 
-    /** @type {!WorkspaceSvg} */
+    /** @type {!Blockly.WorkspaceSvg} */
     this.workspace;
-    /** @type {RenderedConnection} */
+    /** @type {Blockly.RenderedConnection} */
     this.outputConnection;
-    /** @type {RenderedConnection} */
+    /** @type {Blockly.RenderedConnection} */
     this.nextConnection;
-    /** @type {RenderedConnection} */
+    /** @type {Blockly.RenderedConnection} */
     this.previousConnection;
 
     /**
@@ -356,7 +356,7 @@ class BlockSvg extends Block {
 
   /**
    * Returns a list of mutator, comment, and warning icons.
-   * @return {!Array<!Icon>} List of icons.
+   * @return {!Array<!Blockly.Icon>} List of icons.
    */
   getIcons() {
     const icons = [];
@@ -374,7 +374,7 @@ class BlockSvg extends Block {
 
   /**
    * Sets the parent of this block to be a new block or null.
-   * @param {?Block} newParent New parent block.
+   * @param {?Blockly.Block} newParent New parent block.
    * @package
    * @override
    */
@@ -398,7 +398,7 @@ class BlockSvg extends Block {
 
     const oldXY = this.getRelativeToSurfaceXY();
     if (newParent) {
-      (/** @type {!BlockSvg} */ (newParent)).getSvgRoot().appendChild(svgRoot);
+      (/** @type {!Blockly.BlockSvg} */ (newParent)).getSvgRoot().appendChild(svgRoot);
       const newXY = this.getRelativeToSurfaceXY();
       // Move the connections to match the child's new position.
       this.moveConnections(newXY.x - oldXY.x, newXY.y - oldXY.y);
@@ -418,7 +418,7 @@ class BlockSvg extends Block {
    * If the block is on the workspace, (0, 0) is the origin of the workspace
    * coordinate system.
    * This does not change with workspace scale.
-   * @return {!Coordinate} Object with .x and .y properties in
+   * @return {!Blockly.utils.Coordinate} Object with .x and .y properties in
    *     workspace coordinates.
    */
   getRelativeToSurfaceXY() {
@@ -465,7 +465,7 @@ class BlockSvg extends Block {
     const eventsEnabled = eventUtils.isEnabled();
     let event;
     if (eventsEnabled) {
-      event = /** @type {!BlockMove} */
+      event = /** @type {!Blockly.Events.BlockMove} */
           (new (eventUtils.get(eventUtils.BLOCK_MOVE))(this));
     }
     const xy = this.getRelativeToSurfaceXY();
@@ -515,7 +515,7 @@ class BlockSvg extends Block {
 
   /**
    * Move a block to a position.
-   * @param {Coordinate} xy The position to move to in workspace units.
+   * @param {Blockly.utils.Coordinate} xy The position to move to in workspace units.
    */
   moveTo(xy) {
     const curXY = this.getRelativeToSurfaceXY();
@@ -526,7 +526,7 @@ class BlockSvg extends Block {
    * Move this block back to the workspace block canvas.
    * Generally should be called at the same time as setDragging_(false).
    * Does nothing if useDragSurface_ is false.
-   * @param {!Coordinate} newXY The position the block should take on
+   * @param {!Blockly.utils.Coordinate} newXY The position the block should take on
    *     on the workspace canvas, in workspace coordinates.
    * @package
    */
@@ -544,7 +544,7 @@ class BlockSvg extends Block {
    * Move this block during a drag, taking into account whether we are using a
    * drag surface to translate blocks.
    * This block must be a top-level block.
-   * @param {!Coordinate} newLoc The location to translate to, in
+   * @param {!Blockly.utils.Coordinate} newLoc The location to translate to, in
    *     workspace coordinates.
    * @package
    */
@@ -604,7 +604,7 @@ class BlockSvg extends Block {
    * Returns the coordinates of a bounding box describing the dimensions of this
    * block and any blocks stacked below it.
    * Coordinate system: workspace coordinates.
-   * @return {!Rect} Object with coordinates of the bounding box.
+   * @return {!Blockly.utils.Rect} Object with coordinates of the bounding box.
    */
   getBoundingRectangle() {
     const blockXY = this.getRelativeToSurfaceXY();
@@ -626,7 +626,7 @@ class BlockSvg extends Block {
    * A dirty field is a field that needs to be re-rendered.
    */
   markDirty() {
-    this.pathObject.constants = (/** @type {!WorkspaceSvg} */ (this.workspace))
+    this.pathObject.constants = (/** @type {!Blockly.WorkspaceSvg} */ (this.workspace))
                                     .getRenderer()
                                     .getConstants();
     for (let i = 0, input; (input = this.inputList[i]); i++) {
@@ -692,7 +692,7 @@ class BlockSvg extends Block {
 
   /**
    * Open the next (or previous) FieldTextInput.
-   * @param {!Field} start Current field.
+   * @param {!Blockly.Field} start Current field.
    * @param {boolean} forward If true go forward, otherwise backward.
    */
   tab(start, forward) {
@@ -708,7 +708,7 @@ class BlockSvg extends Block {
 
     const nextNode = tabCursor.getCurNode();
     if (nextNode && nextNode !== currentNode) {
-      const nextField = /** @type {!Field} */ (nextNode.getLocation());
+      const nextField = /** @type {!Blockly.Field} */ (nextNode.getLocation());
       nextField.showEditor();
 
       // Also move the cursor if we're in keyboard nav mode.
@@ -802,7 +802,7 @@ class BlockSvg extends Block {
 
     // Recurse through all blocks attached under this one.
     for (let i = 0; i < this.childBlocks_.length; i++) {
-      (/** @type {!BlockSvg} */ (this.childBlocks_[i])).moveConnections(dx, dy);
+      (/** @type {!Blockly.BlockSvg} */ (this.childBlocks_[i])).moveConnections(dx, dy);
     }
   }
 
@@ -827,7 +827,7 @@ class BlockSvg extends Block {
     }
     // Recurse through all blocks attached under this one.
     for (let i = 0; i < this.childBlocks_.length; i++) {
-      (/** @type {!BlockSvg} */ (this.childBlocks_[i])).setDragging(adding);
+      (/** @type {!Blockly.BlockSvg} */ (this.childBlocks_[i])).setDragging(adding);
     }
   }
 
@@ -970,7 +970,7 @@ class BlockSvg extends Block {
 
   /**
    * Encode a block for copying.
-   * @return {?ICopyable.CopyData} Copy metadata, or null if the block is
+   * @return {?Blockly.ICopyable.CopyData} Copy metadata, or null if the block is
    *     an insertion marker.
    * @package
    */
@@ -1012,7 +1012,7 @@ class BlockSvg extends Block {
    */
   updateDisabled() {
     const children =
-        /** @type {!Array<!BlockSvg>} */ (this.getChildren(false));
+        /** @type {!Array<!Blockly.BlockSvg>} */ (this.getChildren(false));
     this.applyColour();
     if (this.isCollapsed()) {
       return;
@@ -1027,7 +1027,7 @@ class BlockSvg extends Block {
   /**
    * Get the comment icon attached to this block, or null if the block has no
    * comment.
-   * @return {?Comment} The comment icon attached to this block, or null.
+   * @return {?Blockly.Comment} The comment icon attached to this block, or null.
    */
   getCommentIcon() {
     return this.commentIcon_;
@@ -1158,7 +1158,7 @@ class BlockSvg extends Block {
 
   /**
    * Give this block a mutator dialog.
-   * @param {?Mutator} mutator A mutator dialog instance or null to remove.
+   * @param {?Blockly.Mutator} mutator A mutator dialog instance or null to remove.
    */
   setMutator(mutator) {
     if (this.mutator && this.mutator !== mutator) {
@@ -1405,7 +1405,7 @@ class BlockSvg extends Block {
    * @param {number} type One of Blockly.inputTypes.
    * @param {string} name Language-neutral identifier which may used to find
    *     this input again.  Should be unique to this block.
-   * @return {!Input} The input object created.
+   * @return {!Blockly.Input} The input object created.
    * @protected
    * @override
    */
@@ -1431,18 +1431,18 @@ class BlockSvg extends Block {
    */
   setConnectionTracking(track) {
     if (this.previousConnection) {
-      /** @type {!RenderedConnection} */ (this.previousConnection)
+      /** @type {!Blockly.RenderedConnection} */ (this.previousBlockly.Connection)
           .setTracking(track);
     }
     if (this.outputConnection) {
-      /** @type {!RenderedConnection} */ (this.outputConnection)
+      /** @type {!Blockly.RenderedConnection} */ (this.outputBlockly.Connection)
           .setTracking(track);
     }
     if (this.nextConnection) {
-      /** @type {!RenderedConnection} */ (this.nextConnection)
+      /** @type {!Blockly.RenderedConnection} */ (this.nextBlockly.Connection)
           .setTracking(track);
       const child =
-          /** @type {!RenderedConnection} */ (this.nextConnection)
+          /** @type {!Blockly.RenderedConnection} */ (this.nextBlockly.Connection)
               .targetBlock();
       if (child) {
         child.setConnectionTracking(track);
@@ -1458,7 +1458,7 @@ class BlockSvg extends Block {
 
     for (let i = 0; i < this.inputList.length; i++) {
       const conn =
-          /** @type {!RenderedConnection} */ (this.inputList[i].connection);
+          /** @type {!Blockly.RenderedConnection} */ (this.inputList[i].connection);
       if (conn) {
         conn.setTracking(track);
 
@@ -1476,7 +1476,7 @@ class BlockSvg extends Block {
    * @param {boolean} all If true, return all connections even hidden ones.
    *     Otherwise, for a non-rendered block return an empty list, and for a
    *     collapsed block don't return inputs connections.
-   * @return {!Array<!RenderedConnection>} Array of connections.
+   * @return {!Array<!Blockly.RenderedConnection>} Array of connections.
    * @package
    */
   getConnections_(all) {
@@ -1508,13 +1508,13 @@ class BlockSvg extends Block {
    * @param {boolean} ignoreShadows If true,the last connection on a non-shadow
    *     block will be returned. If false, this will follow shadows to find the
    *     last connection.
-   * @return {?RenderedConnection} The last next connection on the stack,
+   * @return {?Blockly.RenderedConnection} The last next connection on the stack,
    *     or null.
    * @package
    * @override
    */
   lastConnectionInStack(ignoreShadows) {
-    return /** @type {RenderedConnection} */ (
+    return /** @type {Blockly.RenderedConnection} */ (
         super.lastConnectionInStack(ignoreShadows));
   }
 
@@ -1522,22 +1522,22 @@ class BlockSvg extends Block {
    * Find the connection on this block that corresponds to the given connection
    * on the other block.
    * Used to match connections between a block and its insertion marker.
-   * @param {!Block} otherBlock The other block to match against.
-   * @param {!Connection} conn The other connection to match.
-   * @return {?RenderedConnection} The matching connection on this block,
+   * @param {!Blockly.Block} otherBlock The other block to match against.
+   * @param {!Blockly.Connection} conn The other connection to match.
+   * @return {?Blockly.RenderedConnection} The matching connection on this block,
    *     or null.
    * @package
    * @override
    */
   getMatchingConnection(otherBlock, conn) {
-    return /** @type {RenderedConnection} */ (
+    return /** @type {Blockly.RenderedConnection} */ (
         super.getMatchingConnection(otherBlock, conn));
   }
 
   /**
    * Create a connection of the specified type.
    * @param {number} type The type of the connection to create.
-   * @return {!RenderedConnection} A new connection of the specified type.
+   * @return {!Blockly.RenderedConnection} A new connection of the specified type.
    * @protected
    */
   makeConnection_(type) {
@@ -1562,7 +1562,7 @@ class BlockSvg extends Block {
     // Loop through every connection on this block.
     const myConnections = this.getConnections_(false);
     for (let i = 0, connection; (connection = myConnections[i]); i++) {
-      const renderedConn = /** @type {!RenderedConnection} */ (connection);
+      const renderedConn = /** @type {!Blockly.RenderedConnection} */ (connection);
       // Spider down from this block bumping all sub-blocks.
       if (renderedConn.isConnected() && renderedConn.isSuperior()) {
         renderedConn.targetBlock().bumpNeighbours();
@@ -1571,7 +1571,7 @@ class BlockSvg extends Block {
       const neighbours = connection.neighbours(config.snapRadius);
       for (let j = 0, otherConnection; (otherConnection = neighbours[j]); j++) {
         const renderedOther =
-            /** @type {!RenderedConnection} */ (otherConnection);
+            /** @type {!Blockly.RenderedConnection} */ (otherBlockly.Connection);
         // If both connections are connected, that's probably fine.  But if
         // either one of them is unconnected, then there could be confusion.
         if (!renderedConn.isConnected() || !renderedOther.isConnected()) {
@@ -1616,9 +1616,9 @@ class BlockSvg extends Block {
    * Position a block so that it doesn't move the target block when connected.
    * The block to position is usually either the first block in a dragged stack
    * or an insertion marker.
-   * @param {!RenderedConnection} sourceConnection The connection on the
+   * @param {!Blockly.RenderedConnection} sourceConnection The connection on the
    *     moving block's stack.
-   * @param {!RenderedConnection} targetConnection The connection that
+   * @param {!Blockly.RenderedConnection} targetConnection The connection that
    *     should stay stationary as this block is positioned.
    * @package
    */
@@ -1636,91 +1636,91 @@ class BlockSvg extends Block {
 
   /**
    * Return the parent block or null if this block is at the top level.
-   * @return {?BlockSvg} The block (if any) that holds the current block.
+   * @return {?Blockly.BlockSvg} The block (if any) that holds the current block.
    * @override
    */
   getParent() {
-    return /** @type {?BlockSvg} */ (super.getParent());
+    return /** @type {?Blockly.BlockSvg} */ (super.getParent());
   }
 
   /**
-   * @return {?BlockSvg} The block (if any) that surrounds the current block.
+   * @return {?Blockly.BlockSvg} The block (if any) that surrounds the current block.
    * @override
    */
   getSurroundParent() {
-    return /** @type {?BlockSvg} */ (super.getSurroundParent());
+    return /** @type {?Blockly.BlockSvg} */ (super.getSurroundParent());
   }
 
   /**
-   * @return {?BlockSvg} The next statement block or null.
+   * @return {?Blockly.BlockSvg} The next statement block or null.
    * @override
    */
   getNextBlock() {
-    return /** @type {?BlockSvg} */ (super.getNextBlock());
+    return /** @type {?Blockly.BlockSvg} */ (super.getNextBlock());
   }
 
   /**
-   * @return {?BlockSvg} The previou statement block or null.
+   * @return {?Blockly.BlockSvg} The previou statement block or null.
    * @override
    */
   getPreviousBlock() {
-    return /** @type {?BlockSvg} */ (super.getPreviousBlock());
+    return /** @type {?Blockly.BlockSvg} */ (super.getPreviousBlock());
   }
 
   /**
-   * @return {?RenderedConnection} The first statement connection or null.
+   * @return {?Blockly.RenderedConnection} The first statement connection or null.
    * @package
    * @override
    */
   getFirstStatementConnection() {
-    return /** @type {?RenderedConnection} */ (
+    return /** @type {?Blockly.RenderedConnection} */ (
         super.getFirstStatementConnection());
   }
 
   /**
-   * @return {!BlockSvg} The top block in a stack.
+   * @return {!Blockly.BlockSvg} The top block in a stack.
    * @override
    */
   getTopStackBlock() {
-    return /** @type {!BlockSvg} */ (super.getTopStackBlock());
+    return /** @type {!Blockly.BlockSvg} */ (super.getTopStackBlock());
   }
 
   /**
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!BlockSvg>} Children of this block.
+   * @return {!Array<!Blockly.BlockSvg>} Children of this block.
    * @override
    */
   getChildren(ordered) {
-    return /** @type {!Array<!BlockSvg>} */ (super.getChildren(ordered));
+    return /** @type {!Array<!Blockly.BlockSvg>} */ (super.getChildren(ordered));
   }
 
   /**
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!BlockSvg>} Descendants of this block.
+   * @return {!Array<!Blockly.BlockSvg>} Descendants of this block.
    * @override
    */
   getDescendants(ordered) {
-    return /** @type {!Array<!BlockSvg>} */ (super.getDescendants(ordered));
+    return /** @type {!Array<!Blockly.BlockSvg>} */ (super.getDescendants(ordered));
   }
 
   /**
    * @param {string} name The name of the input.
-   * @return {?BlockSvg} The attached value block, or null if the input is
+   * @return {?Blockly.BlockSvg} The attached value block, or null if the input is
    *     either disconnected or if the input does not exist.
    * @override
    */
   getInputTargetBlock(name) {
-    return /** @type {?BlockSvg} */ (super.getInputTargetBlock(name));
+    return /** @type {?Blockly.BlockSvg} */ (super.getInputTargetBlock(name));
   }
 
   /**
    * Return the top-most block in this block's tree.
    * This will return itself if this block is at the top level.
-   * @return {!BlockSvg} The root block.
+   * @return {!Blockly.BlockSvg} The root block.
    * @override
    */
   getRootBlock() {
-    return /** @type {!BlockSvg} */ (super.getRootBlock());
+    return /** @type {!Blockly.BlockSvg} */ (super.getRootBlock());
   }
 
   /**
@@ -1793,7 +1793,7 @@ class BlockSvg extends Block {
 
     for (let i = 0; i < this.inputList.length; i++) {
       const conn =
-          /** @type {!RenderedConnection} */ (this.inputList[i].connection);
+          /** @type {!Blockly.RenderedConnection} */ (this.inputList[i].connection);
       if (conn) {
         conn.moveToOffset(blockTL);
         if (conn.isConnected()) {
@@ -1844,7 +1844,7 @@ class BlockSvg extends Block {
     const nextBlock = this.getNextBlock();
     if (nextBlock) {
       const nextHeightWidth = nextBlock.getHeightWidth();
-      const workspace = /** @type {!WorkspaceSvg} */ (this.workspace);
+      const workspace = /** @type {!Blockly.WorkspaceSvg} */ (this.workspace);
       const tabHeight = workspace.getRenderer().getConstants().NOTCH_HEIGHT;
       height += nextHeightWidth.height - tabHeight;
       width = Math.max(width, nextHeightWidth.width);
@@ -1866,7 +1866,7 @@ class BlockSvg extends Block {
   /**
    * Visual effect to show that if the dragging block is dropped it will connect
    * to this input.
-   * @param {Connection} conn The connection on the input to highlight.
+   * @param {Blockly.Connection} conn The connection on the input to highlight.
    * @param {boolean} add True if highlighting should be added.
    * @package
    */

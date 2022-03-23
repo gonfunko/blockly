@@ -27,15 +27,15 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about the space a next connection takes
  * up during rendering.
- * @extends {Connection}
+ * @extends {Blockly.blockRendering.Connection}
  * @struct
  * @alias Blockly.blockRendering.NextConnection
  */
 class NextConnection extends Connection {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!RenderedConnection} connectionModel The connection object on
+   * @param {!RenderedBlockly.blockRendering.Connection} connectionModel The connection object on
    *     the block that this represents.
    * @package
    */

@@ -43,19 +43,19 @@ goog.require('Blockly.Warning');
 
 /**
  * Class for a comment.
- * @extends {Icon}
+ * @extends {Blockly.Icon}
  * @alias Blockly.Comment
  */
 class Comment extends Icon {
   /**
-   * @param {!BlockSvg} block The block associated with this comment.
+   * @param {!Blockly.BlockSvg} block The block associated with this comment.
    */
   constructor(block) {
     super(block);
 
     /**
      * The model for this comment.
-     * @type {!Block.CommentModel}
+     * @type {!Blockly.Block.CommentModel}
      * @private
      */
     this.model_ = block.commentModel;
@@ -310,9 +310,9 @@ class Comment extends Icon {
    */
   createEditableBubble_() {
     this.bubble_ = new Bubble(
-        /** @type {!WorkspaceSvg} */ (this.block_.workspace),
+        /** @type {!Blockly.WorkspaceSvg} */ (this.block_.workspace),
         this.createEditor_(), this.block_.pathObject.svgPath,
-        /** @type {!Coordinate} */ (this.iconXY_), this.model_.size.width,
+        /** @type {!Blockly.utils.Coordinate} */ (this.iconXY_), this.model_.size.width,
         this.model_.size.height);
     // Expose this comment's block's ID on its top-level SVG group.
     this.bubble_.setSvgId(this.block_.id);
@@ -329,8 +329,8 @@ class Comment extends Icon {
     // TODO (#2917): It would be great if the comment could support line breaks.
     this.paragraphElement_ = Bubble.textToDom(this.block_.getCommentText());
     this.bubble_ = Bubble.createNonEditableBubble(
-        this.paragraphElement_, /** @type {!BlockSvg} */ (this.block_),
-        /** @type {!Coordinate} */ (this.iconXY_));
+        this.paragraphElement_, /** @type {!Blockly.BlockSvg} */ (this.block_),
+        /** @type {!Blockly.utils.Coordinate} */ (this.iconXY_));
     this.applyColour();
   }
 
@@ -383,7 +383,7 @@ class Comment extends Icon {
 
   /**
    * Get the dimensions of this comment's bubble.
-   * @return {Size} Object with width and height properties.
+   * @return {Blockly.utils.Size} Object with width and height properties.
    */
   getBubbleSize() {
     return this.model_.size;

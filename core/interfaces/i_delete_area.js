@@ -14,7 +14,7 @@
 /**
  * The interface for a component that can delete a block or bubble
  * that is dropped on top of it.
- * @namespace Blockly.IDeleteArea
+
  */
 goog.module('Blockly.IDeleteArea');
 
@@ -27,7 +27,7 @@ const {IDraggable} = goog.requireType('Blockly.IDraggable');
 /**
  * Interface for a component that can delete a block or bubble that is dropped
  * on top of it.
- * @extends {IDragTarget}
+ * @extends {Blockly.IDragTarget}
  * @interface
  * @alias Blockly.IDeleteArea
  */
@@ -38,7 +38,7 @@ const IDeleteArea = function() {};
  * this area.
  * This method should check if the element is deletable and is always called
  * before onDragEnter/onDragOver/onDragExit.
- * @param {!IDraggable} element The block or bubble currently being
+ * @param {!Blockly.IDraggable} element The block or bubble currently being
  *   dragged.
  * @param {boolean} couldConnect Whether the element could could connect to
  *     another.

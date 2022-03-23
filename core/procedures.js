@@ -73,7 +73,7 @@ exports.ProcedureBlock = ProcedureBlock;
 
 /**
  * Find all user-created procedure definitions in a workspace.
- * @param {!Workspace} root Root workspace.
+ * @param {!Blockly.Workspace} root Root workspace.
  * @return {!Array<!Array<!Array>>} Pair of arrays, the
  *     first contains procedures without return variables, the second with.
  *     Each procedure is defined by a three-element list of name, parameter
@@ -84,11 +84,11 @@ const allProcedures = function(root) {
   const proceduresNoReturn =
       root.getBlocksByType('procedures_defnoreturn', false)
           .map(function(block) {
-            return /** @type {!ProcedureBlock} */ (block).getProcedureDef();
+            return /** @type {!ProcedureBlockly.Block} */ (block).getProcedureDef();
           });
   const proceduresReturn =
       root.getBlocksByType('procedures_defreturn', false).map(function(block) {
-        return /** @type {!ProcedureBlock} */ (block).getProcedureDef();
+        return /** @type {!ProcedureBlockly.Block} */ (block).getProcedureDef();
       });
   proceduresNoReturn.sort(procTupleComparator);
   proceduresReturn.sort(procTupleComparator);
@@ -112,7 +112,7 @@ const procTupleComparator = function(ta, tb) {
  * Take the proposed procedure name, and return a legal name i.e. one that
  * is not empty and doesn't collide with other procedures.
  * @param {string} name Proposed procedure name.
- * @param {!Block} block Block to disambiguate.
+ * @param {!Blockly.Block} block Block to disambiguate.
  * @return {string} Non-colliding name.
  * @alias Blockly.Procedures.findLegalName
  */
@@ -139,8 +139,8 @@ exports.findLegalName = findLegalName;
  * Does this procedure have a legal name?  Illegal names include names of
  * procedures already defined.
  * @param {string} name The questionable name.
- * @param {!Workspace} workspace The workspace to scan for collisions.
- * @param {Block=} opt_exclude Optional block to exclude from
+ * @param {!Blockly.Workspace} workspace The workspace to scan for collisions.
+ * @param {Blockly.Block=} opt_exclude Optional block to exclude from
  *     comparisons (one doesn't want to collide with oneself).
  * @return {boolean} True if the name is legal.
  */
@@ -151,8 +151,8 @@ const isLegalName = function(name, workspace, opt_exclude) {
 /**
  * Return if the given name is already a procedure name.
  * @param {string} name The questionable name.
- * @param {!Workspace} workspace The workspace to scan for collisions.
- * @param {Block=} opt_exclude Optional block to exclude from
+ * @param {!Blockly.Workspace} workspace The workspace to scan for collisions.
+ * @param {Blockly.Block=} opt_exclude Optional block to exclude from
  *     comparisons (one doesn't want to collide with oneself).
  * @return {boolean} True if the name is used, otherwise return false.
  * @alias Blockly.Procedures.isNameUsed
@@ -165,7 +165,7 @@ const isNameUsed = function(name, workspace, opt_exclude) {
       continue;
     }
     // Assume it is a procedure block so we can check.
-    const procedureBlock = /** @type {!ProcedureBlock} */ (blocks[i]);
+    const procedureBlock = /** @type {!ProcedureBlockly.Block} */ (blocks[i]);
     if (procedureBlock.getProcedureDef) {
       const procName = procedureBlock.getProcedureDef();
       if (Names.equals(procName[0], name)) {
@@ -181,7 +181,7 @@ exports.isNameUsed = isNameUsed;
  * Rename a procedure.  Called by the editable field.
  * @param {string} name The proposed new name.
  * @return {string} The accepted name.
- * @this {Field}
+ * @this {Blockly.Field}
  * @alias Blockly.Procedures.rename
  */
 const rename = function(name) {
@@ -190,14 +190,14 @@ const rename = function(name) {
 
   const legalName = findLegalName(
       name,
-      /** @type {!Block} */ (this.getSourceBlock()));
+      /** @type {!Blockly.Block} */ (this.getSourceBlock()));
   const oldName = this.getValue();
   if (oldName !== name && oldName !== legalName) {
     // Rename any callers.
     const blocks = this.getSourceBlock().workspace.getAllBlocks(false);
     for (let i = 0; i < blocks.length; i++) {
       // Assume it is a procedure so we can check.
-      const procedureBlock = /** @type {!ProcedureBlock} */ (blocks[i]);
+      const procedureBlock = /** @type {!ProcedureBlockly.Block} */ (blocks[i]);
       if (procedureBlock.renameProcedure) {
         procedureBlock.renameProcedure(
             /** @type {string} */ (oldName), legalName);
@@ -210,7 +210,7 @@ exports.rename = rename;
 
 /**
  * Construct the blocks required by the flyout for the procedure category.
- * @param {!WorkspaceSvg} workspace The workspace containing procedures.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace containing procedures.
  * @return {!Array<!Element>} Array of XML block elements.
  * @alias Blockly.Procedures.flyoutCategory
  */
@@ -297,7 +297,7 @@ exports.flyoutCategory = flyoutCategory;
 /**
  * Updates the procedure mutator's flyout so that the arg block is not a
  * duplicate of another arg.
- * @param {!WorkspaceSvg} workspace The procedure mutator's workspace. This
+ * @param {!Blockly.WorkspaceSvg} workspace The procedure mutator's workspace. This
  *     workspace's flyout is what is being updated.
  */
 const updateMutatorFlyout = function(workspace) {
@@ -326,7 +326,7 @@ const updateMutatorFlyout = function(workspace) {
 /**
  * Listens for when a procedure mutator is opened. Then it triggers a flyout
  * update and adds a mutator change listener to the mutator workspace.
- * @param {!Abstract} e The event that triggered this listener.
+ * @param {!Blockly.Events.Abstract} e The event that triggered this listener.
  * @alias Blockly.Procedures.mutatorOpenListener
  * @package
  */
@@ -334,18 +334,18 @@ const mutatorOpenListener = function(e) {
   if (e.type !== eventUtils.BUBBLE_OPEN) {
     return;
   }
-  const bubbleEvent = /** @type {!BubbleOpen} */ (e);
+  const bubbleEvent = /** @type {!Blockly.Events.BubbleOpen} */ (e);
   if (!(bubbleEvent.bubbleType === 'mutator' && bubbleEvent.isOpen)) {
     return;
   }
   const workspaceId = /** @type {string} */ (bubbleEvent.workspaceId);
-  const block = /** @type {!BlockSvg} */
+  const block = /** @type {!Blockly.BlockSvg} */
       (Workspace.getById(workspaceId).getBlockById(bubbleEvent.blockId));
   const type = block.type;
   if (type !== 'procedures_defnoreturn' && type !== 'procedures_defreturn') {
     return;
   }
-  const workspace = /** @type {!WorkspaceSvg} */ (block.mutator.getWorkspace());
+  const workspace = /** @type {!Blockly.WorkspaceSvg} */ (block.mutator.getWorkspace());
   updateMutatorFlyout(workspace);
   workspace.addChangeListener(mutatorChangeListener);
 };
@@ -354,7 +354,7 @@ exports.mutatorOpenListener = mutatorOpenListener;
 /**
  * Listens for changes in a procedure mutator and triggers flyout updates when
  * necessary.
- * @param {!Abstract} e The event that triggered this listener.
+ * @param {!Blockly.Events.Abstract} e The event that triggered this listener.
  */
 const mutatorChangeListener = function(e) {
   if (e.type !== eventUtils.BLOCK_CREATE &&
@@ -363,7 +363,7 @@ const mutatorChangeListener = function(e) {
     return;
   }
   const workspaceId = /** @type {string} */ (e.workspaceId);
-  const workspace = /** @type {!WorkspaceSvg} */
+  const workspace = /** @type {!Blockly.WorkspaceSvg} */
       (Workspace.getById(workspaceId));
   updateMutatorFlyout(workspace);
 };
@@ -371,8 +371,8 @@ const mutatorChangeListener = function(e) {
 /**
  * Find all the callers of a named procedure.
  * @param {string} name Name of procedure.
- * @param {!Workspace} workspace The workspace to find callers in.
- * @return {!Array<!Block>} Array of caller blocks.
+ * @param {!Blockly.Workspace} workspace The workspace to find callers in.
+ * @return {!Array<!Blockly.Block>} Array of caller blocks.
  * @alias Blockly.Procedures.getCallers
  */
 const getCallers = function(name, workspace) {
@@ -381,7 +381,7 @@ const getCallers = function(name, workspace) {
   // Iterate through every block and check the name.
   for (let i = 0; i < blocks.length; i++) {
     // Assume it is a procedure block so we can check.
-    const procedureBlock = /** @type {!ProcedureBlock} */ (blocks[i]);
+    const procedureBlock = /** @type {!ProcedureBlockly.Block} */ (blocks[i]);
     if (procedureBlock.getProcedureCall) {
       const procName = procedureBlock.getProcedureCall();
       // Procedure name may be null if the block is only half-built.
@@ -397,12 +397,12 @@ exports.getCallers = getCallers;
 /**
  * When a procedure definition changes its parameters, find and edit all its
  * callers.
- * @param {!Block} defBlock Procedure definition block.
+ * @param {!Blockly.Block} defBlock Procedure definition block.
  * @alias Blockly.Procedures.mutateCallers
  */
 const mutateCallers = function(defBlock) {
   const oldRecordUndo = eventUtils.getRecordUndo();
-  const procedureBlock = /** @type {!ProcedureBlock} */ (defBlock);
+  const procedureBlock = /** @type {!ProcedureBlock} */ (defBlockly.Block);
   const name = procedureBlock.getProcedureDef()[0];
   const xmlElement = defBlock.mutationToDom(true);
   const callers = getCallers(name, defBlock.workspace);
@@ -428,8 +428,8 @@ exports.mutateCallers = mutateCallers;
 /**
  * Find the definition block for the named procedure.
  * @param {string} name Name of procedure.
- * @param {!Workspace} workspace The workspace to search.
- * @return {?Block} The procedure definition block, or null not found.
+ * @param {!Blockly.Workspace} workspace The workspace to search.
+ * @return {?Blockly.Block} The procedure definition block, or null not found.
  * @alias Blockly.Procedures.getDefinition
  */
 const getDefinition = function(name, workspace) {
@@ -439,7 +439,7 @@ const getDefinition = function(name, workspace) {
   const blocks = workspace.getAllBlocks(false);
   for (let i = 0; i < blocks.length; i++) {
     // Assume it is a procedure block so we can check.
-    const procedureBlock = /** @type {!ProcedureBlock} */ (blocks[i]);
+    const procedureBlock = /** @type {!ProcedureBlockly.Block} */ (blocks[i]);
     if (procedureBlock.getProcedureDef) {
       const tuple = procedureBlock.getProcedureDef();
       if (tuple && Names.equals(tuple[0], name)) {

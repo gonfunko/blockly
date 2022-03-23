@@ -27,7 +27,7 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about the space an icon takes up during
  * rendering
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @struct
  * @alias Blockly.blockRendering.Icon
  */
@@ -35,15 +35,15 @@ class Icon extends Measurable {
   /**
    * An object containing information about the space an icon takes up during
    * rendering
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!BlocklyIcon} icon The icon to measure and store information for.
+   * @param {!Blockly.Icon} icon The icon to measure and store information for.
    * @package
    */
   constructor(constants, icon) {
     super(constants);
 
-    /** @type {!BlocklyIcon} */
+    /** @type {!Blockly.Icon} */
     this.icon = icon;
 
     /** @type {boolean} */

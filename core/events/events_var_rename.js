@@ -24,12 +24,12 @@ const {VariableModel} = goog.requireType('Blockly.VariableModel');
 
 /**
  * Class for a variable rename event.
- * @extends {VarBase}
+ * @extends {Blockly.Events.VarBase}
  * @alias Blockly.Events.VarRename
  */
 class VarRename extends VarBase {
   /**
-   * @param {!VariableModel=} opt_variable The renamed variable. Undefined
+   * @param {!Blockly.VariableModel=} opt_variable The renamed variable. Undefined
    *     for a blank event.
    * @param {string=} newName The new name the variable will be changed to.
    */

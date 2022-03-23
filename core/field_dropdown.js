@@ -37,12 +37,12 @@ const {Svg} = goog.require('Blockly.utils.Svg');
 
 /**
  * Class for an editable dropdown field.
- * @extends {Field}
+ * @extends {Blockly.Field}
  * @alias Blockly.FieldDropdown
  */
 class FieldDropdown extends Field {
   /**
-   * @param {(!Array<!Array>|!Function|!Sentinel)} menuGenerator
+   * @param {(!Array<!Array>|!Function|!Blockly.utils.Sentinel)} menuGenerator
    *     A non-empty array of options for a dropdown list, or a function which
    *     generates these options.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
@@ -63,14 +63,14 @@ class FieldDropdown extends Field {
 
     /**
      * A reference to the currently selected menu item.
-     * @type {?MenuItem}
+     * @type {?Blockly.MenuItem}
      * @private
      */
     this.selectedMenuItem_ = null;
 
     /**
      * The dropdown menu.
-     * @type {?Menu}
+     * @type {?Blockly.Menu}
      * @protected
      */
     this.menu_ = null;
@@ -120,7 +120,7 @@ class FieldDropdown extends Field {
     /**
      * An array of options for a dropdown list,
      * or a function which generates these options.
-     * @type {(!Array<!Array>|!function(this:FieldDropdown): !Array<!Array>)}
+     * @type {(!Array<!Array>|!function(this:Blockly.FieldDropdown): !Array<!Array>)}
      * @protected
      */
     this.menuGenerator_ =
@@ -358,18 +358,18 @@ class FieldDropdown extends Field {
 
   /**
    * Handle an action in the dropdown menu.
-   * @param {!MenuItem} menuItem The MenuItem selected within menu.
+   * @param {!Blockly.MenuItem} menuItem The MenuItem selected within menu.
    * @private
    */
   handleMenuActionEvent_(menuItem) {
     dropDownDiv.hideIfOwner(this, true);
-    this.onItemSelected_(/** @type {!Menu} */ (this.menu_), menuItem);
+    this.onItemSelected_(/** @type {!Blockly.Menu} */ (this.menu_), menuItem);
   }
 
   /**
    * Handle the selection of an item in the dropdown menu.
-   * @param {!Menu} menu The Menu component clicked.
-   * @param {!MenuItem} menuItem The MenuItem selected within menu.
+   * @param {!Blockly.Menu} menu The Menu component clicked.
+   * @param {!Blockly.MenuItem} menuItem The MenuItem selected within menu.
    * @protected
    */
   onItemSelected_(menu, menuItem) {
@@ -675,7 +675,7 @@ class FieldDropdown extends Field {
   /**
    * Construct a FieldDropdown from a JSON arg object.
    * @param {!Object} options A JSON object with options (options).
-   * @return {!FieldDropdown} The new field instance.
+   * @return {!Blockly.FieldDropdown} The new field instance.
    * @package
    * @nocollapse
    */

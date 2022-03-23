@@ -25,13 +25,13 @@ const {Field} = goog.requireType('Blockly.Field');
 
 /**
  * A cursor for navigating between tab navigable fields.
- * @extends {BasicCursor}
+ * @extends {Blockly.BasicCursor}
  * @alias Blockly.TabNavigateCursor
  */
 class TabNavigateCursor extends BasicCursor {
   /**
    * Skip all nodes except for tab navigable fields.
-   * @param {?ASTNode} node The AST node to check whether it is valid.
+   * @param {?Blockly.ASTNode} node The AST node to check whether it is valid.
    * @return {boolean} True if the node should be visited, false otherwise.
    * @override
    */
@@ -39,7 +39,7 @@ class TabNavigateCursor extends BasicCursor {
     let isValid = false;
     const type = node && node.getType();
     if (node) {
-      const location = /** @type {Field} */ (node.getLocation());
+      const location = /** @type {Blockly.Field} */ (node.getLocation());
       if (type === ASTNode.types.FIELD && location &&
           location.isTabNavigable() && location.isClickable()) {
         isValid = true;

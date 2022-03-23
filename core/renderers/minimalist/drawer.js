@@ -24,13 +24,13 @@ const {RenderInfo} = goog.requireType('Blockly.minimalist.RenderInfo');
 
 /**
  * An object that draws a block based on the given rendering information.
- * @extends {BaseDrawer}
+ * @extends {Blockly.blockRendering.Drawer}
  * @alias Blockly.minimalist.Drawer
  */
 class Drawer extends BaseDrawer {
   /**
-   * @param {!BlockSvg} block The block to render.
-   * @param {!RenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!Blockly.minimalist.RenderInfo} info An object containing all
    *   information needed to render this block.
    * @package
    */

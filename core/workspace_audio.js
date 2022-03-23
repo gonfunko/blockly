@@ -36,14 +36,14 @@ const SOUND_LIMIT = 100;
  */
 class WorkspaceAudio {
   /**
-   * @param {WorkspaceSvg} parentWorkspace The parent of the workspace
+   * @param {Blockly.WorkspaceSvg} parentWorkspace The parent of the workspace
    *     this audio object belongs to, or null.
    */
   constructor(parentWorkspace) {
     /**
      * The parent of the workspace this object belongs to, or null.  May be
      * checked for sounds that this object can't find.
-     * @type {WorkspaceSvg}
+     * @type {Blockly.WorkspaceSvg}
      * @private
      */
     this.parentWorkspace_ = parentWorkspace;

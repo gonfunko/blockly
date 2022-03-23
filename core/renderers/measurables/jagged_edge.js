@@ -25,13 +25,13 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about the jagged edge of a collapsed block
  * takes up during rendering
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @struct
  * @alias Blockly.blockRendering.JaggedEdge
  */
 class JaggedEdge extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */

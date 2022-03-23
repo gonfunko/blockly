@@ -27,12 +27,12 @@ const {Sentinel} = goog.requireType('Blockly.utils.Sentinel');
 
 /**
  * Class for a non-editable, non-serializable text field.
- * @extends {Field}
+ * @extends {Blockly.Field}
  * @alias Blockly.FieldLabel
  */
 class FieldLabel extends Field {
   /**
-   * @param {(string|!Sentinel)=} opt_value The initial value of the
+   * @param {(string|!Blockly.utils.Sentinel)=} opt_value The initial value of the
    *     field. Should cast to a string. Defaults to an empty string if null or
    *     undefined.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
@@ -125,7 +125,7 @@ class FieldLabel extends Field {
    * Construct a FieldLabel from a JSON arg object,
    * dereferencing any string table references.
    * @param {!Object} options A JSON object with options (text, and class).
-   * @return {!FieldLabel} The new field instance.
+   * @return {!Blockly.FieldLabel} The new field instance.
    * @package
    * @nocollapse
    */

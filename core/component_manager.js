@@ -40,7 +40,7 @@ class ComponentManager {
   constructor() {
     /**
      * A map of the components registered with the workspace, mapped to id.
-     * @type {!Object<string, !ComponentManager.ComponentDatum>}
+     * @type {!Object<string, !Blockly.ComponentManager.ComponentDatum>}
      * @private
      */
     this.componentData_ = Object.create(null);
@@ -55,7 +55,7 @@ class ComponentManager {
 
   /**
    * Adds a component.
-   * @param {!ComponentManager.ComponentDatum} componentInfo The data for
+   * @param {!Blockly.ComponentManager.ComponentDatum} componentInfo The data for
    *   the component to register.
    * @param {boolean=} opt_allowOverrides True to prevent an error when
    *     overriding an already registered item.
@@ -101,7 +101,7 @@ class ComponentManager {
   /**
    * Adds a capability to a existing registered component.
    * @param {string} id The ID of the component to add the capability to.
-   * @param {string|!ComponentManager.Capability<T>} capability The
+   * @param {string|!Blockly.ComponentManager.Capability<T>} capability The
    *     capability to add.
    * @template T
    */
@@ -124,7 +124,7 @@ class ComponentManager {
   /**
    * Removes a capability from an existing registered component.
    * @param {string} id The ID of the component to remove the capability from.
-   * @param {string|!ComponentManager.Capability<T>} capability The
+   * @param {string|!Blockly.ComponentManager.Capability<T>} capability The
    *     capability to remove.
    * @template T
    */
@@ -148,7 +148,7 @@ class ComponentManager {
   /**
    * Returns whether the component with this id has the specified capability.
    * @param {string} id The ID of the component to check.
-   * @param {string|!ComponentManager.Capability<T>} capability The
+   * @param {string|!Blockly.ComponentManager.Capability<T>} capability The
    *     capability to check for.
    * @return {boolean} Whether the component has the capability.
    * @template T
@@ -161,7 +161,7 @@ class ComponentManager {
   /**
    * Gets the component with the given ID.
    * @param {string} id The ID of the component to get.
-   * @return {!IComponent|undefined} The component with the given name
+   * @return {!Blockly.IComponent|undefined} The component with the given name
    *    or undefined if not found.
    */
   getComponent(id) {
@@ -170,7 +170,7 @@ class ComponentManager {
 
   /**
    * Gets all the components with the specified capability.
-   * @param {string|!ComponentManager.Capability<T>
+   * @param {string|!Blockly.ComponentManager.Capability<T>
    *   } capability The capability of the component.
    * @param {boolean} sorted Whether to return list ordered by weights.
    * @return {!Array<T>} The components that match the specified capability.
@@ -208,9 +208,9 @@ class ComponentManager {
 /**
  * An object storing component information.
  * @typedef {{
- *    component: !IComponent,
+ *    component: !Blockly.IComponent,
  *    capabilities: (
- *     !Array<string|!ComponentManager.Capability<!IComponent>>
+ *     !Array<string|!Blockly.ComponentManager.Capability<!Blockly.IComponent>>
  *       ),
  *    weight: number
  *  }}
@@ -244,19 +244,19 @@ ComponentManager.Capability = class {
   }
 };
 
-/** @type {!ComponentManager.Capability<!IPositionable>} */
+/** @type {!Blockly.ComponentManager.Capability<!Blockly.IPositionable>} */
 ComponentManager.Capability.POSITIONABLE =
     new ComponentManager.Capability('positionable');
 
-/** @type {!ComponentManager.Capability<!IDragTarget>} */
+/** @type {!Blockly.ComponentManager.Capability<!Blockly.IDragTarget>} */
 ComponentManager.Capability.DRAG_TARGET =
     new ComponentManager.Capability('drag_target');
 
-/** @type {!ComponentManager.Capability<!IDeleteArea>} */
+/** @type {!Blockly.ComponentManager.Capability<!Blockly.IDeleteArea>} */
 ComponentManager.Capability.DELETE_AREA =
     new ComponentManager.Capability('delete_area');
 
-/** @type {!ComponentManager.Capability<!IAutoHideable>} */
+/** @type {!Blockly.ComponentManager.Capability<!Blockly.IAutoHideable>} */
 ComponentManager.Capability.AUTOHIDEABLE =
     new ComponentManager.Capability('autohideable');
 

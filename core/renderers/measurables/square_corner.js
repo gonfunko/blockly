@@ -25,13 +25,13 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about the space a square corner takes up
  * during rendering.
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @struct
  * @alias Blockly.blockRendering.SquareCorner
  */
 class SquareCorner extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @param {string=} opt_position The position of this corner.
    * @package

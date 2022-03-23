@@ -29,20 +29,20 @@ const {ToolboxItem} = goog.require('Blockly.ToolboxItem');
 /**
  * Class for a toolbox separator. This is the thin visual line that appears on
  * the toolbox. This item is not interactable.
- * @extends {ToolboxItem}
+ * @extends {Blockly.ToolboxItem}
  * @alias Blockly.ToolboxSeparator
  */
 class ToolboxSeparator extends ToolboxItem {
   /**
-   * @param {!toolbox.SeparatorInfo} separatorDef The information
+   * @param {!Blockly.utils.toolbox.SeparatorInfo} separatorDef The information
    *     needed to create a separator.
-   * @param {!IToolbox} toolbox The parent toolbox for the separator.
+   * @param {!Blockly.IToolbox} toolbox The parent toolbox for the separator.
    */
   constructor(separatorDef, toolbox) {
     super(separatorDef, toolbox);
     /**
      * All the CSS class names that are used to create a separator.
-     * @type {!ToolboxSeparator.CssConfig}
+     * @type {!Blockly.ToolboxSeparator.CssConfig}
      * @protected
      */
     this.cssConfig_ = {'container': 'blocklyTreeSeparator'};

@@ -43,8 +43,8 @@ const {ToolboxSeparator} = goog.requireType('Blockly.ToolboxSeparator');
  *            extra-state: (*|undefined),
  *            icons: (!Object<string, *>|undefined),
  *            fields: (!Object<string, *>|undefined),
- *            inputs: (!Object<string, !ConnectionState>|undefined),
- *            next: (!ConnectionState|undefined)
+ *            inputs: (!Object<string, !Blockly.serialization.blocks.ConnectionState>|undefined),
+ *            next: (!Blockly.serialization.blocks.ConnectionState|undefined)
  *          }}
  * @alias Blockly.utils.toolbox.BlockInfo
  */
@@ -57,7 +57,7 @@ exports.BlockInfo = BlockInfo;
  *            kind:string,
  *            id:(string|undefined),
  *            gap:(number|undefined),
- *            cssconfig:(!ToolboxSeparator.CssConfig|undefined)
+ *            cssconfig:(!Blockly.ToolboxSeparator.CssConfig|undefined)
  *          }}
  * @alias Blockly.utils.toolbox.SeparatorInfo
  */
@@ -102,11 +102,11 @@ exports.ButtonOrLabelInfo = ButtonOrLabelInfo;
  * @typedef {{
  *            kind:string,
  *            name:string,
- *            contents:!Array<!ToolboxItemInfo>,
+ *            contents:!Array<!Blockly.ToolboxItemInfo>,
  *            id:(string|undefined),
  *            categorystyle:(string|undefined),
  *            colour:(string|undefined),
- *            cssconfig:(!ToolboxCategory.CssConfig|undefined),
+ *            cssconfig:(!Blockly.ToolboxCategory.CssConfig|undefined),
  *            hidden:(string|undefined)
  *          }}
  * @alias Blockly.utils.toolbox.StaticCategoryInfo
@@ -122,7 +122,7 @@ exports.StaticCategoryInfo = StaticCategoryInfo;
  *            id:(string|undefined),
  *            categorystyle:(string|undefined),
  *            colour:(string|undefined),
- *            cssconfig:(!ToolboxCategory.CssConfig|undefined),
+ *            cssconfig:(!Blockly.ToolboxCategory.CssConfig|undefined),
  *            hidden:(string|undefined)
  *          }}
  * @alias Blockly.utils.toolbox.DynamicCategoryInfo
@@ -233,7 +233,7 @@ exports.Position = Position;
 
 /**
  * Converts the toolbox definition into toolbox JSON.
- * @param {?ToolboxDefinition} toolboxDef The definition
+ * @param {?Blockly.utils.toolbox.ToolboxDefinition} toolboxDef The definition
  *     of the toolbox in one of its many forms.
  * @return {?ToolboxInfo} Object holding information
  *     for creating a toolbox.
@@ -282,9 +282,9 @@ const validateToolbox = function(toolboxJson) {
 
 /**
  * Converts the flyout definition into a list of flyout items.
- * @param {?FlyoutDefinition} flyoutDef The definition of
+ * @param {?Blockly.utils.toolbox.FlyoutDefinition} flyoutDef The definition of
  *    the flyout in one of its many forms.
- * @return {!FlyoutItemInfoArray} A list of flyout items.
+ * @return {!Blockly.utils.toolbox.FlyoutItemInfoArray} A list of flyout items.
  * @alias Blockly.utils.toolbox.convertFlyoutDefToJsonArray
  * @package
  */
@@ -373,7 +373,7 @@ const convertToToolboxJson = function(toolboxDef) {
  * Converts the xml for a toolbox to JSON.
  * @param {!Node|!Array<Node>|!NodeList} toolboxDef The
  *     definition of the toolbox in one of its many forms.
- * @return {!FlyoutItemInfoArray|
+ * @return {!Blockly.utils.toolbox.FlyoutItemInfoArray|
  *          !Array<ToolboxItemInfo>} A list of objects in
  *          the toolbox.
  */

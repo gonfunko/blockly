@@ -28,13 +28,13 @@ const {Renderer} = goog.requireType('Blockly.minimalist.Renderer');
  * This measure pass does not propagate changes to the block (although fields
  * may choose to rerender when getSize() is called).  However, calling it
  * repeatedly may be expensive.
- * @extends {BaseRenderInfo}
+ * @extends {Blockly.blockRendering.RenderInfo}
  * @alias Blockly.minimalist.RenderInfo
  */
 class RenderInfo extends BaseRenderInfo {
   /**
-   * @param {!Renderer} renderer The renderer in use.
-   * @param {!BlockSvg} block The block to measure.
+   * @param {!Blockly.minimalist.Renderer} renderer The renderer in use.
+   * @param {!Blockly.BlockSvg} block The block to measure.
    * @package
    */
   constructor(renderer, block) {
@@ -43,11 +43,11 @@ class RenderInfo extends BaseRenderInfo {
 
   /**
    * Get the block renderer in use.
-   * @return {!Renderer} The block renderer in use.
+   * @return {!Blockly.minimalist.Renderer} The block renderer in use.
    * @package
    */
   getRenderer() {
-    return /** @type {!Renderer} */ (this.renderer_);
+    return /** @type {!Blockly.minimalist.Renderer} */ (this.renderer_);
   }
 }
 

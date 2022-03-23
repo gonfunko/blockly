@@ -22,7 +22,7 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a trashcan open event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.TrashcanOpen
  */
 class TrashcanOpen extends UiBase {

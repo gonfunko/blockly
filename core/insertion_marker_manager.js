@@ -56,7 +56,7 @@ const DUPLICATE_BLOCK_ERROR = 'The insertion marker ' +
  */
 class InsertionMarkerManager {
   /**
-   * @param {!BlockSvg} block The top block in the stack being dragged.
+   * @param {!Blockly.BlockSvg} block The top block in the stack being dragged.
    */
   constructor(block) {
     common.setSelected(block);
@@ -64,7 +64,7 @@ class InsertionMarkerManager {
     /**
      * The top block in the stack being dragged.
      * Does not change during a drag.
-     * @type {!BlockSvg}
+     * @type {!Blockly.BlockSvg}
      * @private
      */
     this.topBlock_ = block;
@@ -72,7 +72,7 @@ class InsertionMarkerManager {
     /**
      * The workspace on which these connections are being dragged.
      * Does not change during a drag.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = block.workspace;
@@ -81,7 +81,7 @@ class InsertionMarkerManager {
      * The last connection on the stack, if it's not the last connection on the
      * first block.
      * Set in initAvailableConnections, if at all.
-     * @type {RenderedConnection}
+     * @type {Blockly.RenderedConnection}
      * @private
      */
     this.lastOnStack_ = null;
@@ -90,7 +90,7 @@ class InsertionMarkerManager {
      * The insertion marker corresponding to the last block in the stack, if
      * that's not the same as the first block in the stack.
      * Set in initAvailableConnections, if at all
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @private
      */
     this.lastMarker_ = null;
@@ -98,7 +98,7 @@ class InsertionMarkerManager {
     /**
      * The insertion marker that shows up between blocks to show where a block
      * would go if dropped immediately.
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @private
      */
     this.firstMarker_ = this.createMarkerBlock_(this.topBlock_);
@@ -107,7 +107,7 @@ class InsertionMarkerManager {
      * The connection that this block would connect to if released immediately.
      * Updated on every mouse move.
      * This is not on any of the blocks that are being dragged.
-     * @type {RenderedConnection}
+     * @type {Blockly.RenderedConnection}
      * @private
      */
     this.closestConnection_ = null;
@@ -117,7 +117,7 @@ class InsertionMarkerManager {
      * block were released immediately. Updated on every mouse move. This is on
      * the top block that is being dragged or the last block in the dragging
      * stack.
-     * @type {RenderedConnection}
+     * @type {Blockly.RenderedConnection}
      * @private
      */
     this.localConnection_ = null;
@@ -133,21 +133,21 @@ class InsertionMarkerManager {
     /**
      * Connection on the insertion marker block that corresponds to
      * this.localConnection_ on the currently dragged block.
-     * @type {RenderedConnection}
+     * @type {Blockly.RenderedConnection}
      * @private
      */
     this.markerConnection_ = null;
 
     /**
      * The block that currently has an input being highlighted, or null.
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @private
      */
     this.highlightedBlock_ = null;
 
     /**
      * The block being faded to indicate replacement, or null.
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @private
      */
     this.fadedBlock_ = null;
@@ -157,7 +157,7 @@ class InsertionMarkerManager {
      * other blocks.  This includes all open connections on the top block, as
      * well as the last connection on the block stack. Does not change during a
      * drag.
-     * @type {!Array<!RenderedConnection>}
+     * @type {!Array<!Blockly.RenderedConnection>}
      * @private
      */
     this.availableConnections_ = this.initAvailableConnections_();
@@ -243,9 +243,9 @@ class InsertionMarkerManager {
 
   /**
    * Update connections based on the most recent move location.
-   * @param {!Coordinate} dxy Position relative to drag start,
+   * @param {!Blockly.utils.Coordinate} dxy Position relative to drag start,
    *     in workspace units.
-   * @param {?IDragTarget} dragTarget The drag target that the block is
+   * @param {?Blockly.IDragTarget} dragTarget The drag target that the block is
    *     currently over.
    * @package
    */
@@ -268,9 +268,9 @@ class InsertionMarkerManager {
 
   /**
    * Create an insertion marker that represents the given block.
-   * @param {!BlockSvg} sourceBlock The block that the insertion marker
+   * @param {!Blockly.BlockSvg} sourceBlock The block that the insertion marker
    *     will represent.
-   * @return {!BlockSvg} The insertion marker that represents the given
+   * @return {!Blockly.BlockSvg} The insertion marker that represents the given
    *     block.
    * @private
    */
@@ -332,7 +332,7 @@ class InsertionMarkerManager {
    * should only be called once, at the beginning of a drag. If the stack has
    * more than one block, this function will populate lastOnStack_ and create
    * the corresponding insertion marker.
-   * @return {!Array<!RenderedConnection>} A list of available
+   * @return {!Array<!Blockly.RenderedConnection>} A list of available
    *     connections.
    * @private
    */
@@ -361,7 +361,7 @@ class InsertionMarkerManager {
    * updated based on the closest candidate and the current drag distance.
    * @param {!Object} candidate An object containing a local connection, a
    *     closest connection, and a radius.  Returned by getCandidate_.
-   * @param {!Coordinate} dxy Position relative to drag start,
+   * @param {!Blockly.utils.Coordinate} dxy Position relative to drag start,
    *     in workspace units.
    * @return {boolean} Whether the preview should be updated.
    * @private
@@ -410,7 +410,7 @@ class InsertionMarkerManager {
   /**
    * Find the nearest valid connection, which may be the same as the current
    * closest connection.
-   * @param {!Coordinate} dxy Position relative to drag start,
+   * @param {!Blockly.utils.Coordinate} dxy Position relative to drag start,
    *     in workspace units.
    * @return {!Object} An object containing a local connection, a closest
    *     connection, and a radius.
@@ -468,7 +468,7 @@ class InsertionMarkerManager {
    * @param {!Object} candidate An object containing a local connection, a
    *     closest
    *    connection, and a radius.
-   * @param {?IDragTarget} dragTarget The drag target that the block is
+   * @param {?Blockly.IDragTarget} dragTarget The drag target that the block is
    *     currently over.
    * @return {boolean} Whether dropping the block immediately would delete the
    *    block.
@@ -481,7 +481,7 @@ class InsertionMarkerManager {
           dragTarget.id, ComponentManager.Capability.DELETE_AREA);
       if (isDeleteArea) {
         return (
-                   /** @type {!IDeleteArea} */ (dragTarget))
+                   /** @type {!Blockly.IDeleteArea} */ (dragTarget))
             .wouldDelete(this.topBlock_, candidate && !!candidate.closest);
       }
     }
@@ -532,8 +532,8 @@ class InsertionMarkerManager {
     const closest = this.closestConnection_;
     const renderer = this.workspace_.getRenderer();
     const method = renderer.getConnectionPreviewMethod(
-        /** @type {!RenderedConnection} */ (closest),
-        /** @type {!RenderedConnection} */ (this.localConnection_),
+        /** @type {!Blockly.RenderedConnection} */ (closest),
+        /** @type {!Blockly.RenderedConnection} */ (this.localConnection_),
         this.topBlock_);
 
     switch (method) {
@@ -760,7 +760,7 @@ class InsertionMarkerManager {
   /**
    * Get a list of the insertion markers that currently exist.  Drags have 0, 1,
    * or 2 insertion markers.
-   * @return {!Array<!BlockSvg>} A possibly empty list of insertion
+   * @return {!Array<!Blockly.BlockSvg>} A possibly empty list of insertion
    *     marker blocks.
    * @package
    */

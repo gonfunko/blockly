@@ -34,7 +34,7 @@ const {Workspace} = goog.requireType('Blockly.Workspace');
 /**
  * The main workspace most recently used.
  * Set by Blockly.WorkspaceSvg.prototype.markFocused
- * @type {!Workspace}
+ * @type {!Blockly.Workspace}
  */
 let mainWorkspace;
 
@@ -42,7 +42,7 @@ let mainWorkspace;
  * Returns the last used top level workspace (based on focus).  Try not to use
  * this function, particularly if there are multiple Blockly instances on a
  * page.
- * @return {!Workspace} The main workspace.
+ * @return {!Blockly.Workspace} The main workspace.
  * @alias Blockly.common.getMainWorkspace
  */
 const getMainWorkspace = function() {
@@ -52,7 +52,7 @@ exports.getMainWorkspace = getMainWorkspace;
 
 /**
  * Sets last used main workspace.
- * @param {!Workspace} workspace The most recently used top level workspace.
+ * @param {!Blockly.Workspace} workspace The most recently used top level workspace.
  * @alias Blockly.common.setMainWorkspace
  */
 const setMainWorkspace = function(workspace) {
@@ -62,13 +62,13 @@ exports.setMainWorkspace = setMainWorkspace;
 
 /**
  * Currently selected block.
- * @type {?ICopyable}
+ * @type {?Blockly.ICopyable}
  */
 let selected = null;
 
 /**
  * Returns the currently selected block.
- * @return {?ICopyable} The currently selected block.
+ * @return {?Blockly.ICopyable} The currently selected block.
  * @alias Blockly.common.getSelected
  */
 const getSelected = function() {
@@ -80,7 +80,7 @@ exports.getSelected = getSelected;
  * Sets the currently selected block. This function does not visually mark the
  * block as selected or fire the required events. If you wish to
  * programmatically select a block, use `BlockSvg#select`.
- * @param {?ICopyable} newSelection The newly selected block.
+ * @param {?Blockly.ICopyable} newSelection The newly selected block.
  * @alias Blockly.common.setSelected
  * @package
  */
@@ -125,7 +125,7 @@ exports.setParentContainer = setParentContainer;
  * See workspace.resizeContents to resize the workspace when the contents
  * change (e.g. when a block is added or removed).
  * Record the height/width of the SVG image.
- * @param {!WorkspaceSvg} workspace Any workspace in the SVG.
+ * @param {!Blockly.WorkspaceSvg} workspace Any workspace in the SVG.
  * @alias Blockly.common.svgResize
  */
 const svgResize = function(workspace) {
@@ -156,14 +156,14 @@ exports.svgResize = svgResize;
 
 /**
  * All of the connections on blocks that are currently being dragged.
- * @type {!Array<!Connection>}
+ * @type {!Array<!Blockly.Connection>}
  */
 exports.draggingConnections = [];
 
 /**
  * Get a map of all the block's descendants mapping their type to the number of
  *    children with that type.
- * @param {!Block} block The block to map.
+ * @param {!Blockly.Block} block The block to map.
  * @param {boolean=} opt_stripFollowing Optionally ignore all following
  *    statements (blocks that are not inside a value or statement input
  *    of the block).
@@ -199,7 +199,7 @@ exports.getBlockTypeCounts = getBlockTypeCounts;
  *     of jsonDef.
  */
 const jsonInitFactory = function(jsonDef) {
-  return /** @this {Block} */ function() {
+  return /** @this {Blockly.Block} */ function() {
     this.jsonInit(jsonDef);
   };
 };
@@ -219,12 +219,12 @@ exports.defineBlocksWithJsonArray = defineBlocksWithJsonArray;
  * Define blocks from an array of JSON block definitions, as might be generated
  * by the Blockly Developer Tools.
  * @param {!Array<!Object>} jsonArray An array of JSON block definitions.
- * @return {!Object<string, !BlockDefinition>} A map of the block
+ * @return {!Object<string, !Blockly.blocks>} A map of the block
  *     definitions created.
  * @alias Blockly.common.defineBlocksWithJsonArray
  */
 const createBlockDefinitionsFromJsonArray = function(jsonArray) {
-  const /** @type {!Object<string,!BlockDefinition>} */ blocks = {};
+  const /** @type {!Object<string,!Blockly.blocks>} */ blocks = {};
   for (let i = 0; i < jsonArray.length; i++) {
     const elem = jsonArray[i];
     if (!elem) {
@@ -248,7 +248,7 @@ exports.createBlockDefinitionsFromJsonArray =
 /**
  * Add the specified block definitions to the block definitions
  * dictionary (Blockly.Blocks).
- * @param {!Object<string,!BlockDefinition>} blocks A map of block
+ * @param {!Object<string,!Blockly.blocks>} blocks A map of block
  *     type names to block definitions.
  * @alias Blockly.common.defineBlocks
  */

@@ -32,7 +32,7 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  */
 class Row {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */
@@ -47,7 +47,7 @@ class Row {
     /**
      * An array of elements contained in this row.
      * @package
-     * @type {!Array<!Measurable>}
+     * @type {!Array<!Blockly.blockRendering.Measurable>}
      */
     this.elements = [];
 
@@ -150,7 +150,7 @@ class Row {
 
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      * @protected
      */
     this.constants_ = constants;
@@ -170,7 +170,7 @@ class Row {
 
   /**
    * Get the last input on this row, if it has one.
-   * @return {InputConnection} The last input on the row,
+   * @return {Blockly.blockRendering.InputConnection} The last input on the row,
    *     or null.
    * @package
    */
@@ -179,7 +179,7 @@ class Row {
     for (let i = this.elements.length - 1; i >= 0; i--) {
       const elem = this.elements[i];
       if (Types.isInput(elem)) {
-        return /** @type {InputConnection} */ (elem);
+        return /** @type {Blockly.blockRendering.InputConnection} */ (elem);
       }
     }
     return null;
@@ -213,7 +213,7 @@ class Row {
 
   /**
    * Convenience method to get the first spacer element on this row.
-   * @return {InRowSpacer} The first spacer element on
+   * @return {Blockly.blockRendering.InRowSpacer} The first spacer element on
    *   this row.
    * @package
    */
@@ -221,7 +221,7 @@ class Row {
     for (let i = 0; i < this.elements.length; i++) {
       const elem = this.elements[i];
       if (Types.isSpacer(elem)) {
-        return /** @type {InRowSpacer} */ (elem);
+        return /** @type {Blockly.blockRendering.InRowSpacer} */ (elem);
       }
     }
     return null;
@@ -229,7 +229,7 @@ class Row {
 
   /**
    * Convenience method to get the last spacer element on this row.
-   * @return {InRowSpacer} The last spacer element on
+   * @return {Blockly.blockRendering.InRowSpacer} The last spacer element on
    *   this row.
    * @package
    */
@@ -237,7 +237,7 @@ class Row {
     for (let i = this.elements.length - 1; i >= 0; i--) {
       const elem = this.elements[i];
       if (Types.isSpacer(elem)) {
-        return /** @type {InRowSpacer} */ (elem);
+        return /** @type {Blockly.blockRendering.InRowSpacer} */ (elem);
       }
     }
     return null;

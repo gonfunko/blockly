@@ -26,12 +26,12 @@ const {Block} = goog.requireType('Blockly.Block');
 
 /**
  * Class for a block deletion event.
- * @extends {BlockBase}
+ * @extends {Blockly.Events.BlockBase}
  * @alias Blockly.Events.BlockDelete
  */
 class BlockDelete extends BlockBase {
   /**
-   * @param {!Block=} opt_block The deleted block.  Undefined for a blank
+   * @param {!Blockly.Block=} opt_block The deleted block.  Undefined for a blank
    *     event.
    */
   constructor(opt_block) {
@@ -71,7 +71,7 @@ class BlockDelete extends BlockBase {
 
     /**
      * JSON representation of the block that was just deleted.
-     * @type {!blocks.State}
+     * @type {!Blockly.serialization.blocks.State}
      */
     this.oldJson = /** @type {!blocks.State} */ (
         blocks.save(opt_block, {addCoordinates: true}));

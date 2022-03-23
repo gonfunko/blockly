@@ -70,15 +70,15 @@ const TEXTAREA_OFFSET = 2;
 
 /**
  * Class for a workspace comment's SVG representation.
- * @extends {WorkspaceComment}
- * @implements {IBoundedElement}
- * @implements {IBubble}
- * @implements {ICopyable}
+ * @extends {Blockly.WorkspaceComment}
+ * @implements {Blockly.IBoundedElement}
+ * @implements {Blockly.IBubble}
+ * @implements {Blockly.ICopyable}
  * @alias Blockly.WorkspaceCommentSvg
  */
 class WorkspaceCommentSvg extends WorkspaceComment {
   /**
-   * @param {!WorkspaceSvg} workspace The block's workspace.
+   * @param {!Blockly.WorkspaceSvg} workspace The block's workspace.
    * @param {string} content The content of this workspace comment.
    * @param {number} height Height of the comment.
    * @param {number} width Width of the comment.
@@ -88,7 +88,7 @@ class WorkspaceCommentSvg extends WorkspaceComment {
   constructor(workspace, content, height, width, opt_id) {
     super(workspace, content, height, width, opt_id);
     /**
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      */
     this.workspace;
 
@@ -383,7 +383,7 @@ class WorkspaceCommentSvg extends WorkspaceComment {
    * If the comment is on the workspace, (0, 0) is the origin of the workspace
    * coordinate system.
    * This does not change with workspace scale.
-   * @return {!Coordinate} Object with .x and .y properties in
+   * @return {!Blockly.utils.Coordinate} Object with .x and .y properties in
    *     workspace coordinates.
    * @package
    */
@@ -427,7 +427,7 @@ class WorkspaceCommentSvg extends WorkspaceComment {
    * @package
    */
   moveBy(dx, dy) {
-    const event = /** @type {!CommentMove} */ (
+    const event = /** @type {!Blockly.Events.CommentMove} */ (
         new (eventUtils.get(eventUtils.COMMENT_MOVE))(this));
     // TODO: Do I need to look up the relative to surface XY position here?
     const xy = this.getRelativeToSurfaceXY();
@@ -475,9 +475,9 @@ class WorkspaceCommentSvg extends WorkspaceComment {
   /**
    * Move this comment during a drag, taking into account whether we are using a
    * drag surface to translate blocks.
-   * @param {BlockDragSurfaceSvg} dragSurface The surface that carries
+   * @param {Blockly.BlockDragSurfaceSvg} dragSurface The surface that carries
    *     rendered items during a drag, or null if no drag surface is in use.
-   * @param {!Coordinate} newLoc The location to translate to, in
+   * @param {!Blockly.utils.Coordinate} newLoc The location to translate to, in
    *     workspace coordinates.
    * @package
    */
@@ -515,7 +515,7 @@ class WorkspaceCommentSvg extends WorkspaceComment {
    * Returns the coordinates of a bounding box describing the dimensions of this
    * comment.
    * Coordinate system: workspace coordinates.
-   * @return {!Rect} Object with coordinates of the bounding box.
+   * @return {!Blockly.utils.Rect} Object with coordinates of the bounding box.
    * @package
    */
   getBoundingRectangle() {
@@ -675,7 +675,7 @@ class WorkspaceCommentSvg extends WorkspaceComment {
 
   /**
    * Encode a comment for copying.
-   * @return {!ICopyable.CopyData} Copy metadata.
+   * @return {!Blockly.ICopyable.CopyData} Copy metadata.
    * @package
    */
   toCopyData() {
@@ -795,7 +795,7 @@ class WorkspaceCommentSvg extends WorkspaceComment {
     browserEvents.conditionalBind(
         textarea, 'change', this,
         /**
-         * @this {WorkspaceCommentSvg}
+         * @this {Blockly.WorkspaceCommentSvg}
          * @param {Event} e Unused event parameter
          */
         function(
@@ -1104,10 +1104,10 @@ class WorkspaceCommentSvg extends WorkspaceComment {
   /**
    * Decode an XML comment tag and create a rendered comment on the workspace.
    * @param {!Element} xmlComment XML comment element.
-   * @param {!WorkspaceSvg} workspace The workspace.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace.
    * @param {number=} opt_wsWidth The width of the workspace, which is used to
    *     position comments correctly in RTL.
-   * @return {!WorkspaceCommentSvg} The created workspace comment.
+   * @return {!Blockly.WorkspaceCommentSvg} The created workspace comment.
    * @package
    */
   static fromXmlRendered(xmlComment, workspace, opt_wsWidth) {
@@ -1137,8 +1137,8 @@ class WorkspaceCommentSvg extends WorkspaceComment {
     }
 
     WorkspaceComment.fireCreateEvent(
-        /** @type {!WorkspaceCommentSvg} */ (comment));
-    return (/** @type {!WorkspaceCommentSvg} */ (comment));
+        /** @type {!Blockly.WorkspaceCommentSvg} */ (comment));
+    return (/** @type {!Blockly.WorkspaceCommentSvg} */ (comment));
   }
 }
 

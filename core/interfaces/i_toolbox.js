@@ -12,7 +12,7 @@
 
 /**
  * The interface for a toolbox.
- * @namespace Blockly.IToolbox
+
  */
 goog.module('Blockly.IToolbox');
 
@@ -30,7 +30,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * Interface for a toolbox.
- * @extends {IRegistrable}
+ * @extends {Blockly.IRegistrable}
  * @interface
  * @alias Blockly.IToolbox
  */
@@ -44,7 +44,7 @@ IToolbox.prototype.init;
 
 /**
  * Fills the toolbox with new toolbox items and removes any old contents.
- * @param {!toolbox.ToolboxInfo} toolboxDef Object holding information
+ * @param {!Blockly.utils.toolbox.ToolboxInfo} toolboxDef Object holding information
  *     for creating a toolbox.
  */
 IToolbox.prototype.render;
@@ -63,13 +63,13 @@ IToolbox.prototype.getHeight;
 
 /**
  * Gets the toolbox flyout.
- * @return {?IFlyout} The toolbox flyout.
+ * @return {?Blockly.IFlyout} The toolbox flyout.
  */
 IToolbox.prototype.getFlyout;
 
 /**
  * Gets the workspace for the toolbox.
- * @return {!WorkspaceSvg} The parent workspace for the toolbox.
+ * @return {!Blockly.WorkspaceSvg} The parent workspace for the toolbox.
  */
 IToolbox.prototype.getWorkspace;
 
@@ -128,7 +128,7 @@ IToolbox.prototype.selectItemByPosition;
 
 /**
  * Gets the selected item.
- * @return {?IToolboxItem} The selected item, or null if no item is
+ * @return {?Blockly.IToolboxItem} The selected item, or null if no item is
  *     currently selected.
  */
 IToolbox.prototype.getSelectedItem;

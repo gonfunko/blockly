@@ -61,7 +61,7 @@ const Rect = class {
   /**
    * Tests whether this rectangle intersects the provided rectangle.
    * Assumes that the coordinate system increases going down and left.
-   * @param {!Rect} other The other rectangle to check for
+   * @param {!Blockly.utils.Rect} other The other rectangle to check for
    *    intersection with.
    * @return {boolean} Whether this rectangle intersects the provided rectangle.
    */

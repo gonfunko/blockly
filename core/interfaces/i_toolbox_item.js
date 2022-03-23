@@ -12,7 +12,7 @@
 
 /**
  * The interface for a toolbox item.
- * @namespace Blockly.IToolboxItem
+
  */
 goog.module('Blockly.IToolboxItem');
 
@@ -49,7 +49,7 @@ IToolboxItem.prototype.getId;
 
 /**
  * Gets the parent if the toolbox item is nested.
- * @return {?IToolboxItem} The parent toolbox item, or null if
+ * @return {?Blockly.IToolboxItem} The parent toolbox item, or null if
  *     this toolbox item is not nested.
  * @public
  */

@@ -35,7 +35,7 @@ exports.DeserializationError = DeserializationError;
  */
 class MissingBlockType extends DeserializationError {
   /**
-   * @param {!State} state The state object which is missing the block type.
+   * @param {!Blockly.serialization.blocks} state The state object which is missing the block type.
    * @package
    */
   constructor(state) {
@@ -43,7 +43,7 @@ class MissingBlockType extends DeserializationError {
 
     /**
      * The state object containing the bad name.
-     * @type {!State}
+     * @type {!Blockly.serialization.blocks}
      */
     this.state = state;
   }
@@ -59,8 +59,8 @@ class MissingConnection extends DeserializationError {
   /**
    * @param {string} connection The name of the connection that is missing. E.g.
    *     'IF0', or 'next'.
-   * @param {!Block} block The block missing the connection.
-   * @param {!State} state The state object containing the bad connection.
+   * @param {!Blockly.Block} block The block missing the connection.
+   * @param {!Blockly.serialization.blocks} state The state object containing the bad connection.
    * @package
    */
   constructor(connection, block, state) {
@@ -69,13 +69,13 @@ connection`);
 
     /**
      * The block missing the connection.
-     * @type {!Block}
+     * @type {!Blockly.Block}
      */
     this.block = block;
 
     /**
      * The state object containing the bad name.
-     * @type {!State}
+     * @type {!Blockly.serialization.blocks}
      */
     this.state = state;
   }
@@ -92,9 +92,9 @@ class BadConnectionCheck extends DeserializationError {
    * @param {string} reason The reason the connections were not compatible.
    * @param {string} childConnection The name of the incompatible child
    *     connection. E.g. 'output' or 'previous'.
-   * @param {!Block} childBlock The child block that could not connect
+   * @param {!Blockly.Block} childBlock The child block that could not connect
    *     to its parent.
-   * @param {!State} childState The state object representing the child block.
+   * @param {!Blockly.serialization.blocks} childState The state object representing the child block.
    * @package
    */
   constructor(reason, childConnection, childBlock, childState) {
@@ -103,14 +103,14 @@ ${childConnection} to its parent, because: ${reason}`);
 
     /**
      * The block that could not connect to its parent.
-     * @type {!Block}
+     * @type {!Blockly.Block}
      */
     this.childBlock = childBlock;
 
     /**
      * The state object representing the block that could not connect to its
      * parent.
-     * @type {!State}
+     * @type {!Blockly.serialization.blocks}
      */
     this.childState = childState;
   }
@@ -126,7 +126,7 @@ exports.BadConnectionCheck = BadConnectionCheck;
  */
 class RealChildOfShadow extends DeserializationError {
   /**
-   * @param {!State} state The state object representing the real block.
+   * @param {!Blockly.serialization.blocks} state The state object representing the real block.
    * @package
    */
   constructor(state) {
@@ -136,7 +136,7 @@ children`);
 
     /**
      * The state object representing the real block.
-     * @type {!State}
+     * @type {!Blockly.serialization.blocks}
      */
     this.state = state;
   }

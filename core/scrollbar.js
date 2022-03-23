@@ -40,7 +40,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
  */
 class Scrollbar {
   /**
-   * @param {!WorkspaceSvg} workspace Workspace to bind the scrollbar to.
+   * @param {!Blockly.WorkspaceSvg} workspace Workspace to bind the scrollbar to.
    * @param {boolean} horizontal True if horizontal, false if vertical.
    * @param {boolean=} opt_pair True if scrollbar is part of a horiz/vert pair.
    * @param {string=} opt_class A class to be applied to this scrollbar.
@@ -49,7 +49,7 @@ class Scrollbar {
   constructor(workspace, horizontal, opt_pair, opt_class, opt_margin) {
     /**
      * The workspace this scrollbar is bound to.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
@@ -77,7 +77,7 @@ class Scrollbar {
         Scrollbar.DEFAULT_SCROLLBAR_MARGIN;
     /**
      * Previously recorded metrics from the workspace.
-     * @type {?Metrics}
+     * @type {?Blockly.utils.Metrics}
      * @private
      */
     this.oldHostMetrics_ = null;
@@ -93,7 +93,7 @@ class Scrollbar {
      * measured in CSS pixels relative to the injection div origin.  This is
      * usually (0, 0).  When the scrollbar is in a flyout it may have a
      * different origin.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @private
      */
     this.origin_ = new Coordinate(0, 0);
@@ -183,7 +183,7 @@ class Scrollbar {
      * The upper left corner of the scrollbar's SVG group in CSS pixels relative
      * to the scrollbar's origin.  This is usually relative to the injection div
      * origin.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @package
      */
     this.position = new Coordinate(0, 0);
@@ -328,7 +328,7 @@ class Scrollbar {
 
   /**
    * Recalculate the scrollbar's location and its length.
-   * @param {Metrics=} opt_metrics A data structure of from the
+   * @param {Blockly.utils.Metrics=} opt_metrics A data structure of from the
    *     describing all the required dimensions.  If not provided, it will be
    *     fetched from the host object.
    */
@@ -363,7 +363,7 @@ class Scrollbar {
   /**
    * Returns whether the a resizeView is necessary by comparing the passed
    * hostMetrics with cached old host metrics.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    * @return {boolean} Whether a resizeView is necessary.
    * @private
@@ -380,7 +380,7 @@ class Scrollbar {
 
   /**
    * Recalculate a horizontal scrollbar's location and length.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    * @private
    */
@@ -396,7 +396,7 @@ class Scrollbar {
    * Recalculate a horizontal scrollbar's location on the screen and path
    * length. This should be called when the layout or size of the window has
    * changed.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    */
   resizeViewHorizontal(hostMetrics) {
@@ -426,7 +426,7 @@ class Scrollbar {
   /**
    * Recalculate a horizontal scrollbar's location within its path and length.
    * This should be called when the contents of the workspace have changed.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    */
   resizeContentHorizontal(hostMetrics) {
@@ -479,7 +479,7 @@ class Scrollbar {
 
   /**
    * Recalculate a vertical scrollbar's location and length.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    * @private
    */
@@ -494,7 +494,7 @@ class Scrollbar {
   /**
    * Recalculate a vertical scrollbar's location on the screen and path length.
    * This should be called when the layout or size of the window has changed.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    */
   resizeViewVertical(hostMetrics) {
@@ -521,7 +521,7 @@ class Scrollbar {
   /**
    * Recalculate a vertical scrollbar's location within its path and length.
    * This should be called when the contents of the workspace have changed.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    */
   resizeContentVertical(hostMetrics) {
@@ -847,9 +847,9 @@ class Scrollbar {
   }
 
   /**
-   * @param {!Metrics} first An object containing computed
+   * @param {!Blockly.utils.Metrics} first An object containing computed
    *     measurements of a workspace.
-   * @param {!Metrics} second Another object containing computed
+   * @param {!Blockly.utils.Metrics} second Another object containing computed
    *     measurements of a workspace.
    * @return {boolean} Whether the two sets of metrics are equivalent.
    * @private

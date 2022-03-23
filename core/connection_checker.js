@@ -30,15 +30,15 @@ const {RenderedConnection} = goog.requireType('Blockly.RenderedConnection');
 
 /**
  * Class for connection type checking logic.
- * @implements {IConnectionChecker}
+ * @implements {Blockly.IConnectionChecker}
  * @alias Blockly.ConnectionChecker
  */
 class ConnectionChecker {
   /**
    * Check whether the current connection can connect with the target
    * connection.
-   * @param {Connection} a Connection to check compatibility with.
-   * @param {Connection} b Connection to check compatibility with.
+   * @param {Blockly.Connection} a Connection to check compatibility with.
+   * @param {Blockly.Connection} b Connection to check compatibility with.
    * @param {boolean} isDragging True if the connection is being made by
    *     dragging a block.
    * @param {number=} opt_distance The max allowable distance between the
@@ -54,13 +54,13 @@ class ConnectionChecker {
   /**
    * Checks whether the current connection can connect with the target
    * connection, and return an error code if there are problems.
-   * @param {Connection} a Connection to check compatibility with.
-   * @param {Connection} b Connection to check compatibility with.
+   * @param {Blockly.Connection} a Connection to check compatibility with.
+   * @param {Blockly.Connection} b Connection to check compatibility with.
    * @param {boolean} isDragging True if the connection is being made by
    *     dragging a block.
    * @param {number=} opt_distance The max allowable distance between the
    *     connections for drag checks.
-   * @return {number} Connection.CAN_CONNECT if the connection is legal,
+   * @return {number} Blockly.Connection.CAN_CONNECT if the connection is legal,
    *    an error code otherwise.
    * @public
    */
@@ -71,16 +71,16 @@ class ConnectionChecker {
     }
 
     // If the safety checks passed, both connections are non-null.
-    const connOne = /** @type {!Connection} **/ (a);
-    const connTwo = /** @type {!Connection} **/ (b);
+    const connOne = /** @type {!Blockly.Connection} **/ (a);
+    const connTwo = /** @type {!Blockly.Connection} **/ (b);
     if (!this.doTypeChecks(connOne, connTwo)) {
       return Connection.REASON_CHECKS_FAILED;
     }
 
     if (isDragging &&
         !this.doDragChecks(
-            /** @type {!RenderedConnection} **/ (a),
-            /** @type {!RenderedConnection} **/ (b), opt_distance || 0)) {
+            /** @type {!Blockly.RenderedConnection} **/ (a),
+            /** @type {!Blockly.RenderedConnection} **/ (b), opt_distance || 0)) {
       return Connection.REASON_DRAG_CHECKS_FAILED;
     }
 
@@ -90,8 +90,8 @@ class ConnectionChecker {
   /**
    * Helper method that translates a connection error code into a string.
    * @param {number} errorCode The error code.
-   * @param {Connection} a One of the two connections being checked.
-   * @param {Connection} b The second of the two connections being
+   * @param {Blockly.Connection} a One of the two connections being checked.
+   * @param {Blockly.Connection} b The second of the two connections being
    *     checked.
    * @return {string} A developer-readable error string.
    * @public
@@ -108,8 +108,8 @@ class ConnectionChecker {
       case Connection.REASON_TARGET_NULL:
         return 'Target connection is null.';
       case Connection.REASON_CHECKS_FAILED: {
-        const connOne = /** @type {!Connection} **/ (a);
-        const connTwo = /** @type {!Connection} **/ (b);
+        const connOne = /** @type {!Blockly.Connection} **/ (a);
+        const connTwo = /** @type {!Blockly.Connection} **/ (b);
         let msg = 'Connection checks failed. ';
         msg += connOne + ' expected ' + connOne.getCheck() + ', found ' +
             connTwo.getCheck();
@@ -129,8 +129,8 @@ class ConnectionChecker {
   /**
    * Check that connecting the given connections is safe, meaning that it would
    * not break any of Blockly's basic assumptions (e.g. no self connections).
-   * @param {Connection} a The first of the connections to check.
-   * @param {Connection} b The second of the connections to check.
+   * @param {Blockly.Connection} a The first of the connections to check.
+   * @param {Blockly.Connection} b The second of the connections to check.
    * @return {number} An enum with the reason this connection is safe or unsafe.
    * @public
    */
@@ -181,8 +181,8 @@ class ConnectionChecker {
    * Check whether this connection is compatible with another connection with
    * respect to the value type system.  E.g. square_root("Hello") is not
    * compatible.
-   * @param {!Connection} a Connection to compare.
-   * @param {!Connection} b Connection to compare against.
+   * @param {!Blockly.Connection} a Connection to compare.
+   * @param {!Blockly.Connection} b Connection to compare against.
    * @return {boolean} True if the connections share a type.
    * @public
    */
@@ -206,8 +206,8 @@ class ConnectionChecker {
 
   /**
    * Check whether this connection can be made by dragging.
-   * @param {!RenderedConnection} a Connection to compare.
-   * @param {!RenderedConnection} b Connection to compare against.
+   * @param {!Blockly.RenderedConnection} a Connection to compare.
+   * @param {!Blockly.RenderedConnection} b Connection to compare against.
    * @param {number} distance The maximum allowable distance between
    *     connections.
    * @return {boolean} True if the connection is allowed during a drag.
@@ -271,9 +271,9 @@ class ConnectionChecker {
 
   /**
    * Helper function for drag checking.
-   * @param {!Connection} a The connection to check, which must be a
+   * @param {!Blockly.Connection} a The connection to check, which must be a
    *     statement input or next connection.
-   * @param {!Connection} b A nearby connection to check, which
+   * @param {!Blockly.Connection} b A nearby connection to check, which
    *     must be a previous connection.
    * @return {boolean} True if the connection is allowed, false otherwise.
    * @protected

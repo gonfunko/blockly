@@ -12,7 +12,7 @@
 
 /**
  * The interface for a Blockly field that can be registered.
- * @namespace Blockly.IRegistrableField
+
  */
 goog.module('Blockly.IRegistrableField');
 
@@ -32,7 +32,7 @@ const {Field} = goog.requireType('Blockly.Field');
 const IRegistrableField = {};
 
 /**
- * @typedef {function(!Object): Field}
+ * @typedef {function(!Object): Blockly.Field}
  */
 IRegistrableField.fromJson;
 

@@ -41,21 +41,21 @@ goog.require('Blockly.Events.VarRename');
  */
 class VariableMap {
   /**
-   * @param {!Workspace} workspace The workspace this map belongs to.
+   * @param {!Blockly.Workspace} workspace The workspace this map belongs to.
    */
   constructor(workspace) {
     /**
      * A map from variable type to list of variable names.  The lists contain
      * all of the named variables in the workspace, including variables that are
      * not currently in use.
-     * @type {!Object<string, !Array<VariableModel>>}
+     * @type {!Object<string, !Array<Blockly.VariableModel>>}
      * @private
      */
     this.variableMap_ = Object.create(null);
 
     /**
      * The workspace this map belongs to.
-     * @type {!Workspace}
+     * @type {!Blockly.Workspace}
      */
     this.workspace = workspace;
   }
@@ -68,7 +68,7 @@ class VariableMap {
   /* Begin functions for renaming variables. */
   /**
    * Rename the given variable by updating its name in the variable map.
-   * @param {!VariableModel} variable Variable to rename.
+   * @param {!Blockly.VariableModel} variable Variable to rename.
    * @param {string} newName New variable name.
    * @package
    */
@@ -107,9 +107,9 @@ class VariableMap {
   /**
    * Update the name of the given variable and refresh all references to it.
    * The new name must not conflict with any existing variable names.
-   * @param {!VariableModel} variable Variable to rename.
+   * @param {!Blockly.VariableModel} variable Variable to rename.
    * @param {string} newName New variable name.
-   * @param {!Array<!Block>} blocks The list of all blocks in the
+   * @param {!Array<!Blockly.Block>} blocks The list of all blocks in the
    *     workspace.
    * @private
    */
@@ -126,11 +126,11 @@ class VariableMap {
    * variable.  The two variables are coalesced into a single variable with the
    * ID of the existing variable that was already using newName. Refresh all
    * references to the variable.
-   * @param {!VariableModel} variable Variable to rename.
+   * @param {!Blockly.VariableModel} variable Variable to rename.
    * @param {string} newName New variable name.
-   * @param {!VariableModel} conflictVar The variable that was already
+   * @param {!Blockly.VariableModel} conflictVar The variable that was already
    *     using newName.
-   * @param {!Array<!Block>} blocks The list of all blocks in the
+   * @param {!Array<!Blockly.Block>} blocks The list of all blocks in the
    *     workspace.
    * @private
    */
@@ -164,7 +164,7 @@ class VariableMap {
    * on their type. This will default to '' which is a specific type.
    * @param {?string=} opt_id The unique ID of the variable. This will default
    *     to a UUID.
-   * @return {!VariableModel} The newly created variable.
+   * @return {!Blockly.VariableModel} The newly created variable.
    */
   createVariable(name, opt_type, opt_id) {
     let variable = this.getVariable(name, opt_type);
@@ -199,7 +199,7 @@ class VariableMap {
   /* Begin functions for variable deletion. */
   /**
    * Delete a variable.
-   * @param {!VariableModel} variable Variable to delete.
+   * @param {!Blockly.VariableModel} variable Variable to delete.
    */
   deleteVariable(variable) {
     const variableId = variable.getId();
@@ -258,8 +258,8 @@ class VariableMap {
   /**
    * Deletes a variable and all of its uses from this workspace without asking
    * the user for confirmation.
-   * @param {!VariableModel} variable Variable to delete.
-   * @param {!Array<!Block>} uses An array of uses of the variable.
+   * @param {!Blockly.VariableModel} variable Variable to delete.
+   * @param {!Array<!Blockly.Block>} uses An array of uses of the variable.
    * @package
    */
   deleteVariableInternal(variable, uses) {
@@ -285,7 +285,7 @@ class VariableMap {
    * @param {string} name The name to check for.
    * @param {?string=} opt_type The type of the variable.  If not provided it
    *     defaults to the empty string, which is a specific type.
-   * @return {?VariableModel} The variable with the given name, or null if
+   * @return {?Blockly.VariableModel} The variable with the given name, or null if
    *     it was not found.
    */
   getVariable(name, opt_type) {
@@ -303,7 +303,7 @@ class VariableMap {
   /**
    * Find the variable by the given ID and return it.  Return null if not found.
    * @param {string} id The ID to check for.
-   * @return {?VariableModel} The variable with the given ID.
+   * @return {?Blockly.VariableModel} The variable with the given ID.
    */
   getVariableById(id) {
     const keys = Object.keys(this.variableMap_);
@@ -321,7 +321,7 @@ class VariableMap {
    * Get a list containing all of the variables of a specified type. If type is
    *     null, return list of variables with empty string type.
    * @param {?string} type Type of the variables to find.
-   * @return {!Array<!VariableModel>} The sought after variables of the
+   * @return {!Array<!Blockly.VariableModel>} The sought after variables of the
    *     passed in type. An empty array if none are found.
    */
   getVariablesOfType(type) {
@@ -335,7 +335,7 @@ class VariableMap {
   /**
    * Return all variable and potential variable types.  This list always
    * contains the empty string.
-   * @param {?Workspace} ws The workspace used to look for potential
+   * @param {?Blockly.Workspace} ws The workspace used to look for potential
    * variables. This can be different than the workspace stored on this object
    * if the passed in ws is a flyout workspace.
    * @return {!Array<string>} List of variable types.
@@ -361,7 +361,7 @@ class VariableMap {
   }
   /**
    * Return all variables of all types.
-   * @return {!Array<!VariableModel>} List of variable models.
+   * @return {!Array<!Blockly.VariableModel>} List of variable models.
    */
   getAllVariables() {
     let allVariables = [];
@@ -387,7 +387,7 @@ class VariableMap {
   /**
    * Find all the uses of a named variable.
    * @param {string} id ID of the variable to find.
-   * @return {!Array<!Block>} Array of block usages.
+   * @return {!Array<!Blockly.Block>} Array of block usages.
    */
   getVariableUsesById(id) {
     const uses = [];

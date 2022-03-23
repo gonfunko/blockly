@@ -29,7 +29,7 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  */
 class Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */
@@ -51,7 +51,7 @@ class Measurable {
 
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      * @protected
      */
     this.constants_ = constants;

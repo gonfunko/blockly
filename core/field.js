@@ -65,10 +65,10 @@ goog.require('Blockly.Gesture');
 
 /**
  * Abstract class for an editable field.
- * @implements {IASTNodeLocationSvg}
- * @implements {IASTNodeLocationWithBlock}
- * @implements {IKeyboardAccessible}
- * @implements {IRegistrable}
+ * @implements {Blockly.IASTNodeLocationSvg}
+ * @implements {Blockly.IASTNodeLocationWithBlock}
+ * @implements {Blockly.IKeyboardAccessible}
+ * @implements {Blockly.IRegistrable}
  * @abstract
  * @alias Blockly.Field
  */
@@ -112,14 +112,14 @@ class Field {
     /**
      * Used to cache the field's tooltip value if setTooltip is called when the
      * field is not yet initialized. Is *not* guaranteed to be accurate.
-     * @type {?Tooltip.TipInfo}
+     * @type {?Blockly.Tooltip.TipInfo}
      * @private
      */
     this.tooltip_ = null;
 
     /**
      * The size of the area rendered by the field.
-     * @type {!Size}
+     * @type {!Blockly.utils.Size}
      * @protected
      */
     this.size_ = new Size(0, 0);
@@ -177,7 +177,7 @@ class Field {
 
     /**
      * Constants associated with the source block's renderer.
-     * @type {ConstantProvider}
+     * @type {Blockly.blockRendering.ConstantProvider}
      * @protected
      */
     this.constants_ = null;
@@ -197,7 +197,7 @@ class Field {
 
     /**
      * Block this field is attached to.  Starts as null, then set in init.
-     * @type {Block}
+     * @type {Blockly.Block}
      * @protected
      */
     this.sourceBlock_ = null;
@@ -291,7 +291,7 @@ class Field {
 
   /**
    * Attach this field to a block.
-   * @param {!Block} block The block containing this field.
+   * @param {!Blockly.Block} block The block containing this field.
    */
   setSourceBlock(block) {
     if (this.sourceBlock_) {
@@ -302,14 +302,14 @@ class Field {
 
   /**
    * Get the renderer constant provider.
-   * @return {?ConstantProvider} The renderer constant
+   * @return {?Blockly.blockRendering.ConstantProvider} The renderer constant
    *     provider.
    */
   getConstants() {
     if (!this.constants_ && this.sourceBlock_ && this.sourceBlock_.workspace &&
         this.sourceBlock_.workspace.rendered) {
       this.constants_ =
-          /** @type {!WorkspaceSvg} */ (this.sourceBlock_.workspace)
+          /** @type {!Blockly.WorkspaceSvg} */ (this.sourceBlock_.workspace)
               .getRenderer()
               .getConstants();
     }
@@ -318,7 +318,7 @@ class Field {
 
   /**
    * Get the block this field is attached to.
-   * @return {Block} The block containing this field.
+   * @return {Blockly.Block} The block containing this field.
    */
   getSourceBlock() {
     return this.sourceBlock_;
@@ -339,7 +339,7 @@ class Field {
     if (!this.isVisible()) {
       this.fieldGroup_.style.display = 'none';
     }
-    const sourceBlockSvg = /** @type {!BlockSvg} **/ (this.sourceBlock_);
+    const sourceBlockSvg = /** @type {!Blockly.BlockSvg} **/ (this.sourceBlock_);
     sourceBlockSvg.getSvgRoot().appendChild(this.fieldGroup_);
     this.initView();
     this.updateEditable();
@@ -798,7 +798,7 @@ class Field {
    * Returns the height and width of the field.
    *
    * This should *in general* be the only place render_ gets called from.
-   * @return {!Size} Height and width.
+   * @return {!Blockly.utils.Size} Height and width.
    */
   getSize() {
     if (!this.isVisible()) {
@@ -822,7 +822,7 @@ class Field {
   /**
    * Returns the bounding box of the rendered field, accounting for workspace
    * scaling.
-   * @return {!Rect} An object with top, bottom, left, and right in
+   * @return {!Blockly.utils.Rect} An object with top, bottom, left, and right in
    *     pixels relative to the top left corner of the page (window
    * coordinates).
    * @package
@@ -837,7 +837,7 @@ class Field {
       // - Gecko / Triden / EdgeHTML: stroke-box
       const bBox = this.sourceBlock_.getHeightWidth();
       const scale =
-          /** @type {!WorkspaceSvg} */ (this.sourceBlock_.workspace).scale;
+          /** @type {!Blockly.WorkspaceSvg} */ (this.sourceBlock_.workspace).scale;
       xy = this.getAbsoluteXY_();
       scaledWidth = bBox.width * scale;
       scaledHeight = bBox.height * scale;
@@ -1076,7 +1076,7 @@ class Field {
       return;
     }
     const gesture =
-        /** @type {!WorkspaceSvg} */ (this.sourceBlock_.workspace)
+        /** @type {!Blockly.WorkspaceSvg} */ (this.sourceBlock_.workspace)
             .getGesture(e);
     if (gesture) {
       gesture.setStartField(this);
@@ -1085,7 +1085,7 @@ class Field {
 
   /**
    * Sets the tooltip for this field.
-   * @param {?Tooltip.TipInfo} newTip The
+   * @param {?Blockly.Tooltip.TipInfo} newTip The
    *     text for the tooltip, a function that returns the text for the tooltip,
    * a parent object whose tooltip will be used, or null to display the tooltip
    *     of the parent block. To not display a tooltip pass the empty string.
@@ -1130,7 +1130,7 @@ class Field {
   /**
    * Return the absolute coordinates of the top-left corner of this field.
    * The origin (0,0) is the top-left corner of the page body.
-   * @return {!Coordinate} Object with .x and .y properties.
+   * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
    * @protected
    */
   getAbsoluteXY_() {
@@ -1161,7 +1161,7 @@ class Field {
   /**
    * Search through the list of inputs and their fields in order to find the
    * parent input of a field.
-   * @return {Input} The input that the field belongs to.
+   * @return {Blockly.Input} The input that the field belongs to.
    * @package
    */
   getParentInput() {
@@ -1200,7 +1200,7 @@ class Field {
 
   /**
    * Handles the given keyboard shortcut.
-   * @param {!ShortcutRegistry.KeyboardShortcut} _shortcut The shortcut to be
+   * @param {!Blockly.ShortcutRegistry.KeyboardShortcut} _shortcut The shortcut to be
    *     handled.
    * @return {boolean} True if the shortcut has been handled, false otherwise.
    * @public
@@ -1247,7 +1247,7 @@ class Field {
    */
   updateMarkers_() {
     const workspace =
-        /** @type {!WorkspaceSvg} */ (this.sourceBlock_.workspace);
+        /** @type {!Blockly.WorkspaceSvg} */ (this.sourceBlock_.workspace);
     if (workspace.keyboardAccessibilityMode && this.cursorSvg_) {
       workspace.getCursor().draw();
     }

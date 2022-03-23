@@ -22,7 +22,7 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a theme change event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.ThemeChange
  */
 class ThemeChange extends UiBase {

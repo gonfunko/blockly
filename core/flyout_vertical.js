@@ -35,12 +35,12 @@ goog.require('Blockly.constants');
 
 /**
  * Class for a flyout.
- * @extends {Flyout}
+ * @extends {Blockly.Flyout}
  * @alias Blockly.VerticalFlyout
  */
 class VerticalFlyout extends Flyout {
   /**
-   * @param {!Options} workspaceOptions Dictionary of options for the
+   * @param {!Blockly.Options} workspaceOptions Dictionary of options for the
    *     workspace.
    */
   constructor(workspaceOptions) {
@@ -267,7 +267,7 @@ class VerticalFlyout extends Flyout {
    * Determine if a drag delta is toward the workspace, based on the position
    * and orientation of the flyout. This is used in determineDragIntention_ to
    * determine if a new block should be created or if the flyout should scroll.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at mouse down, in pixel units.
    * @return {boolean} True if the drag is toward the workspace.
    * @package
@@ -290,7 +290,7 @@ class VerticalFlyout extends Flyout {
   /**
    * Returns the bounding rectangle of the drag target area in pixel units
    * relative to viewport.
-   * @return {?Rect} The component's bounding box. Null if drag
+   * @return {?Blockly.utils.Rect} The component's bounding box. Null if drag
    *   target area should be ignored.
    */
   getClientRect() {

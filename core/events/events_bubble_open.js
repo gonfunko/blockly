@@ -24,12 +24,12 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a bubble open event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.BubbleOpen
  */
 class BubbleOpen extends UiBase {
   /**
-   * @param {BlockSvg} opt_block The associated block. Undefined for a
+   * @param {Blockly.BlockSvg} opt_block The associated block. Undefined for a
    *    blank event.
    * @param {boolean=} opt_isOpen Whether the bubble is opening (false if
    *    closing). Undefined for a blank event.

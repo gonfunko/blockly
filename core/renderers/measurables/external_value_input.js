@@ -28,14 +28,14 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  * An object containing information about the space an external value input
  * takes up during rendering
  * @struct
- * @extends {InputConnection}
+ * @extends {Blockly.blockRendering.InputConnection}
  * @alias Blockly.blockRendering.ExternalValueInput
  */
 class ExternalValueInput extends InputConnection {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!Input} input The external value input to measure and store
+   * @param {!Blockly.Input} input The external value input to measure and store
    *     information for.
    * @package
    */

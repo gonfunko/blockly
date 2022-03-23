@@ -22,7 +22,7 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a viewport change event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.ViewportChange
  */
 class ViewportChange extends UiBase {

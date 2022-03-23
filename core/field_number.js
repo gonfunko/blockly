@@ -25,12 +25,12 @@ const {Sentinel} = goog.requireType('Blockly.utils.Sentinel');
 
 /**
  * Class for an editable number field.
- * @extends {FieldTextInput}
+ * @extends {Blockly.FieldTextInput}
  * @alias Blockly.FieldNumber
  */
 class FieldNumber extends FieldTextInput {
   /**
-   * @param {(string|number|!Sentinel)=} opt_value The initial value of
+   * @param {(string|number|!Blockly.utils.Sentinel)=} opt_value The initial value of
    *     the field. Should cast to a number. Defaults to 0.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
    *     subclasses that want to handle configuration and setting the field
@@ -315,7 +315,7 @@ class FieldNumber extends FieldTextInput {
    * Construct a FieldNumber from a JSON arg object.
    * @param {!Object} options A JSON object with options (value, min, max, and
    *                          precision).
-   * @return {!FieldNumber} The new field instance.
+   * @return {!Blockly.FieldNumber} The new field instance.
    * @package
    * @nocollapse
    * @override

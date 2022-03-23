@@ -14,7 +14,7 @@
 /**
  * The record type for an object containing functions for
  *     serializing part of the workspace.
- * @namespace Blockly.serialization.ISerializer
+
  */
 goog.module('Blockly.serialization.ISerializer');
 
@@ -46,7 +46,7 @@ class ISerializer {
 
   /**
    * Saves the state of the plugin or system.
-   * @param {!Workspace} workspace The workspace the system to serialize is
+   * @param {!Blockly.Workspace} workspace The workspace the system to serialize is
    *     associated with.
    * @return {?} A JS object containing the system's state, or null if
    *     there is no state to record.
@@ -59,14 +59,14 @@ class ISerializer {
    * Loads the state of the plugin or system.
    * @param {?} state The state of the system to deserialize. This will always
    *     be non-null.
-   * @param {!Workspace} workspace The workspace the system to deserialize is
+   * @param {!Blockly.Workspace} workspace The workspace the system to deserialize is
    *     associated with.
    */
   load(state, workspace) {}
 
   /**
    * Clears the state of the plugin or system.
-   * @param {!Workspace} workspace The workspace the system to clear the state
+   * @param {!Blockly.Workspace} workspace The workspace the system to clear the state
    *     of is associated with.
    */
   clear(workspace) {}

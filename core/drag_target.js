@@ -29,13 +29,13 @@ const {Rect} = goog.requireType('Blockly.utils.Rect');
 /**
  * Abstract class for a component with custom behaviour when a block or bubble
  * is dragged over or dropped on top of it.
- * @implements {IDragTarget}
+ * @implements {Blockly.IDragTarget}
  * @alias Blockly.DragTarget
  */
 class DragTarget {
   /**
    * Handles when a cursor with a block or bubble enters this drag target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    */
   onDragEnter(_dragElement) {
@@ -45,7 +45,7 @@ class DragTarget {
   /**
    * Handles when a cursor with a block or bubble is dragged over this drag
    * target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    */
   onDragOver(_dragElement) {
@@ -54,7 +54,7 @@ class DragTarget {
 
   /**
    * Handles when a cursor with a block or bubble exits this drag target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    */
   onDragExit(_dragElement) {
@@ -64,7 +64,7 @@ class DragTarget {
   /**
    * Handles when a block or bubble is dropped on this component.
    * Should not handle delete here.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    */
   onDrop(_dragElement) {
@@ -74,7 +74,7 @@ class DragTarget {
   /**
    * Returns the bounding rectangle of the drag target area in pixel units
    * relative to the Blockly injection div.
-   * @return {?Rect} The component's bounding box. Null if drag
+   * @return {?Blockly.utils.Rect} The component's bounding box. Null if drag
    *   target area should be ignored.
    */
   getClientRect() {
@@ -85,7 +85,7 @@ class DragTarget {
    * Returns whether the provided block or bubble should not be moved after
    * being dropped on this component. If true, the element will return to where
    * it was when the drag started.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @return {boolean} Whether the block or bubble provided should be returned
    *     to drag start.

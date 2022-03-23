@@ -74,7 +74,7 @@ const registerMixin = function(name, mixinObj) {
   }
   register(
       name,
-      /** @this {Block} */
+      /** @this {Blockly.Block} */
       function() {
         this.mixin(mixinObj);
       });
@@ -108,7 +108,7 @@ const registerMutator = function(name, mixinObj, opt_helperFn, opt_blockList) {
   // Sanity checks passed.
   register(
       name,
-      /** @this {Block} */
+      /** @this {Blockly.Block} */
       function() {
         if (hasMutatorDialog) {
           const {Mutator} = goog.module.get('Blockly.Mutator');
@@ -158,7 +158,7 @@ exports.isRegistered = isRegistered;
  * Applies an extension method to a block. This should only be called during
  * block construction.
  * @param {string} name The name of the extension.
- * @param {!Block} block The block to apply the named extension to.
+ * @param {!Blockly.Block} block The block to apply the named extension to.
  * @param {boolean} isMutator True if this extension defines a mutator.
  * @throws {Error} if the extension is not found.
  * @alias Blockly.Extensions.apply
@@ -199,7 +199,7 @@ exports.apply = apply;
  * extension to a block, to make sure we are not overwriting properties.
  * @param {string} mutationName The name of the mutation to reference in error
  *     messages.
- * @param {!Block} block The block to check.
+ * @param {!Blockly.Block} block The block to check.
  * @throws {Error} if any of the properties already exist on the block.
  */
 const checkNoMutatorProperties = function(mutationName, block) {
@@ -301,7 +301,7 @@ const checkHasMutatorProperties = function(errorPrefix, object) {
 
 /**
  * Get a list of values of mutator properties on the given block.
- * @param {!Block} block The block to inspect.
+ * @param {!Blockly.Block} block The block to inspect.
  * @return {!Array<Object>} A list with all of the defined properties, which
  *     should be functions, but may be anything other than undefined.
  */
@@ -335,7 +335,7 @@ const getMutatorProperties = function(block) {
  * properties.  This should be called after applying a non-mutator extension,
  * to verify that the extension didn't change properties it shouldn't.
  * @param {!Array<Object>} oldProperties The old values to compare to.
- * @param {!Block} block The block to inspect for new values.
+ * @param {!Blockly.Block} block The block to inspect for new values.
  * @return {boolean} True if the property lists match.
  */
 const mutatorPropertiesMatch = function(oldProperties, block) {
@@ -414,7 +414,7 @@ const buildTooltipForDropdown = function(dropdownName, lookupTable) {
 
   /**
    * The actual extension.
-   * @this {Block}
+   * @this {Blockly.Block}
    */
   const extensionFn = function() {
     if (this.type && blockTypesChecked.indexOf(this.type) === -1) {
@@ -448,7 +448,7 @@ exports.buildTooltipForDropdown = buildTooltipForDropdown;
 /**
  * Checks all options keys are present in the provided string lookup table.
  * Emits console warnings when they are not.
- * @param {!Block} block The block containing the dropdown
+ * @param {!Blockly.Block} block The block containing the dropdown
  * @param {string} dropdownName The name of the dropdown
  * @param {!Object<string, string>} lookupTable The string lookup table
  */
@@ -492,7 +492,7 @@ const buildTooltipWithFieldText = function(msgTemplate, fieldName) {
 
   /**
    * The actual extension.
-   * @this {Block}
+   * @this {Blockly.Block}
    */
   const extensionFn = function() {
     this.setTooltip(function() {
@@ -510,7 +510,7 @@ exports.buildTooltipWithFieldText = buildTooltipWithFieldText;
  * uses the tooltip text at the time this extension is initialized. This takes
  * advantage of the fact that all other values from JSON are initialized before
  * extensions.
- * @this {Block}
+ * @this {Blockly.Block}
  */
 const extensionParentTooltip = function() {
   const tooltipWhenNotConnected = this.tooltip;

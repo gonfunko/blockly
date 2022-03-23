@@ -25,13 +25,13 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about a spacer between two elements on a
  * row.
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @struct
  * @alias Blockly.blockRendering.InRowSpacer
  */
 class InRowSpacer extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @param {number} width The width of the spacer.
    * @package

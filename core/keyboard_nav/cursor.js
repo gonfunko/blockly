@@ -24,7 +24,7 @@ const {Marker} = goog.require('Blockly.Marker');
 /**
  * Class for a cursor.
  * A cursor controls how a user navigates the Blockly AST.
- * @extends {Marker}
+ * @extends {Blockly.Marker}
  * @alias Blockly.Cursor
  */
 class Cursor extends Marker {
@@ -42,7 +42,7 @@ class Cursor extends Marker {
 
   /**
    * Find the next connection, field, or block.
-   * @return {ASTNode} The next element, or null if the current node is
+   * @return {Blockly.ASTNode} The next element, or null if the current node is
    *     not set or there is no next value.
    * @public
    */
@@ -67,7 +67,7 @@ class Cursor extends Marker {
 
   /**
    * Find the in connection or field.
-   * @return {ASTNode} The in element, or null if the current node is
+   * @return {Blockly.ASTNode} The in element, or null if the current node is
    *     not set or there is no in value.
    * @public
    */
@@ -92,7 +92,7 @@ class Cursor extends Marker {
 
   /**
    * Find the previous connection, field, or block.
-   * @return {ASTNode} The previous element, or null if the current node
+   * @return {Blockly.ASTNode} The previous element, or null if the current node
    *     is not set or there is no previous value.
    * @public
    */
@@ -117,7 +117,7 @@ class Cursor extends Marker {
 
   /**
    * Find the out connection, field, or block.
-   * @return {ASTNode} The out element, or null if the current node is
+   * @return {Blockly.ASTNode} The out element, or null if the current node is
    *     not set or there is no out value.
    * @public
    */

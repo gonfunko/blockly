@@ -12,7 +12,7 @@
 
 /**
  * The interface for an object that is copyable.
- * @namespace Blockly.ICopyable
+
  */
 goog.module('Blockly.ICopyable');
 
@@ -23,7 +23,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 
 /**
- * @extends {ISelectable}
+ * @extends {Blockly.ISelectable}
  * @interface
  * @alias Blockly.ICopyable
  */
@@ -31,7 +31,7 @@ const ICopyable = function() {};
 
 /**
  * Encode for copying.
- * @return {?ICopyable.CopyData} Copy metadata.
+ * @return {?Blockly.ICopyable.CopyData} Copy metadata.
  * @package
  */
 ICopyable.prototype.toCopyData;
@@ -40,7 +40,7 @@ ICopyable.prototype.toCopyData;
  * Copy Metadata.
  * @typedef {{
  *            saveInfo:(!Object|!Element),
- *            source:WorkspaceSvg,
+ *            source:Blockly.WorkspaceSvg,
  *            typeCounts:?Object
  *          }}
  */

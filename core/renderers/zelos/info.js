@@ -52,31 +52,31 @@ const {inputTypes} = goog.require('Blockly.inputTypes');
  * This measure pass does not propagate changes to the block (although fields
  * may choose to rerender when getSize() is called).  However, calling it
  * repeatedly may be expensive.
- * @extends {BaseRenderInfo}
+ * @extends {Blockly.blockRendering.RenderInfo}
  * @alias Blockly.zelos.RenderInfo
  */
 class RenderInfo extends BaseRenderInfo {
   /**
-   * @param {!Renderer} renderer The renderer in use.
-   * @param {!BlockSvg} block The block to measure.
+   * @param {!Blockly.zelos.Renderer} renderer The renderer in use.
+   * @param {!Blockly.BlockSvg} block The block to measure.
    * @package
    */
   constructor(renderer, block) {
     super(renderer, block);
 
-    /** @type {!ConstantProvider} */
+    /** @type {!Blockly.zelos.ConstantProvider} */
     this.constants_;
 
     /**
      * An object with rendering information about the top row of the block.
-     * @type {!TopRow}
+     * @type {!TopBlockly.blockRendering.Row}
      * @override
      */
     this.topRow = new TopRow(this.constants_);
 
     /**
      * An object with rendering information about the bottom row of the block.
-     * @type {!BottomRow}
+     * @type {!BottomBlockly.blockRendering.Row}
      * @override
      */
     this.bottomRow = new BottomRow(this.constants_);
@@ -101,7 +101,7 @@ class RenderInfo extends BaseRenderInfo {
 
     /**
      * An object with rendering information about the right connection shape.
-     * @type {RightConnectionShape}
+     * @type {Blockly.zelos.RightConnectionShape}
      */
     this.rightSide = this.outputConnection ?
         new RightConnectionShape(this.constants_) :
@@ -110,7 +110,7 @@ class RenderInfo extends BaseRenderInfo {
     /**
      * A map of rows to right aligned dummy inputs within those rows. Used to
      * add padding between left and right aligned inputs.
-     * @type {!WeakMap<!Row, !Input>}
+     * @type {!WeakMap<!Blockly.blockRendering.Row, !Blockly.Input>}
      * @private
      */
     this.rightAlignedDummyInputs_ = new WeakMap();
@@ -118,11 +118,11 @@ class RenderInfo extends BaseRenderInfo {
 
   /**
    * Get the block renderer in use.
-   * @return {!Renderer} The block renderer in use.
+   * @return {!Blockly.zelos.Renderer} The block renderer in use.
    * @package
    */
   getRenderer() {
-    return /** @type {!Renderer} */ (this.renderer_);
+    return /** @type {!Blockly.zelos.Renderer} */ (this.renderer_);
   }
 
   /**
@@ -221,7 +221,7 @@ class RenderInfo extends BaseRenderInfo {
     }
     // Top and bottom rows act as a spacer so we don't need any extra padding.
     if (Types.isTopRow(prev)) {
-      const topRow = /** @type {!TopRow} */ (prev);
+      const topRow = /** @type {!TopBlockly.blockRendering.Row} */ (prev);
       if (!topRow.hasPreviousConnection &&
           (!this.outputConnection || this.hasStatementInput)) {
         return Math.abs(
@@ -230,7 +230,7 @@ class RenderInfo extends BaseRenderInfo {
       return this.constants_.NO_PADDING;
     }
     if (Types.isBottomRow(next)) {
-      const bottomRow = /** @type {!BottomRow} */ (next);
+      const bottomRow = /** @type {!BottomBlockly.blockRendering.Row} */ (next);
       if (!this.outputConnection) {
         const topHeight = Math.max(
                               this.topRow.minHeight,
@@ -340,9 +340,9 @@ class RenderInfo extends BaseRenderInfo {
     // first input row (if the block has prev connection) and every input row
     // that has a prev and next notch.
     for (let i = 2; i < this.rows.length - 1; i += 2) {
-      const prevSpacer = /** @type {!SpacerRow} */ (this.rows[i - 1]);
+      const prevSpacer = /** @type {!Blockly.blockRendering.SpacerRow} */ (this.rows[i - 1]);
       const row = this.rows[i];
-      const nextSpacer = /** @type {!SpacerRow} */ (this.rows[i + 1]);
+      const nextSpacer = /** @type {!Blockly.blockRendering.SpacerRow} */ (this.rows[i + 1]);
 
       const hasPrevNotch = i === 2 ? !!this.topRow.hasPreviousConnection :
                                      !!prevSpacer.followsStatement;
@@ -483,7 +483,7 @@ class RenderInfo extends BaseRenderInfo {
   /**
    * Calculate the spacing to reduce the left and right edges by based on the
    * outer and inner connection shape.
-   * @param {Measurable} elem The first or last element on
+   * @param {Blockly.blockRendering.Measurable} elem The first or last element on
    *     a block.
    * @return {number} The amount of spacing to reduce the first or last spacer.
    * @protected
@@ -495,7 +495,7 @@ class RenderInfo extends BaseRenderInfo {
     const connectionWidth = this.outputConnection.width;
     const outerShape = this.outputConnection.shape.type;
     const constants =
-        /** @type {!ConstantProvider} */ (this.constants_);
+        /** @type {!Blockly.zelos.ConstantProvider} */ (this.constants_);
     if (this.isMultiRow && this.inputRows.length > 1) {
       switch (outerShape) {
         case constants.SHAPES.ROUND: {
@@ -556,9 +556,9 @@ class RenderInfo extends BaseRenderInfo {
     // Run through every input row on the block and only apply tight nesting
     // logic to input rows that have a prev and next notch.
     for (let i = 2; i < this.rows.length - 1; i += 2) {
-      const prevSpacer = /** @type {!SpacerRow} */ (this.rows[i - 1]);
+      const prevSpacer = /** @type {!Blockly.blockRendering.SpacerRow} */ (this.rows[i - 1]);
       const row = this.rows[i];
-      const nextSpacer = /** @type {!SpacerRow} */ (this.rows[i + 1]);
+      const nextSpacer = /** @type {!Blockly.blockRendering.SpacerRow} */ (this.rows[i + 1]);
 
       const firstRow = i === 2;
       const hasPrevNotch = firstRow ? !!this.topRow.hasPreviousConnection :

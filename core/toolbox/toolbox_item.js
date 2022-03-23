@@ -30,15 +30,15 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * Class for an item in the toolbox.
- * @implements {IToolboxItem}
+ * @implements {Blockly.IToolboxItem}
  * @alias Blockly.ToolboxItem
  */
 class ToolboxItem {
   /**
-   * @param {!toolbox.ToolboxItemInfo} toolboxItemDef The JSON defining
+   * @param {!Blockly.utils.toolbox.ToolboxItemInfo} toolboxItemDef The JSON defining
    *     the toolbox item.
-   * @param {!IToolbox} toolbox The toolbox that holds the toolbox item.
-   * @param {ICollapsibleToolboxItem=} opt_parent The parent toolbox item
+   * @param {!Blockly.IToolbox} toolbox The toolbox that holds the toolbox item.
+   * @param {Blockly.ICollapsibleToolboxItem=} opt_parent The parent toolbox item
    *     or null if the category does not have a parent.
    */
   constructor(toolboxItemDef, toolbox, opt_parent) {
@@ -51,7 +51,7 @@ class ToolboxItem {
 
     /**
      * The parent of the category.
-     * @type {?ICollapsibleToolboxItem}
+     * @type {?Blockly.ICollapsibleToolboxItem}
      * @protected
      */
     this.parent_ = opt_parent || null;
@@ -65,21 +65,21 @@ class ToolboxItem {
 
     /**
      * The JSON definition of the toolbox item.
-     * @type {?toolbox.ToolboxItemInfo}
+     * @type {?Blockly.utils.toolbox.ToolboxItemInfo}
      * @protected
      */
     this.toolboxItemDef_ = toolboxItemDef;
 
     /**
      * The toolbox this category belongs to.
-     * @type {!IToolbox}
+     * @type {!Blockly.IToolbox}
      * @protected
      */
     this.parentToolbox_ = toolbox;
 
     /**
      * The workspace of the parent toolbox.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @protected
      */
     this.workspace_ = this.parentToolbox_.getWorkspace();
@@ -128,7 +128,7 @@ class ToolboxItem {
 
   /**
    * Gets the parent if the toolbox item is nested.
-   * @return {?IToolboxItem} The parent toolbox item, or null if
+   * @return {?Blockly.IToolboxItem} The parent toolbox item, or null if
    *     this toolbox item is not nested.
    * @public
    */

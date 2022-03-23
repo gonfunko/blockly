@@ -46,7 +46,7 @@ goog.require('Blockly.Events.BubbleOpen');
 
 /**
  * Class for a mutator dialog.
- * @extends {Icon}
+ * @extends {Blockly.Icon}
  * @alias Blockly.Mutator
  */
 class Mutator extends Icon {
@@ -59,7 +59,7 @@ class Mutator extends Icon {
 
     /**
      * Workspace in the mutator's bubble.
-     * @type {?WorkspaceSvg}
+     * @type {?Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = null;
@@ -89,7 +89,7 @@ class Mutator extends Icon {
     /**
      * The root block of the mutator workspace, created by decomposing the
      * source block.
-     * @type {?BlockSvg}
+     * @type {?Blockly.BlockSvg}
      * @private
      */
     this.rootBlock_ = null;
@@ -105,7 +105,7 @@ class Mutator extends Icon {
 
   /**
    * Set the block this mutator is associated with.
-   * @param {!BlockSvg} block The block associated with this mutator.
+   * @param {!Blockly.BlockSvg} block The block associated with this mutator.
    * @package
    */
   setBlock(block) {
@@ -114,7 +114,7 @@ class Mutator extends Icon {
 
   /**
    * Returns the workspace inside this mutator icon's bubble.
-   * @return {?WorkspaceSvg} The workspace inside this mutator icon's
+   * @return {?Blockly.WorkspaceSvg} The workspace inside this mutator icon's
    *     bubble or null if the mutator isn't open.
    * @package
    */
@@ -196,7 +196,7 @@ class Mutator extends Icon {
       quarkXml = null;
     }
     const workspaceOptions = new Options(
-        /** @type {!BlocklyOptions} */
+        /** @type {!BlocklyBlockly.Options} */
         ({
           // If you want to enable disabling, also remove the
           // event filter from workspaceChanged_ .
@@ -328,9 +328,9 @@ class Mutator extends Icon {
     if (visible) {
       // Create the bubble.
       this.bubble_ = new Bubble(
-          /** @type {!WorkspaceSvg} */ (this.block_.workspace),
+          /** @type {!Blockly.WorkspaceSvg} */ (this.block_.workspace),
           this.createEditor_(), this.block_.pathObject.svgPath,
-          /** @type {!Coordinate} */ (this.iconXY_), null, null);
+          /** @type {!Blockly.utils.Coordinate} */ (this.iconXY_), null, null);
       // Expose this mutator's block's ID on its top-level SVG group.
       this.bubble_.setSvgId(this.block_.id);
       this.bubble_.registerMoveEvent(this.onBubbleMove_.bind(this));
@@ -396,13 +396,13 @@ class Mutator extends Icon {
 
   /**
    * Fired whenever a change is made to the mutator's workspace.
-   * @param {!Abstract} e Custom data for event.
+   * @param {!Blockly.Events.Abstract} e Custom data for event.
    * @private
    */
   workspaceChanged_(e) {
     if (!(e.isUiEvent ||
           (e.type === eventUtils.CHANGE &&
-           /** @type {!BlockChange} */ (e).element === 'disabled') ||
+           /** @type {!Blockly.Events.BlockChange} */ (e).element === 'disabled') ||
           e.type === eventUtils.CREATE)) {
       this.updateWorkspace_();
     }
@@ -447,7 +447,7 @@ class Mutator extends Icon {
       if (!existingGroup) {
         eventUtils.setGroup(true);
       }
-      const block = /** @type {!BlockSvg} */ (this.block_);
+      const block = /** @type {!Blockly.BlockSvg} */ (this.block_);
       const oldExtraState = BlockChange.getExtraBlockState_(block);
 
       // Switch off rendering while the source block is rebuilt.
@@ -522,8 +522,8 @@ class Mutator extends Icon {
 
   /**
    * Reconnect an block to a mutated input.
-   * @param {Connection} connectionChild Connection on child block.
-   * @param {!Block} block Parent block.
+   * @param {Blockly.Connection} connectionChild Connection on child block.
+   * @param {!Blockly.Block} block Parent block.
    * @param {string} inputName Name of input on parent block.
    * @return {boolean} True iff a reconnection was made, false otherwise.
    */
@@ -548,8 +548,8 @@ class Mutator extends Icon {
   /**
    * Get the parent workspace of a workspace that is inside a mutator, taking
    * into account whether it is a flyout.
-   * @param {WorkspaceSvg} workspace The workspace that is inside a mutator.
-   * @return {?WorkspaceSvg} The mutator's parent workspace or null.
+   * @param {Blockly.WorkspaceSvg} workspace The workspace that is inside a mutator.
+   * @return {?Blockly.WorkspaceSvg} The mutator's parent workspace or null.
    * @public
    */
   static findParentWs(workspace) {

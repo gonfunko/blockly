@@ -47,7 +47,7 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  */
 class Debug {
   /**
-   * @param {!ConstantProvider} constants The renderer's
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The renderer's
    *     constants.
    * @package
    */
@@ -69,7 +69,7 @@ class Debug {
 
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      * @private
      */
     this.constants_ = constants;
@@ -96,7 +96,7 @@ class Debug {
 
   /**
    * Draw a debug rectangle for a spacer (empty) row.
-   * @param {!Row} row The row to render.
+   * @param {!Blockly.blockRendering.Row} row The row to render.
    * @param {number} cursorY The y position of the top of the row.
    * @param {boolean} isRtl Whether the block is rendered RTL.
    * @package
@@ -129,7 +129,7 @@ class Debug {
 
   /**
    * Draw a debug rectangle for a horizontal spacer.
-   * @param {!InRowSpacer} elem The spacer to render.
+   * @param {!Blockly.blockRendering.InRowSpacer} elem The spacer to render.
    * @param {number} rowHeight The height of the container row.
    * @param {boolean} isRtl Whether the block is rendered RTL.
    * @package
@@ -163,7 +163,7 @@ class Debug {
 
   /**
    * Draw a debug rectangle for an in-row element.
-   * @param {!Measurable} elem The element to render.
+   * @param {!Blockly.blockRendering.Measurable} elem The element to render.
    * @param {boolean} isRtl Whether the block is rendered RTL.
    * @package
    */
@@ -216,7 +216,7 @@ class Debug {
    * Draw a circle at the location of the given connection.  Inputs and outputs
    * share the same colours, as do previous and next.  When positioned correctly
    * a connected pair will look like a bullseye.
-   * @param {RenderedConnection} conn The connection to circle.
+   * @param {Blockly.RenderedConnection} conn The connection to circle.
    * @suppress {visibility} Suppress visibility of conn.offsetInBlock_ since
    * this is a debug module.
    * @package
@@ -260,7 +260,7 @@ class Debug {
 
   /**
    * Draw a debug rectangle for a non-empty row.
-   * @param {!Row} row The non-empty row to render.
+   * @param {!Blockly.blockRendering.Row} row The non-empty row to render.
    * @param {number} cursorY The y position of the top of the row.
    * @param {boolean} isRtl Whether the block is rendered RTL.
    * @package
@@ -305,7 +305,7 @@ class Debug {
 
   /**
    * Draw debug rectangles for a non-empty row and all of its subcomponents.
-   * @param {!Row} row The non-empty row to render.
+   * @param {!Blockly.blockRendering.Row} row The non-empty row to render.
    * @param {number} cursorY The y position of the top of the row.
    * @param {boolean} isRtl Whether the block is rendered RTL.
    * @package
@@ -319,7 +319,7 @@ class Debug {
       }
       if (Types.isSpacer(elem)) {
         this.drawSpacerElem(
-            /** @type {!InRowSpacer} */ (elem), row.height, isRtl);
+            /** @type {!Blockly.blockRendering.InRowSpacer} */ (elem), row.height, isRtl);
       } else {
         this.drawRenderedElem(elem, isRtl);
       }
@@ -329,7 +329,7 @@ class Debug {
 
   /**
    * Draw a debug rectangle around the entire block.
-   * @param {!RenderInfo} info Rendering information about
+   * @param {!Blockly.blockRendering.RenderInfo} info Rendering information about
    *     the block to debug.
    * @package
    */
@@ -375,8 +375,8 @@ class Debug {
 
   /**
    * Do all of the work to draw debug information for the whole block.
-   * @param {!BlockSvg} block The block to draw debug information for.
-   * @param {!RenderInfo} info Rendering information about
+   * @param {!Blockly.BlockSvg} block The block to draw debug information for.
+   * @param {!Blockly.blockRendering.RenderInfo} info Rendering information about
    *     the block to debug.
    * @package
    */
@@ -411,7 +411,7 @@ class Debug {
      * TODO: Find a better way to do this check without pulling in all of
      * zelos, or just delete this line or the whole debug renderer.
      */
-    const maybeZelosInfo = /** @type {!ZelosInfo} */ (info);
+    const maybeZelosInfo = /** @type {!Blockly.zelos.Blockly.blockRendering.RenderInfo} */ (info);
     if (maybeZelosInfo.rightSide) {
       this.drawRenderedElem(maybeZelosInfo.rightSide, info.RTL);
     }

@@ -12,7 +12,7 @@
 
 /**
  * The interface for a flyout.
- * @namespace Blockly.IFlyout
+
  */
 goog.module('Blockly.IFlyout');
 
@@ -32,7 +32,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * Interface for a flyout.
- * @extends {IRegistrable}
+ * @extends {Blockly.IRegistrable}
  * @interface
  * @alias Blockly.IFlyout
  */
@@ -52,7 +52,7 @@ IFlyout.prototype.RTL;
 
 /**
  * The target workspace
- * @type {?WorkspaceSvg}
+ * @type {?Blockly.WorkspaceSvg}
  */
 IFlyout.prototype.targetWorkspace;
 
@@ -90,7 +90,7 @@ IFlyout.prototype.createDom;
 
 /**
  * Initializes the flyout.
- * @param {!WorkspaceSvg} targetWorkspace The workspace in which to
+ * @param {!Blockly.WorkspaceSvg} targetWorkspace The workspace in which to
  *     create new blocks.
  */
 IFlyout.prototype.init;
@@ -115,7 +115,7 @@ IFlyout.prototype.getHeight;
 
 /**
  * Get the workspace inside the flyout.
- * @return {!WorkspaceSvg} The workspace inside the flyout.
+ * @return {!Blockly.WorkspaceSvg} The workspace inside the flyout.
  */
 IFlyout.prototype.getWorkspace;
 
@@ -145,7 +145,7 @@ IFlyout.prototype.hide;
 
 /**
  * Show and populate the flyout.
- * @param {!toolbox.FlyoutDefinition|string} flyoutDef Contents to
+ * @param {!Blockly.utils.toolbox.FlyoutDefinition|string} flyoutDef Contents to
  *     display in the flyout. This is either an array of Nodes, a NodeList, a
  *     toolbox definition, or a string with the name of the dynamic category.
  */
@@ -153,8 +153,8 @@ IFlyout.prototype.show;
 
 /**
  * Create a copy of this block on the workspace.
- * @param {!BlockSvg} originalBlock The block to copy from the flyout.
- * @return {!BlockSvg} The newly created block.
+ * @param {!Blockly.BlockSvg} originalBlock The block to copy from the flyout.
+ * @return {!Blockly.BlockSvg} The newly created block.
  * @throws {Error} if something went wrong with deserialization.
  */
 IFlyout.prototype.createBlock;
@@ -192,7 +192,7 @@ IFlyout.prototype.position;
  * Determine if a drag delta is toward the workspace, based on the position
  * and orientation of the flyout. This is used in determineDragIntention_ to
  * determine if a new block should be created or if the flyout should scroll.
- * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+ * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
  *     moved from the position at mouse down, in pixel units.
  * @return {boolean} True if the drag is toward the workspace.
  */

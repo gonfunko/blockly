@@ -24,12 +24,12 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a click event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.Click
  */
 class Click extends UiBase {
   /**
-   * @param {?Block=} opt_block The affected block. Null for click events
+   * @param {?Blockly.Block=} opt_block The affected block. Null for click events
    *    that do not have an associated block (i.e. workspace click). Undefined
    *    for a blank event.
    * @param {?string=} opt_workspaceId The workspace identifier for this event.

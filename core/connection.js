@@ -37,17 +37,17 @@ goog.require('Blockly.constants');
 
 /**
  * Class for a connection between blocks.
- * @implements {IASTNodeLocationWithBlock}
+ * @implements {Blockly.IASTNodeLocationWithBlock}
  * @alias Blockly.Connection
  */
 class Connection {
   /**
-   * @param {!Block} source The block establishing this connection.
+   * @param {!Blockly.Block} source The block establishing this connection.
    * @param {number} type The type of the connection.
    */
   constructor(source, type) {
     /**
-     * @type {!Block}
+     * @type {!Blockly.Block}
      * @protected
      */
     this.sourceBlock_ = source;
@@ -56,7 +56,7 @@ class Connection {
 
     /**
      * Connection this connection connects to.  Null if not connected.
-     * @type {Connection}
+     * @type {Blockly.Connection}
      */
     this.targetConnection = null;
 
@@ -96,7 +96,7 @@ class Connection {
     this.y = 0;
 
     /**
-     * @type {?blocks.State}
+     * @type {?Blockly.serialization.blocks.State}
      * @private
      */
     this.shadowState_ = null;
@@ -105,7 +105,7 @@ class Connection {
   /**
    * Connect two connections together.  This is the connection on the superior
    * block.
-   * @param {!Connection} childConnection Connection on inferior block.
+   * @param {!Blockly.Connection} childConnection Connection on inferior block.
    * @protected
    */
   connect_(childConnection) {
@@ -136,7 +136,7 @@ class Connection {
     // Connect the new connection to the parent.
     let event;
     if (eventUtils.isEnabled()) {
-      event = /** @type {!BlockMove} */
+      event = /** @type {!Blockly.Events.BlockMove} */
           (new (eventUtils.get(eventUtils.BLOCK_MOVE))(childBlock));
     }
     connectReciprocally(parentConnection, childConnection);
@@ -152,7 +152,7 @@ class Connection {
           orphan.outputConnection :
           orphan.previousConnection;
       const connection = Connection.getConnectionForOrphanedConnection(
-          childBlock, /** @type {!Connection} */ (orphanConnection));
+          childBlock, /** @type {!Blockly.Connection} */ (orphanBlockly.Connection));
       if (connection) {
         orphanConnection.connect(connection);
       } else {
@@ -183,7 +183,7 @@ class Connection {
 
   /**
    * Get the source block for this connection.
-   * @return {!Block} The source block.
+   * @return {!Blockly.Block} The source block.
    */
   getSourceBlock() {
     return this.sourceBlock_;
@@ -209,7 +209,7 @@ class Connection {
 
   /**
    * Get the workspace's connection type checker object.
-   * @return {!IConnectionChecker} The connection type checker for the
+   * @return {!Blockly.IConnectionChecker} The connection type checker for the
    *     source block's workspace.
    * @package
    */
@@ -220,7 +220,7 @@ class Connection {
   /**
    * Called when an attempted connection fails. NOP by default (i.e. for
    * headless workspaces).
-   * @param {!Connection} _otherConnection Connection that this connection
+   * @param {!Blockly.Connection} _otherConnection Connection that this connection
    *     failed to connect to.
    * @package
    */
@@ -230,7 +230,7 @@ class Connection {
 
   /**
    * Connect this connection to another connection.
-   * @param {!Connection} otherConnection Connection to connect to.
+   * @param {!Blockly.Connection} otherConnection Connection to connect to.
    * @return {boolean} Whether the the blocks are now connected or not.
    */
   connect(otherConnection) {
@@ -303,14 +303,14 @@ class Connection {
 
   /**
    * Disconnect two blocks that are connected by this connection.
-   * @param {!Block} parentBlock The superior block.
-   * @param {!Block} childBlock The inferior block.
+   * @param {!Blockly.Block} parentBlock The superior block.
+   * @param {!Blockly.Block} childBlock The inferior block.
    * @protected
    */
   disconnectInternal_(parentBlock, childBlock) {
     let event;
     if (eventUtils.isEnabled()) {
-      event = /** @type {!BlockMove} */
+      event = /** @type {!Blockly.Events.BlockMove} */
           (new (eventUtils.get(eventUtils.BLOCK_MOVE))(childBlock));
     }
     const otherConnection = this.targetConnection;
@@ -334,7 +334,7 @@ class Connection {
 
   /**
    * Returns the block that this connection connects to.
-   * @return {?Block} The connected block or null if none is connected.
+   * @return {?Blockly.Block} The connected block or null if none is connected.
    */
   targetBlock() {
     if (this.isConnected()) {
@@ -362,7 +362,7 @@ class Connection {
    * Change a connection's compatibility.
    * @param {?(string|!Array<string>)} check Compatible value type or list of
    *     value types. Null if all types are compatible.
-   * @return {!Connection} The connection being modified
+   * @return {!Blockly.Connection} The connection being modified
    *     (to allow chaining).
    */
   setCheck(check) {
@@ -408,13 +408,13 @@ class Connection {
   getShadowDom(returnCurrent) {
     return (returnCurrent && this.targetBlock().isShadow()) ?
         /** @type {!Element} */ (Xml.blockToDom(
-            /** @type {!Block} */ (this.targetBlock()))) :
+            /** @type {!Blockly.Block} */ (this.targetBlock()))) :
         this.shadowDom_;
   }
 
   /**
    * Changes the connection's shadow block.
-   * @param {?blocks.State} shadowState An state represetation of the block or
+   * @param {?Blockly.serialization.blocks.State} shadowState An state represetation of the block or
    *     null.
    */
   setShadowState(shadowState) {
@@ -428,12 +428,12 @@ class Connection {
    *     attached to this connection, this serializes the state of that block
    *     and returns it (so that field values are correct). Otherwise the saved
    *     state is just returned.
-   * @return {?blocks.State} Serialized object representation of the block, or
+   * @return {?Blockly.serialization.blocks.State} Serialized object representation of the block, or
    *     null.
    */
   getShadowState(returnCurrent) {
     if (returnCurrent && this.targetBlock() && this.targetBlock().isShadow()) {
-      return blocks.save(/** @type {!Block} */ (this.targetBlock()));
+      return blocks.save(/** @type {!Blockly.Block} */ (this.targetBlock()));
     }
     return this.shadowState_;
   }
@@ -447,7 +447,7 @@ class Connection {
    * {@link Blockly.RenderedConnection} overrides this behavior with a list
    * computed from the rendered positioning.
    * @param {number} _maxLimit The maximum radius to another connection.
-   * @return {!Array<!Connection>} List of connections.
+   * @return {!Array<!Blockly.Connection>} List of connections.
    * @package
    */
   neighbours(_maxLimit) {
@@ -456,7 +456,7 @@ class Connection {
 
   /**
    * Get the parent input of a connection.
-   * @return {?Input} The input that the connection belongs to or null if
+   * @return {?Blockly.Input} The input that the connection belongs to or null if
    *     no parent exists.
    * @package
    */
@@ -510,7 +510,7 @@ class Connection {
   /**
    * Returns the state of the shadowDom_ and shadowState_ properties, then
    * temporarily sets those properties to null so no shadow respawns.
-   * @return {{shadowDom: ?Element, shadowState: ?blocks.State}} The state of
+   * @return {{shadowDom: ?Element, shadowState: ?Blockly.serialization.blocks.State}} The state of
    *     both the shadowDom_ and shadowState_ properties.
    * @private
    */
@@ -525,7 +525,7 @@ class Connection {
 
   /**
    * Reapplies the stashed state of the shadowDom_ and shadowState_ properties.
-   * @param {{shadowDom: ?Element, shadowState: ?blocks.State}} param0 The state
+   * @param {{shadowDom: ?Element, shadowState: ?Blockly.serialization.blocks.State}} param0 The state
    *     to reapply to the shadowDom_ and shadowState_ properties.
    * @private
    */
@@ -537,7 +537,7 @@ class Connection {
   /**
    * Sets the state of the shadow of this connection.
    * @param {{shadowDom: (?Element|undefined), shadowState:
-   *     (?blocks.State|undefined)}=} param0 The state to set the shadow of this
+   *     (?Blockly.serialization.blocks.State|undefined)}=} param0 The state to set the shadow of this
    *     connection to.
    * @private
    */
@@ -573,7 +573,7 @@ class Connection {
    * shadowState_ gets priority.
    * @param {boolean} attemptToConnect Whether to try to connect the shadow
    *     block to this connection or not.
-   * @return {?Block} The shadow block that was created, or null if both the
+   * @return {?Blockly.Block} The shadow block that was created, or null if both the
    *     shadowState_ and shadowDom_ are null.
    * @private
    */
@@ -625,7 +625,7 @@ class Connection {
   /**
    * Saves the given shadow block to both the shadowDom_ and shadowState_
    * properties, in their respective serialized forms.
-   * @param {?Block} shadow The shadow to serialize, or null.
+   * @param {?Blockly.Block} shadow The shadow to serialize, or null.
    * @private
    */
   serializeShadow_(shadow) {
@@ -640,10 +640,10 @@ class Connection {
    * Returns the connection (starting at the startBlock) which will accept
    * the given connection. This includes compatible connection types and
    * connection checks.
-   * @param {!Block} startBlock The block on which to start the search.
-   * @param {!Connection} orphanConnection The connection that is looking
+   * @param {!Blockly.Block} startBlock The block on which to start the search.
+   * @param {!Blockly.Connection} orphanConnection The connection that is looking
    *     for a home.
-   * @return {?Connection} The suitable connection point on the chain of
+   * @return {?Blockly.Connection} The suitable connection point on the chain of
    *     blocks, or null.
    */
   static getConnectionForOrphanedConnection(startBlock, orphanConnection) {
@@ -676,8 +676,8 @@ Connection.REASON_PREVIOUS_AND_OUTPUT = 8;
 
 /**
  * Update two connections to target each other.
- * @param {Connection} first The first connection to update.
- * @param {Connection} second The second connection to update.
+ * @param {Blockly.Connection} first The first connection to update.
+ * @param {Blockly.Connection} second The second connection to update.
  */
 const connectReciprocally = function(first, second) {
   if (!first || !second) {
@@ -692,9 +692,9 @@ const connectReciprocally = function(first, second) {
  * block, if one can be found. If the block has multiple compatible connections
  * (even if they are filled) this returns null. If the block has no compatible
  * connections, this returns null.
- * @param {!Block} block The superior block.
- * @param {!Block} orphanBlock The inferior block.
- * @return {?Connection} The suitable connection point on 'block',
+ * @param {!Blockly.Block} block The superior block.
+ * @param {!Blockly.Block} orphanBlock The inferior block.
+ * @return {?Blockly.Connection} The suitable connection point on 'block',
  *     or null.
  */
 const getSingleConnection = function(block, orphanBlock) {
@@ -720,9 +720,9 @@ const getSingleConnection = function(block, orphanBlock) {
  * are zero or multiple eligible connections, returns null.  Otherwise
  * returns the only input on the last block in the chain.
  * Terminates early for shadow blocks.
- * @param {!Block} startBlock The block on which to start the search.
- * @param {!Block} orphanBlock The block that is looking for a home.
- * @return {?Connection} The suitable connection point on the chain
+ * @param {!Blockly.Block} startBlock The block on which to start the search.
+ * @param {!Blockly.Block} orphanBlock The block that is looking for a home.
+ * @return {?Blockly.Connection} The suitable connection point on the chain
  *     of blocks, or null.
  */
 const getConnectionForOrphanedOutput = function(startBlock, orphanBlock) {
@@ -730,7 +730,7 @@ const getConnectionForOrphanedOutput = function(startBlock, orphanBlock) {
   let connection;
   while (
       (connection = getSingleConnection(
-           /** @type {!Block} */ (newBlock), orphanBlock))) {
+           /** @type {!Block} */ (newBlock), orphanBlockly.Block))) {
     newBlock = connection.targetBlock();
     if (!newBlock || newBlock.isShadow()) {
       return connection;

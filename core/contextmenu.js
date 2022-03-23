@@ -45,13 +45,13 @@ goog.require('Blockly.Events.BlockCreate');
 
 /**
  * Which block is the context menu attached to?
- * @type {?Block}
+ * @type {?Blockly.Block}
  */
 let currentBlock = null;
 
 /**
  * Gets the block the context menu is currently attached to.
- * @return {?Block} The block the context menu is attached to.
+ * @return {?Blockly.Block} The block the context menu is attached to.
  * @alias Blockly.ContextMenu.getCurrentBlock
  */
 const getCurrentBlock = function() {
@@ -61,7 +61,7 @@ exports.getCurrentBlock = getCurrentBlock;
 
 /**
  * Sets the block the context menu is currently attached to.
- * @param {?Block} block The block the context menu is attached to.
+ * @param {?Blockly.Block} block The block the context menu is attached to.
  * @alias Blockly.ContextMenu.setCurrentBlock
  */
 const setCurrentBlock = function(block) {
@@ -74,7 +74,7 @@ Object.defineProperties(exports, {
   /**
    * Which block is the context menu attached to?
    * @name Blockly.ContextMenu.currentBlock
-   * @type {Block}
+   * @type {Blockly.Block}
    * @deprecated Use Blockly.Tooltip.getCurrentBlock() /
    *     .setCurrentBlock() instead.  (September 2021)
    * @suppress {checkTypes}
@@ -97,7 +97,7 @@ Object.defineProperties(exports, {
 
 /**
  * Menu object.
- * @type {Menu}
+ * @type {Blockly.Menu}
  */
 let menu_ = null;
 
@@ -131,7 +131,7 @@ exports.show = show;
  * Create the context menu object and populate it with the given options.
  * @param {!Array<!Object>} options Array of menu options.
  * @param {boolean} rtl True if RTL, false if LTR.
- * @return {!Menu} The menu that will be shown on right click.
+ * @return {!Blockly.Menu} The menu that will be shown on right click.
  * @private
  */
 const populate_ = function(options, rtl) {
@@ -165,7 +165,7 @@ const populate_ = function(options, rtl) {
 
 /**
  * Add the menu to the page and position it correctly.
- * @param {!Menu} menu The menu to add and position.
+ * @param {!Blockly.Menu} menu The menu to add and position.
  * @param {!Event} e Mouse event for the right click that is making the context
  *     menu appear.
  * @param {boolean} rtl True if RTL, false if LTR.
@@ -199,7 +199,7 @@ const position_ = function(menu, e, rtl) {
 
 /**
  * Create and render the menu widget inside Blockly's widget div.
- * @param {!Menu} menu The menu to add to the widget div.
+ * @param {!Blockly.Menu} menu The menu to add to the widget div.
  * @private
  */
 const createWidget_ = function(menu) {
@@ -254,7 +254,7 @@ exports.dispose = dispose;
 /**
  * Create a callback function that creates and configures a block,
  *   then places the new block next to the original.
- * @param {!Block} block Original block.
+ * @param {!Blockly.Block} block Original block.
  * @param {!Element} xml XML representation of new block.
  * @return {!Function} Function that creates a block.
  * @alias Blockly.ContextMenu.callbackFactory
@@ -265,7 +265,7 @@ const callbackFactory = function(block, xml) {
     let newBlock;
     try {
       newBlock =
-          /** @type {!BlockSvg} */ (Xml.domToBlock(xml, block.workspace));
+          /** @type {!Blockly.BlockSvg} */ (Xml.domToBlock(xml, block.workspace));
       // Move the new block next to the old block.
       const xy = block.getRelativeToSurfaceXY();
       if (block.RTL) {
@@ -290,7 +290,7 @@ exports.callbackFactory = callbackFactory;
 
 /**
  * Make a context menu option for deleting the current workspace comment.
- * @param {!WorkspaceCommentSvg} comment The workspace comment where the
+ * @param {!Blockly.WorkspaceCommentSvg} comment The workspace comment where the
  *     right-click originated.
  * @return {!Object} A menu option, containing text, enabled, and a callback.
  * @alias Blockly.ContextMenu.commentDeleteOption
@@ -312,7 +312,7 @@ exports.commentDeleteOption = commentDeleteOption;
 
 /**
  * Make a context menu option for duplicating the current workspace comment.
- * @param {!WorkspaceCommentSvg} comment The workspace comment where the
+ * @param {!Blockly.WorkspaceCommentSvg} comment The workspace comment where the
  *     right-click originated.
  * @return {!Object} A menu option, containing text, enabled, and a callback.
  * @alias Blockly.ContextMenu.commentDuplicateOption
@@ -332,7 +332,7 @@ exports.commentDuplicateOption = commentDuplicateOption;
 
 /**
  * Make a context menu option for adding a comment on the workspace.
- * @param {!WorkspaceSvg} ws The workspace where the right-click
+ * @param {!Blockly.WorkspaceSvg} ws The workspace where the right-click
  *     originated.
  * @param {!Event} e The right-click mouse event.
  * @return {!Object} A menu option, containing text, enabled, and a callback.

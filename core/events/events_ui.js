@@ -26,13 +26,13 @@ const {UiBase} = goog.require('Blockly.Events.UiBase');
 
 /**
  * Class for a UI event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @deprecated December 2020. Instead use a more specific UI event.
  * @alias Blockly.Events.Ui
  */
 class Ui extends UiBase {
   /**
-   * @param {?Block=} opt_block The affected block.  Null for UI events
+   * @param {?Blockly.Block=} opt_block The affected block.  Null for UI events
    *     that do not have an associated block.  Undefined for a blank event.
    * @param {string=} opt_element One of 'selected', 'comment', 'mutatorOpen',
    *     etc.

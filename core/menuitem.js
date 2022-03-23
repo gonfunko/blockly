@@ -280,7 +280,7 @@ const MenuItem = class {
   /**
    * Set the handler that's called when the menu item is activated by the user.
    * `obj` will be used as the 'this' object in the function when called.
-   * @param {function(!MenuItem)} fn The handler.
+   * @param {function(!Blockly.MenuItem)} fn The handler.
    * @param {!Object} obj Used as the 'this' object in fn when called.
    * @package
    */

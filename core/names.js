@@ -68,7 +68,7 @@ const Names = class {
 
     /**
      * The variable map from the workspace, containing Blockly variable models.
-     * @type {?VariableMap}
+     * @type {?Blockly.VariableMap}
      * @private
      */
     this.variableMap_ = null;
@@ -93,7 +93,7 @@ const Names = class {
 
   /**
    * Set the variable map that maps from variable name to variable object.
-   * @param {!VariableMap} map The map to track.
+   * @param {!Blockly.VariableMap} map The map to track.
    */
   setVariableMap(map) {
     this.variableMap_ = map;
@@ -126,7 +126,7 @@ const Names = class {
 
   /**
    * Generate names for user variables, but only ones that are being used.
-   * @param {!Workspace} workspace Workspace to generate variables from.
+   * @param {!Blockly.Workspace} workspace Workspace to generate variables from.
    */
   populateVariables(workspace) {
     const variables = Variables.allUsedVarModels(workspace);
@@ -137,7 +137,7 @@ const Names = class {
 
   /**
    * Generate names for procedures.
-   * @param {!Workspace} workspace Workspace to generate procedures from.
+   * @param {!Blockly.Workspace} workspace Workspace to generate procedures from.
    */
   populateProcedures(workspace) {
     let procedures =

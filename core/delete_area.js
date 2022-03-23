@@ -29,8 +29,8 @@ const {IDraggable} = goog.requireType('Blockly.IDraggable');
 /**
  * Abstract class for a component that can delete a block or bubble that is
  * dropped on top of it.
- * @extends {DragTarget}
- * @implements {IDeleteArea}
+ * @extends {Blockly.DragTarget}
+ * @implements {Blockly.IDeleteArea}
  * @alias Blockly.DeleteArea
  */
 class DeleteArea extends DragTarget {
@@ -56,7 +56,7 @@ class DeleteArea extends DragTarget {
    * this area.
    * This method should check if the element is deletable and is always called
    * before onDragEnter/onDragOver/onDragExit.
-   * @param {!IDraggable} element The block or bubble currently being
+   * @param {!Blockly.IDraggable} element The block or bubble currently being
    *   dragged.
    * @param {boolean} couldConnect Whether the element could could connect to
    *     another.
@@ -65,7 +65,7 @@ class DeleteArea extends DragTarget {
    */
   wouldDelete(element, couldConnect) {
     if (element instanceof BlockSvg) {
-      const block = /** @type {BlockSvg} */ (element);
+      const block = /** @type {Blockly.BlockSvg} */ (element);
       const couldDeleteBlock = !block.getParent() && block.isDeletable();
       this.updateWouldDelete_(couldDeleteBlock && !couldConnect);
     } else {

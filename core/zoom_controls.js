@@ -38,16 +38,16 @@ goog.require('Blockly.Events.Click');
 
 /**
  * Class for a zoom controls.
- * @implements {IPositionable}
+ * @implements {Blockly.IPositionable}
  * @alias Blockly.ZoomControls
  */
 class ZoomControls {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace to sit in.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace to sit in.
    */
   constructor(workspace) {
     /**
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
@@ -232,7 +232,7 @@ class ZoomControls {
   /**
    * Returns the bounding rectangle of the UI element in pixel units relative to
    * the Blockly injection div.
-   * @return {?Rect} The UI elements's bounding box. Null if
+   * @return {?Blockly.utils.Rect} The UI elements's bounding box. Null if
    *   bounding box should be ignored by other UI elements.
    */
   getBoundingRectangle() {
@@ -248,8 +248,8 @@ class ZoomControls {
    * Positions the zoom controls.
    * It is positioned in the opposite corner to the corner the
    * categories/toolbox starts at.
-   * @param {!MetricsManager.UiMetrics} metrics The workspace metrics.
-   * @param {!Array<!Rect>} savedPositions List of rectangles that
+   * @param {!Blockly.MetricsManager.UiMetrics} metrics The workspace metrics.
+   * @param {!Array<!Blockly.utils.Rect>} savedPositions List of rectangles that
    *     are already on the workspace.
    */
   position(metrics, savedPositions) {

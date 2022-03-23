@@ -26,7 +26,7 @@ const {FieldLabel} = goog.require('Blockly.FieldLabel');
 
 /**
  * Class for a non-editable, serializable text field.
- * @extends {FieldLabel}
+ * @extends {Blockly.FieldLabel}
  * @alias Blockly.FieldLabelSerializable
  */
 class FieldLabelSerializable extends FieldLabel {
@@ -62,7 +62,7 @@ class FieldLabelSerializable extends FieldLabel {
    * Construct a FieldLabelSerializable from a JSON arg object,
    * dereferencing any string table references.
    * @param {!Object} options A JSON object with options (text, and class).
-   * @return {!FieldLabelSerializable} The new field instance.
+   * @return {!Blockly.FieldLabelSerializable} The new field instance.
    * @package
    * @nocollapse
    * @override

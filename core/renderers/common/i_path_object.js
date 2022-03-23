@@ -29,7 +29,7 @@ const {Theme} = goog.requireType('Blockly.Theme');
 /**
  * An interface for a block's path object.
  * @param {!SVGElement} _root The root SVG element.
- * @param {!ConstantProvider} _constants The renderer's
+ * @param {!Blockly.blockRendering.ConstantProvider} _constants The renderer's
  *     constants.
  * @interface
  * @alias Blockly.blockRendering.IPathObject
@@ -44,13 +44,13 @@ IPathObject.prototype.svgPath;
 
 /**
  * The renderer's constant provider.
- * @type {!ConstantProvider}
+ * @type {!Blockly.blockRendering.ConstantProvider}
  */
 IPathObject.prototype.constants;
 
 /**
  * The primary path of the block.
- * @type {!Theme.BlockStyle}
+ * @type {!Blockly.Theme.BlockStyle}
  */
 IPathObject.prototype.style;
 
@@ -78,14 +78,14 @@ IPathObject.prototype.setPath;
 /**
  * Apply the stored colours to the block's path, taking into account whether
  * the paths belong to a shadow block.
- * @param {!BlockSvg} block The source block.
+ * @param {!Blockly.BlockSvg} block The source block.
  * @package
  */
 IPathObject.prototype.applyColour;
 
 /**
  * Update the style.
- * @param {!Theme.BlockStyle} blockStyle The block style to use.
+ * @param {!Blockly.Theme.BlockStyle} blockStyle The block style to use.
  * @package
  */
 IPathObject.prototype.setStyle;

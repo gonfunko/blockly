@@ -30,22 +30,22 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  * An object containing information about the space a field takes up during
  * rendering
  * @struct
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @alias Blockly.blockRendering.Field
  */
 class Field extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!BlocklyField} field The field to measure and store information
+   * @param {!Blockly.Field} field The field to measure and store information
    *     for.
-   * @param {!Input} parentInput The parent input for the field.
+   * @param {!Blockly.Input} parentInput The parent input for the field.
    * @package
    */
   constructor(constants, field, parentInput) {
     super(constants);
 
-    /** @type {!BlocklyField} */
+    /** @type {!Blockly.Field} */
     this.field = field;
 
     /** @type {boolean} */
@@ -63,7 +63,7 @@ class Field extends Measurable {
     /** @type {number} */
     this.width = size.width;
 
-    /** @type {!Input} */
+    /** @type {!Blockly.Input} */
     this.parentInput = parentInput;
   }
 }

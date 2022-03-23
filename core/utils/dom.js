@@ -85,7 +85,7 @@ let canvasContext = null;
 
 /**
  * Helper method for creating SVG elements.
- * @param {string|Svg<T>} name Element's tag name.
+ * @param {string|Blockly.utils.Svg<T>} name Element's tag name.
  * @param {!Object} attrs Dictionary of attribute names and values.
  * @param {Element=} opt_parent Optional parent on which to append the element.
  * @return {T} Newly created SVG element.  The return type is {!SVGElement} if

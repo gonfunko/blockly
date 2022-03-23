@@ -54,20 +54,20 @@ goog.require('Blockly.Events.TrashcanOpen');
 
 /**
  * Class for a trash can.
- * @implements {IAutoHideable}
- * @implements {IPositionable}
- * @extends {DeleteArea}
+ * @implements {Blockly.IAutoHideable}
+ * @implements {Blockly.IPositionable}
+ * @extends {Blockly.DeleteArea}
  * @alias Blockly.Trashcan
  */
 class Trashcan extends DeleteArea {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace to sit in.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace to sit in.
    */
   constructor(workspace) {
     super();
     /**
      * The workspace the trashcan sits in.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
@@ -88,7 +88,7 @@ class Trashcan extends DeleteArea {
 
     /**
      * The trashcan flyout.
-     * @type {IFlyout}
+     * @type {Blockly.IFlyout}
      * @package
      */
     this.flyout = null;
@@ -162,7 +162,7 @@ class Trashcan extends DeleteArea {
 
     // Create flyout options.
     const flyoutWorkspaceOptions = new Options(
-        /** @type {!BlocklyOptions} */
+        /** @type {!BlocklyBlockly.Options} */
         ({
           'scrollbars': true,
           'parentWorkspace': this.workspace_,
@@ -381,8 +381,8 @@ class Trashcan extends DeleteArea {
    * Positions the trashcan.
    * It is positioned in the opposite corner to the corner the
    * categories/toolbox starts at.
-   * @param {!MetricsManager.UiMetrics} metrics The workspace metrics.
-   * @param {!Array<!Rect>} savedPositions List of rectangles that
+   * @param {!Blockly.MetricsManager.UiMetrics} metrics The workspace metrics.
+   * @param {!Array<!Blockly.utils.Rect>} savedPositions List of rectangles that
    *     are already on the workspace.
    */
   position(metrics, savedPositions) {
@@ -415,7 +415,7 @@ class Trashcan extends DeleteArea {
   /**
    * Returns the bounding rectangle of the UI element in pixel units relative to
    * the Blockly injection div.
-   * @return {?Rect} The UI elements's bounding box. Null if
+   * @return {?Blockly.utils.Rect} The UI elements's bounding box. Null if
    *   bounding box should be ignored by other UI elements.
    */
   getBoundingRectangle() {
@@ -427,7 +427,7 @@ class Trashcan extends DeleteArea {
   /**
    * Returns the bounding rectangle of the drag target area in pixel units
    * relative to viewport.
-   * @return {?Rect} The component's bounding box. Null if drag
+   * @return {?Blockly.utils.Rect} The component's bounding box. Null if drag
    *   target area should be ignored.
    */
   getClientRect() {
@@ -446,7 +446,7 @@ class Trashcan extends DeleteArea {
   /**
    * Handles when a cursor with a block or bubble is dragged over this drag
    * target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @override
    */
@@ -456,7 +456,7 @@ class Trashcan extends DeleteArea {
 
   /**
    * Handles when a cursor with a block or bubble exits this drag target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @override
    */
@@ -467,7 +467,7 @@ class Trashcan extends DeleteArea {
   /**
    * Handles when a block or bubble is dropped on this component.
    * Should not handle delete here.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @override
    */
@@ -605,7 +605,7 @@ class Trashcan extends DeleteArea {
   /**
    * Handle a BLOCK_DELETE event. Adds deleted blocks oldXml to the content
    * array.
-   * @param {!Abstract} event Workspace event.
+   * @param {!Blockly.Events.Abstract} event Workspace event.
    * @private
    */
   onDelete_(event) {
@@ -613,7 +613,7 @@ class Trashcan extends DeleteArea {
         event.type !== eventUtils.BLOCK_DELETE) {
       return;
     }
-    const deleteEvent = /** @type {!BlockDelete} */ (event);
+    const deleteEvent = /** @type {!Blockly.Events.BlockDelete} */ (event);
     if (event.type === eventUtils.BLOCK_DELETE && !deleteEvent.wasShadow) {
       const cleanedJson = this.cleanBlockJson_(deleteEvent.oldJson);
       if (this.contents_.indexOf(cleanedJson) !== -1) {

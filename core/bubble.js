@@ -40,16 +40,16 @@ goog.require('Blockly.Workspace');
 
 /**
  * Class for UI bubble.
- * @implements {IBubble}
+ * @implements {Blockly.IBubble}
  * @alias Blockly.Bubble
  */
 const Bubble = class {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace on which to draw the
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace on which to draw the
    *     bubble.
    * @param {!Element} content SVG content for the bubble.
    * @param {!Element} shape SVG element to avoid eclipsing.
-   * @param {!Coordinate} anchorXY Absolute position of bubble's
+   * @param {!Blockly.utils.Coordinate} anchorXY Absolute position of bubble's
    *     anchor point.
    * @param {?number} bubbleWidth Width of bubble, or null if not resizable.
    * @param {?number} bubbleHeight Height of bubble, or null if not resizable.
@@ -97,7 +97,7 @@ const Bubble = class {
 
     /**
      * Absolute coordinate of anchor point, in workspace coordinates.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @private
      */
     this.anchorXY_ = null;
@@ -423,7 +423,7 @@ const Bubble = class {
   /**
    * Notification that the anchor has moved.
    * Update the arrow and bubble accordingly.
-   * @param {!Coordinate} xy Absolute location.
+   * @param {!Blockly.utils.Coordinate} xy Absolute location.
    */
   setAnchorLocation(xy) {
     this.anchorXY_ = xy;
@@ -497,7 +497,7 @@ const Bubble = class {
    * workspace (what percentage of the bubble is visible).
    * @param {!{x: number, y: number}} relativeMin The position of the top-left
    *     corner of the bubble relative to the anchor point.
-   * @param {!MetricsManager.ContainerRegion} viewMetrics The view metrics
+   * @param {!Blockly.MetricsManager.ContainerRegion} viewMetrics The view metrics
    *     of the workspace the bubble will appear in.
    * @return {number} The percentage of the bubble that is visible.
    * @private
@@ -543,7 +543,7 @@ const Bubble = class {
    * Calculate what the optimal horizontal position of the top-left corner of
    * the bubble is (relative to the anchor point) so that the most area of the
    * bubble is shown.
-   * @param {!MetricsManager.ContainerRegion} viewMetrics The view metrics
+   * @param {!Blockly.MetricsManager.ContainerRegion} viewMetrics The view metrics
    *     of the workspace the bubble will appear in.
    * @return {number} The optimal horizontal position of the top-left corner
    *     of the bubble.
@@ -599,7 +599,7 @@ const Bubble = class {
    * Calculate what the optimal vertical position of the top-left corner of
    * the bubble is (relative to the anchor point) so that the most area of the
    * bubble is shown.
-   * @param {!MetricsManager.ContainerRegion} viewMetrics The view metrics
+   * @param {!Blockly.MetricsManager.ContainerRegion} viewMetrics The view metrics
    *     of the workspace the bubble will appear in.
    * @return {number} The optimal vertical position of the top-left corner
    *     of the bubble.
@@ -671,7 +671,7 @@ const Bubble = class {
 
   /**
    * Get the dimensions of this bubble.
-   * @return {!Size} The height and width of the bubble.
+   * @return {!Blockly.utils.Size} The height and width of the bubble.
    */
   getBubbleSize() {
     return new Size(this.width_, this.height_);
@@ -818,9 +818,9 @@ const Bubble = class {
   /**
    * Move this bubble during a drag, taking into account whether or not there is
    * a drag surface.
-   * @param {BlockDragSurfaceSvg} dragSurface The surface that carries
+   * @param {Blockly.BlockDragSurfaceSvg} dragSurface The surface that carries
    *     rendered items during a drag, or null if no drag surface is in use.
-   * @param {!Coordinate} newLoc The location to translate to, in
+   * @param {!Blockly.utils.Coordinate} newLoc The location to translate to, in
    *     workspace coordinates.
    * @package
    */
@@ -842,7 +842,7 @@ const Bubble = class {
   /**
    * Return the coordinates of the top-left corner of this bubble's body
    * relative to the drawing surface's origin (0,0), in workspace units.
-   * @return {!Coordinate} Object with .x and .y properties.
+   * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
    */
   getRelativeToSurfaceXY() {
     return new Coordinate(
@@ -916,16 +916,16 @@ const Bubble = class {
    * Creates a bubble that can not be edited.
    * @param {!SVGTextElement} paragraphElement The text element for the non
    *     editable bubble.
-   * @param {!BlockSvg} block The block that the bubble is attached to.
-   * @param {!Coordinate} iconXY The coordinate of the icon.
-   * @return {!Bubble} The non editable bubble.
+   * @param {!Blockly.BlockSvg} block The block that the bubble is attached to.
+   * @param {!Blockly.utils.Coordinate} iconXY The coordinate of the icon.
+   * @return {!Blockly.Bubble} The non editable bubble.
    * @package
    */
   static createNonEditableBubble(paragraphElement, block, iconXY) {
     const bubble = new Bubble(
-        /** @type {!WorkspaceSvg} */ (block.workspace), paragraphElement,
+        /** @type {!Blockly.WorkspaceSvg} */ (block.workspace), paragraphElement,
         block.pathObject.svgPath,
-        /** @type {!Coordinate} */ (iconXY), null, null);
+        /** @type {!Blockly.utils.Coordinate} */ (iconXY), null, null);
     // Expose this bubble's block's ID on its top-level SVG group.
     bubble.setSvgId(block.id);
     if (block.RTL) {

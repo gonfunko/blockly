@@ -12,7 +12,7 @@
 
 /**
  * The interface for an object that is selectable.
- * @namespace Blockly.ISelectable
+
  */
 goog.module('Blockly.ISelectable');
 
@@ -24,8 +24,8 @@ const {IMovable} = goog.require('Blockly.IMovable');
 
 /**
  * The interface for an object that is selectable.
- * @extends {IDeletable}
- * @extends {IMovable}
+ * @extends {Blockly.IDeletable}
+ * @extends {Blockly.IMovable}
  * @interface
  * @alias Blockly.ISelectable
  */

@@ -29,13 +29,13 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
  */
 class MarkerManager {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace for the marker manager.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace for the marker manager.
    * @package
    */
   constructor(workspace) {
     /**
      * The cursor.
-     * @type {?Cursor}
+     * @type {?Blockly.Cursor}
      * @private
      */
     this.cursor_ = null;
@@ -49,14 +49,14 @@ class MarkerManager {
 
     /**
      * The map of markers for the workspace.
-     * @type {!Object<string, !Marker>}
+     * @type {!Object<string, !Blockly.Marker>}
      * @private
      */
     this.markers_ = Object.create(null);
 
     /**
      * The workspace this marker manager is associated with.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
@@ -72,7 +72,7 @@ class MarkerManager {
   /**
    * Register the marker by adding it to the map of markers.
    * @param {string} id A unique identifier for the marker.
-   * @param {!Marker} marker The marker to register.
+   * @param {!Blockly.Marker} marker The marker to register.
    */
   registerMarker(id, marker) {
     if (this.markers_[id]) {
@@ -102,7 +102,7 @@ class MarkerManager {
 
   /**
    * Get the cursor for the workspace.
-   * @return {?Cursor} The cursor for this workspace.
+   * @return {?Blockly.Cursor} The cursor for this workspace.
    */
   getCursor() {
     return this.cursor_;
@@ -111,7 +111,7 @@ class MarkerManager {
   /**
    * Get a single marker that corresponds to the given ID.
    * @param {string} id A unique identifier for the marker.
-   * @return {?Marker} The marker that corresponds to the given ID,
+   * @return {?Blockly.Marker} The marker that corresponds to the given ID,
    *     or null if none exists.
    */
   getMarker(id) {
@@ -121,7 +121,7 @@ class MarkerManager {
   /**
    * Sets the cursor and initializes the drawer for use with keyboard
    * navigation.
-   * @param {Cursor} cursor The cursor used to move around this workspace.
+   * @param {Blockly.Cursor} cursor The cursor used to move around this workspace.
    */
   setCursor(cursor) {
     if (this.cursor_ && this.cursor_.getDrawer()) {

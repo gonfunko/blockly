@@ -21,13 +21,13 @@ const {ICopyable} = goog.requireType('Blockly.ICopyable');
 
 /**
  * Metadata about the object that is currently on the clipboard.
- * @type {?ICopyable.CopyData}
+ * @type {?Blockly.ICopyable.CopyData}
  */
 let copyData = null;
 
 /**
  * Copy a block or workspace comment onto the local clipboard.
- * @param {!ICopyable} toCopy Block or Workspace Comment to be copied.
+ * @param {!Blockly.ICopyable} toCopy Block or Workspace Comment to be copied.
  * @alias Blockly.clipboard.copy
  * @package
  */
@@ -38,7 +38,7 @@ exports.copy = copy;
 
 /**
  * Paste a block or workspace comment on to the main workspace.
- * @return {!ICopyable|null} The pasted thing if the paste
+ * @return {!Blockly.ICopyable|null} The pasted thing if the paste
  *     was successful, null otherwise.
  * @alias Blockly.clipboard.paste
  * @package
@@ -63,9 +63,9 @@ exports.paste = paste;
 
 /**
  * Duplicate this block and its children, or a workspace comment.
- * @param {!ICopyable} toDuplicate Block or Workspace Comment to be
+ * @param {!Blockly.ICopyable} toDuplicate Block or Workspace Comment to be
  *     duplicated.
- * @return {!ICopyable|null} The block or workspace comment that was duplicated,
+ * @return {!Blockly.ICopyable|null} The block or workspace comment that was duplicated,
  *     or null if the duplication failed.
  * @alias Blockly.clipboard.duplicate
  * @package

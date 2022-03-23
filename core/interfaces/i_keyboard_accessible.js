@@ -12,7 +12,7 @@
 
 /**
  * The interface for objects that handle keyboard shortcuts.
- * @namespace Blockly.IKeyboardAccessible
+
  */
 goog.module('Blockly.IKeyboardAccessible');
 
@@ -29,7 +29,7 @@ const IKeyboardAccessible = function() {};
 
 /**
  * Handles the given keyboard shortcut.
- * @param {!ShortcutRegistry.KeyboardShortcut} shortcut The shortcut to be
+ * @param {!Blockly.ShortcutRegistry.KeyboardShortcut} shortcut The shortcut to be
  *     handled.
  * @return {boolean} True if the shortcut has been handled, false otherwise.
  */

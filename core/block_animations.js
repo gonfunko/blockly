@@ -35,7 +35,7 @@ let disconnectGroup = null;
 
 /**
  * Play some UI effects (sound, animation) when disposing of a block.
- * @param {!BlockSvg} block The block being disposed of.
+ * @param {!Blockly.BlockSvg} block The block being disposed of.
  * @alias Blockly.blockAnimations.disposeUiEffect
  * @package
  */
@@ -86,7 +86,7 @@ const disposeUiStep = function(clone, rtl, start, workspaceScale) {
 
 /**
  * Play some UI effects (sound, ripple) after a connection has been established.
- * @param {!BlockSvg} block The block being connected.
+ * @param {!Blockly.BlockSvg} block The block being connected.
  * @alias Blockly.blockAnimations.connectionUiEffect
  * @package
  */
@@ -142,7 +142,7 @@ const connectionUiStep = function(ripple, start, scale) {
 
 /**
  * Play some UI effects (sound, animation) when disconnecting a block.
- * @param {!BlockSvg} block The block being disconnected.
+ * @param {!Blockly.BlockSvg} block The block being disconnected.
  * @alias Blockly.blockAnimations.disconnectUiEffect
  * @package
  */

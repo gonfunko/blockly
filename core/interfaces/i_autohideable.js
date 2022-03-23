@@ -14,7 +14,7 @@
 /**
  * The interface for a component that is automatically hidden
  * when WorkspaceSvg.hideChaff is called.
- * @namespace Blockly.IAutoHideable
+
  */
 goog.module('Blockly.IAutoHideable');
 
@@ -24,7 +24,7 @@ const {IComponent} = goog.require('Blockly.IComponent');
 
 /**
  * Interface for a component that can be automatically hidden.
- * @extends {IComponent}
+ * @extends {Blockly.IComponent}
  * @interface
  * @alias Blockly.IAutoHideable
  */

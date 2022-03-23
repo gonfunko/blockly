@@ -27,7 +27,7 @@ const {Size} = goog.require('Blockly.utils.Size');
  * Gets the height and width of an element.
  * Similar to Closure's goog.style.getSize
  * @param {!Element} element Element to get size of.
- * @return {!Size} Object with width/height properties.
+ * @return {!Blockly.utils.Size} Object with width/height properties.
  * @alias Blockly.utils.style.getSize
  */
 const getSize = function(element) {
@@ -59,7 +59,7 @@ exports.getSize = getSize;
 /**
  * Gets the height and width of an element when the display is not none.
  * @param {!Element} element Element to get size of.
- * @return {!Size} Object with width/height properties.
+ * @return {!Blockly.utils.Size} Object with width/height properties.
  */
 const getSizeWithDisplay = function(element) {
   const offsetWidth = /** @type {!HTMLElement} */ (element).offsetWidth;
@@ -133,7 +133,7 @@ exports.getCascadedStyle = getCascadedStyle;
  * Returns a Coordinate object relative to the top-left of the HTML document.
  * Similar to Closure's goog.style.getPageOffset
  * @param {!Element} el Element to get the page offset for.
- * @return {!Coordinate} The page offset.
+ * @return {!Blockly.utils.Coordinate} The page offset.
  * @alias Blockly.utils.style.getPageOffset
  */
 const getPageOffset = function(el) {
@@ -156,7 +156,7 @@ exports.getPageOffset = getPageOffset;
 /**
  * Calculates the viewport coordinates relative to the document.
  * Similar to Closure's goog.style.getViewportPageOffset
- * @return {!Coordinate} The page offset of the viewport.
+ * @return {!Blockly.utils.Coordinate} The page offset of the viewport.
  * @alias Blockly.utils.style.getViewportPageOffset
  */
 const getViewportPageOffset = function() {
@@ -254,7 +254,7 @@ exports.scrollIntoContainerView = scrollIntoContainerView;
  *     document scroll element will be used.
  * @param {boolean=} opt_center Whether to center the element in the container.
  *     Defaults to false.
- * @return {!Coordinate} The new scroll position of the container,
+ * @return {!Blockly.utils.Coordinate} The new scroll position of the container,
  *     in form of goog.math.Coordinate(scrollLeft, scrollTop).
  * @alias Blockly.utils.style.getContainerOffsetToScrollInto
  */

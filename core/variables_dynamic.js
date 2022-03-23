@@ -61,7 +61,7 @@ exports.onCreateVariableButtonClick_Colour = colourButtonClickHandler;
 /**
  * Construct the elements (blocks and button) required by the flyout for the
  * variable category.
- * @param {!WorkspaceSvg} workspace The workspace containing variables.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace containing variables.
  * @return {!Array<!Element>} Array of XML elements.
  * @alias Blockly.VariablesDynamic.flyoutCategory
  */
@@ -96,7 +96,7 @@ exports.flyoutCategory = flyoutCategory;
 
 /**
  * Construct the blocks required by the flyout for the variable category.
- * @param {!Workspace} workspace The workspace containing variables.
+ * @param {!Blockly.Workspace} workspace The workspace containing variables.
  * @return {!Array<!Element>} Array of XML block elements.
  * @alias Blockly.VariablesDynamic.flyoutCategoryBlocks
  */

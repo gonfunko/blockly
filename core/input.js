@@ -52,8 +52,8 @@ class Input {
    * @param {number} type The type of the input.
    * @param {string} name Language-neutral identifier which may used to find
    *     this input again.
-   * @param {!Block} block The block containing this input.
-   * @param {Connection} connection Optional connection for this input.
+   * @param {!Blockly.Block} block The block containing this input.
+   * @param {Blockly.Connection} connection Optional connection for this input.
    */
   constructor(type, name, block, connection) {
     if (type !== inputTypes.DUMMY && !name) {
@@ -65,13 +65,13 @@ class Input {
     /** @type {string} */
     this.name = name;
     /**
-     * @type {!Block}
+     * @type {!Blockly.Block}
      * @private
      */
     this.sourceBlock_ = block;
-    /** @type {Connection} */
+    /** @type {Blockly.Connection} */
     this.connection = connection;
-    /** @type {!Array<!Field>} */
+    /** @type {!Array<!Blockly.Field>} */
     this.fieldRow = [];
 
     /**
@@ -90,7 +90,7 @@ class Input {
 
   /**
    * Get the source block for this input.
-   * @return {?Block} The source block, or null if there is none.
+   * @return {?Blockly.Block} The source block, or null if there is none.
    */
   getSourceBlock() {
     return this.sourceBlock_;
@@ -99,10 +99,10 @@ class Input {
   /**
    * Add a field (or label from string), and all prefix and suffix fields, to
    * the end of the input's field row.
-   * @param {string|!Field} field Something to add as a field.
+   * @param {string|!Blockly.Field} field Something to add as a field.
    * @param {string=} opt_name Language-neutral identifier which may used to
    *     find this field again.  Should be unique to the host block.
-   * @return {!Input} The input being append to (to allow chaining).
+   * @return {!Blockly.Input} The input being append to (to allow chaining).
    */
   appendField(field, opt_name) {
     this.insertFieldAt(this.fieldRow.length, field, opt_name);
@@ -113,7 +113,7 @@ class Input {
    * Inserts a field (or label from string), and all prefix and suffix fields,
    * at the location of the input's field row.
    * @param {number} index The index at which to insert field.
-   * @param {string|!Field} field Something to add as a field.
+   * @param {string|!Blockly.Field} field Something to add as a field.
    * @param {string=} opt_name Language-neutral identifier which may used to
    *     find this field again.  Should be unique to the host block.
    * @return {number} The index following the last inserted field.
@@ -130,7 +130,7 @@ class Input {
 
     // Generate a FieldLabel when given a plain text field.
     if (typeof field === 'string') {
-      field = /** @type {!Field} **/ (fieldRegistry.fromJson({
+      field = /** @type {!Blockly.Field} **/ (fieldRegistry.fromJson({
         'type': 'field_label',
         'text': field,
       }));
@@ -157,7 +157,7 @@ class Input {
     }
 
     if (this.sourceBlock_.rendered) {
-      this.sourceBlock_ = /** @type {!BlockSvg} */ (this.sourceBlock_);
+      this.sourceBlock_ = /** @type {!Blockly.BlockSvg} */ (this.sourceBlock_);
       this.sourceBlock_.render();
       // Adding a field will cause the block to change shape.
       this.sourceBlock_.bumpNeighbours();
@@ -180,7 +180,7 @@ class Input {
         field.dispose();
         this.fieldRow.splice(i, 1);
         if (this.sourceBlock_.rendered) {
-          this.sourceBlock_ = /** @type {!BlockSvg} */ (this.sourceBlock_);
+          this.sourceBlock_ = /** @type {!Blockly.BlockSvg} */ (this.sourceBlock_);
           this.sourceBlock_.render();
           // Removing a field will cause the block to change shape.
           this.sourceBlock_.bumpNeighbours();
@@ -206,7 +206,7 @@ class Input {
    * Sets whether this input is visible or not.
    * Should only be used to collapse/uncollapse a block.
    * @param {boolean} visible True if visible.
-   * @return {!Array<!BlockSvg>} List of blocks to render.
+   * @return {!Array<!Blockly.BlockSvg>} List of blocks to render.
    * @package
    */
   setVisible(visible) {
@@ -224,7 +224,7 @@ class Input {
     }
     if (this.connection) {
       this.connection =
-          /** @type {!RenderedConnection} */ (this.connection);
+          /** @type {!Blockly.RenderedConnection} */ (this.connection);
       // Has a connection.
       if (visible) {
         renderList = this.connection.startTrackingAll();
@@ -253,7 +253,7 @@ class Input {
    * Change a connection's compatibility.
    * @param {string|Array<string>|null} check Compatible value type or
    *     list of value types.  Null if all types are compatible.
-   * @return {!Input} The input being modified (to allow chaining).
+   * @return {!Blockly.Input} The input being modified (to allow chaining).
    */
   setCheck(check) {
     if (!this.connection) {
@@ -267,12 +267,12 @@ class Input {
    * Change the alignment of the connection's field(s).
    * @param {number} align One of the values of Align
    *   In RTL mode directions are reversed, and Align.RIGHT aligns to the left.
-   * @return {!Input} The input being modified (to allow chaining).
+   * @return {!Blockly.Input} The input being modified (to allow chaining).
    */
   setAlign(align) {
     this.align = align;
     if (this.sourceBlock_.rendered) {
-      this.sourceBlock_ = /** @type {!BlockSvg} */ (this.sourceBlock_);
+      this.sourceBlock_ = /** @type {!Blockly.BlockSvg} */ (this.sourceBlock_);
       this.sourceBlock_.render();
     }
     return this;
@@ -281,7 +281,7 @@ class Input {
   /**
    * Changes the connection's shadow block.
    * @param {?Element} shadow DOM representation of a block or null.
-   * @return {!Input} The input being modified (to allow chaining).
+   * @return {!Blockly.Input} The input being modified (to allow chaining).
    */
   setShadowDom(shadow) {
     if (!this.connection) {

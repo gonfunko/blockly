@@ -32,18 +32,18 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * The manager for all workspace metrics calculations.
- * @implements {IMetricsManager}
+ * @implements {Blockly.IMetricsManager}
  * @alias Blockly.MetricsManager
  */
 class MetricsManager {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace to calculate metrics
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace to calculate metrics
    *     for.
    */
   constructor(workspace) {
     /**
      * The workspace to calculate metrics for.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @protected
      */
     this.workspace_ = workspace;
@@ -51,10 +51,10 @@ class MetricsManager {
 
   /**
    * Gets the dimensions of the given workspace component, in pixel coordinates.
-   * @param {?IToolbox|?IFlyout} elem The element to get the
+   * @param {?Blockly.IToolbox|?Blockly.IFlyout} elem The element to get the
    *     dimensions of, or null.  It should be a toolbox or flyout, and should
    *     implement getWidth() and getHeight().
-   * @return {!Size} An object containing width and height
+   * @return {!Blockly.utils.Size} An object containing width and height
    *     attributes, which will both be zero if elem did not exist.
    * @protected
    */
@@ -74,7 +74,7 @@ class MetricsManager {
    * category toolbox instead of a simple toolbox.
    * @param {boolean=} opt_own Whether to only return the workspace's own
    *     flyout.
-   * @return {!MetricsManager.ToolboxMetrics} The width and height of the
+   * @return {!Blockly.MetricsManager.ToolboxMetrics} The width and height of the
    *     flyout.
    * @public
    */
@@ -94,7 +94,7 @@ class MetricsManager {
    * a simple toolbox instead of a category toolbox. To get the width and height
    * of a
    * simple toolbox @see {@link getFlyoutMetrics}.
-   * @return {!MetricsManager.ToolboxMetrics} The object with the width,
+   * @return {!Blockly.MetricsManager.ToolboxMetrics} The object with the width,
    *     height and position of the toolbox.
    * @public
    */
@@ -112,7 +112,7 @@ class MetricsManager {
   /**
    * Gets the width and height of the workspace's parent SVG element in pixel
    * coordinates. This area includes the toolbox and the visible workspace area.
-   * @return {!Size} The width and height of the workspace's parent
+   * @return {!Blockly.utils.Size} The width and height of the workspace's parent
    *     SVG element.
    * @public
    */
@@ -124,7 +124,7 @@ class MetricsManager {
    * Gets the absolute left and absolute top in pixel coordinates.
    * This is where the visible workspace starts in relation to the SVG
    * container.
-   * @return {!MetricsManager.AbsoluteMetrics} The absolute metrics for
+   * @return {!Blockly.MetricsManager.AbsoluteMetrics} The absolute metrics for
    *     the workspace.
    * @public
    */
@@ -162,7 +162,7 @@ class MetricsManager {
    * coordinates. The visible workspace does not include the toolbox or flyout.
    * @param {boolean=} opt_getWorkspaceCoordinates True to get the view metrics
    *     in workspace coordinates, false to get them in pixel coordinates.
-   * @return {!MetricsManager.ContainerRegion} The width, height, top and
+   * @return {!Blockly.MetricsManager.ContainerRegion} The width, height, top and
    *     left of the viewport in either workspace coordinates or pixel
    *     coordinates.
    * @public
@@ -210,7 +210,7 @@ class MetricsManager {
    * @param {boolean=} opt_getWorkspaceCoordinates True to get the content
    *     metrics in workspace coordinates, false to get them in pixel
    *     coordinates.
-   * @return {!MetricsManager.ContainerRegion} The
+   * @return {!Blockly.MetricsManager.ContainerRegion} The
    *     metrics for the content container.
    * @public
    */
@@ -241,10 +241,10 @@ class MetricsManager {
 
   /**
    * Computes the fixed edges of the scroll area.
-   * @param {!MetricsManager.ContainerRegion=} opt_viewMetrics The view
+   * @param {!Blockly.MetricsManager.ContainerRegion=} opt_viewMetrics The view
    *     metrics if they have been previously computed. Passing in null may
    * cause the view metrics to be computed again, if it is needed.
-   * @return {!MetricsManager.FixedEdges} The fixed edges of the scroll
+   * @return {!Blockly.MetricsManager.FixedEdges} The fixed edges of the scroll
    *     area.
    * @protected
    */
@@ -273,9 +273,9 @@ class MetricsManager {
 
   /**
    * Returns the content area with added padding.
-   * @param {!MetricsManager.ContainerRegion} viewMetrics The view
+   * @param {!Blockly.MetricsManager.ContainerRegion} viewMetrics The view
    *     metrics.
-   * @param {!MetricsManager.ContainerRegion} contentMetrics The content
+   * @param {!Blockly.MetricsManager.ContainerRegion} contentMetrics The content
    *     metrics.
    * @return {{top: number, bottom: number, left: number, right: number}} The
    *     padded content area.
@@ -309,13 +309,13 @@ class MetricsManager {
    * @param {boolean=} opt_getWorkspaceCoordinates True to get the scroll
    *     metrics in workspace coordinates, false to get them in pixel
    *     coordinates.
-   * @param {!MetricsManager.ContainerRegion=} opt_viewMetrics The view
+   * @param {!Blockly.MetricsManager.ContainerRegion=} opt_viewMetrics The view
    *     metrics if they have been previously computed. Passing in null may
    * cause the view metrics to be computed again, if it is needed.
-   * @param {!MetricsManager.ContainerRegion=} opt_contentMetrics The
+   * @param {!Blockly.MetricsManager.ContainerRegion=} opt_contentMetrics The
    *     content metrics if they have been previously computed. Passing in null
    *     may cause the content metrics to be computed again, if it is needed.
-   * @return {!MetricsManager.ContainerRegion} The metrics for the scroll
+   * @return {!Blockly.MetricsManager.ContainerRegion} The metrics for the scroll
    *    container.
    */
   getScrollMetrics(
@@ -348,7 +348,7 @@ class MetricsManager {
 
   /**
    * Returns common metrics used by UI elements.
-   * @return {!MetricsManager.UiMetrics} The UI metrics.
+   * @return {!Blockly.MetricsManager.UiMetrics} The UI metrics.
    */
   getUiMetrics() {
     return {
@@ -390,7 +390,7 @@ class MetricsManager {
    * .flyoutHeight: Height of the flyout if it is always open.  Otherwise zero.
    * .toolboxPosition: Top, bottom, left or right. Use TOOLBOX_AT constants to
    *     compare.
-   * @return {!Metrics} Contains size and position metrics of a top
+   * @return {!Blockly.utils.Metrics} Contains size and position metrics of a top
    *     level workspace.
    * @public
    */
@@ -442,7 +442,7 @@ class MetricsManager {
  * @typedef {{
  *            width: number,
  *            height: number,
- *            position: !toolboxUtils.Position
+ *            position: !Blockly.utils.toolbox.Position
  *          }}
  */
 MetricsManager.ToolboxMetrics;
@@ -482,9 +482,9 @@ MetricsManager.FixedEdges;
 /**
  * Common metrics used for UI elements.
  * @typedef {{
- *            viewMetrics: !MetricsManager.ContainerRegion,
- *            absoluteMetrics: !MetricsManager.AbsoluteMetrics,
- *            toolboxMetrics: !MetricsManager.ToolboxMetrics
+ *            viewMetrics: !Blockly.MetricsManager.ContainerRegion,
+ *            absoluteMetrics: !Blockly.MetricsManager.AbsoluteMetrics,
+ *            toolboxMetrics: !Blockly.MetricsManager.ToolboxMetrics
  *          }}
  */
 MetricsManager.UiMetrics;

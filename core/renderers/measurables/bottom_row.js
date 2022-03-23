@@ -31,13 +31,13 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  * a block as well as spacing information for the bottom row.
  * Elements in a bottom row can consist of corners, spacers and next
  * connections.
- * @extends {Row}
+ * @extends {Blockly.blockRendering.Row}
  * @struct
  * @alias Blockly.blockRendering.BottomRow
  */
 class BottomRow extends Row {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */
@@ -55,7 +55,7 @@ class BottomRow extends Row {
     /**
      * The next connection on the row, if any.
      * @package
-     * @type {NextConnection}
+     * @type {Blockly.blockRendering.NextConnection}
      */
     this.connection = null;
 
@@ -78,7 +78,7 @@ class BottomRow extends Row {
 
   /**
    * Returns whether or not the bottom row has a left square corner.
-   * @param {!BlockSvg} block The block whose bottom row this represents.
+   * @param {!Blockly.BlockSvg} block The block whose bottom row this represents.
    * @return {boolean} Whether or not the bottom row has a left square corner.
    */
   hasLeftSquareCorner(block) {
@@ -87,7 +87,7 @@ class BottomRow extends Row {
 
   /**
    * Returns whether or not the bottom row has a right square corner.
-   * @param {!BlockSvg} _block The block whose bottom row this represents.
+   * @param {!Blockly.BlockSvg} _block The block whose bottom row this represents.
    * @return {boolean} Whether or not the bottom row has a right square corner.
    */
   hasRightSquareCorner(_block) {

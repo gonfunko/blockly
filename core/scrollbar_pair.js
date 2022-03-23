@@ -31,7 +31,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
  */
 const ScrollbarPair = class {
   /**
-   * @param {!WorkspaceSvg} workspace Workspace to bind the scrollbars to.
+   * @param {!Blockly.WorkspaceSvg} workspace Workspace to bind the scrollbars to.
    * @param {boolean=} addHorizontal Whether to add a horizontal scrollbar.
    *    Defaults to true.
    * @param {boolean=} addVertical Whether to add a vertical scrollbar. Defaults
@@ -42,7 +42,7 @@ const ScrollbarPair = class {
   constructor(workspace, addHorizontal, addVertical, opt_class, opt_margin) {
     /**
      * The workspace this scrollbar pair is bound to.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
@@ -73,7 +73,7 @@ const ScrollbarPair = class {
 
     /**
      * Previously recorded metrics from the workspace.
-     * @type {?Metrics}
+     * @type {?Blockly.utils.Metrics}
      * @private
      */
     this.oldHostMetrics_ = null;
@@ -298,7 +298,7 @@ const ScrollbarPair = class {
   /**
    * Recalculates the scrollbars' locations within their path and length.
    * This should be called when the contents of the workspace have changed.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    */
   resizeContent(hostMetrics) {
@@ -313,7 +313,7 @@ const ScrollbarPair = class {
   /**
    * Recalculates the scrollbars' locations on the screen and path length.
    * This should be called when the layout or size of the window has changed.
-   * @param {!Metrics} hostMetrics A data structure describing all
+   * @param {!Blockly.utils.Metrics} hostMetrics A data structure describing all
    *     the required dimensions, possibly fetched from the host object.
    */
   resizeView(hostMetrics) {

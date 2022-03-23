@@ -27,15 +27,15 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about the space an inline input takes up
  * during rendering
- * @extends {InputConnection}
+ * @extends {Blockly.blockRendering.InputConnection}
  * @struct
  * @alias Blockly.blockRendering.InlineInput
  */
 class InlineInput extends InputConnection {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!Input} input The inline input to measure and store
+   * @param {!Blockly.Input} input The inline input to measure and store
    *     information for.
    * @package
    */

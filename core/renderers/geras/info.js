@@ -46,29 +46,29 @@ const {inputTypes} = goog.require('Blockly.inputTypes');
  * This measure pass does not propagate changes to the block (although fields
  * may choose to rerender when getSize() is called).  However, calling it
  * repeatedly may be expensive.
- * @extends {BaseRenderInfo}
+ * @extends {Blockly.blockRendering.RenderInfo}
  * @alias Blockly.geras.RenderInfo
  */
 class RenderInfo extends BaseRenderInfo {
   /**
-   * @param {!Renderer} renderer The renderer in use.
-   * @param {!BlockSvg} block The block to measure.
+   * @param {!Blockly.geras.Renderer} renderer The renderer in use.
+   * @param {!Blockly.BlockSvg} block The block to measure.
    * @package
    */
   constructor(renderer, block) {
     super(renderer, block);
 
-    /** @type {!ConstantProvider} */
+    /** @type {!Blockly.geras.ConstantProvider} */
     this.constants_;
   }
 
   /**
    * Get the block renderer in use.
-   * @return {!Renderer} The block renderer in use.
+   * @return {!Blockly.geras.Renderer} The block renderer in use.
    * @package
    */
   getRenderer() {
-    return /** @type {!Renderer} */ (this.renderer_);
+    return /** @type {!Blockly.geras.Renderer} */ (this.renderer_);
   }
 
   /**
@@ -165,7 +165,7 @@ class RenderInfo extends BaseRenderInfo {
     if (!prev) {
       // Between an editable field and the beginning of the row.
       if (next && Types.isField(next) &&
-          (/** @type {Field} */ (next)).isEditable) {
+          (/** @type {Blockly.blockRendering.Field} */ (next)).isEditable) {
         return this.constants_.MEDIUM_PADDING;
       }
       // Inline input at the beginning of the row.
@@ -182,7 +182,7 @@ class RenderInfo extends BaseRenderInfo {
     // Spacing between a non-input and the end of the row or a statement input.
     if (!Types.isInput(prev) && (!next || Types.isStatementInput(next))) {
       // Between an editable field and the end of the row.
-      if (Types.isField(prev) && (/** @type {Field} */ (prev)).isEditable) {
+      if (Types.isField(prev) && (/** @type {Blockly.blockRendering.Field} */ (prev)).isEditable) {
         return this.constants_.MEDIUM_PADDING;
       }
       // Padding at the end of an icon-only row to make the block shape clearer.
@@ -223,7 +223,7 @@ class RenderInfo extends BaseRenderInfo {
     // Spacing between a non-input and an input.
     if (!Types.isInput(prev) && next && Types.isInput(next)) {
       // Between an editable field and an input.
-      if (Types.isField(prev) && (/** @type {Field} */ (prev)).isEditable) {
+      if (Types.isField(prev) && (/** @type {Blockly.blockRendering.Field} */ (prev)).isEditable) {
         if (Types.isInlineInput(next)) {
           return this.constants_.SMALL_PADDING;
         } else if (Types.isExternalInput(next)) {
@@ -249,7 +249,7 @@ class RenderInfo extends BaseRenderInfo {
     // Spacing between an inline input and a field.
     if (Types.isInlineInput(prev) && next && Types.isField(next)) {
       // Editable field after inline input.
-      if ((/** @type {Field} */ (next)).isEditable) {
+      if ((/** @type {Blockly.blockRendering.Field} */ (next)).isEditable) {
         return this.constants_.MEDIUM_PADDING;
       } else {
         // Noneditable field after inline input.
@@ -291,8 +291,8 @@ class RenderInfo extends BaseRenderInfo {
 
     // Spacing between two fields of the same editability.
     if (Types.isField(prev) && next && Types.isField(next) &&
-        ((/** @type {Field} */ (prev)).isEditable ===
-         (/** @type {Field} */ (next)).isEditable)) {
+        ((/** @type {Blockly.blockRendering.Field} */ (prev)).isEditable ===
+         (/** @type {Blockly.blockRendering.Field} */ (next)).isEditable)) {
       return this.constants_.LARGE_PADDING;
     }
 
@@ -342,7 +342,7 @@ class RenderInfo extends BaseRenderInfo {
       return row.yPos + elem.height / 2;
     }
     if (Types.isBottomRow(row)) {
-      const bottomRow = /** @type {!BottomRow} */ (row);
+      const bottomRow = /** @type {!Blockly.blockRendering.BottomRow} */ (row);
       const baseline =
           bottomRow.yPos + bottomRow.height - bottomRow.descenderHeight;
       if (Types.isNextConnection(elem)) {
@@ -351,7 +351,7 @@ class RenderInfo extends BaseRenderInfo {
       return baseline - elem.height / 2;
     }
     if (Types.isTopRow(row)) {
-      const topRow = /** @type {!TopRow} */ (row);
+      const topRow = /** @type {!Blockly.blockRendering.TopRow} */ (row);
       if (Types.isHat(elem)) {
         return topRow.capline - elem.height / 2;
       }
@@ -393,7 +393,7 @@ class RenderInfo extends BaseRenderInfo {
       if (Types.isInputRow(row)) {
         if (row.hasStatement) {
           this.alignStatementRow_(
-              /** @type {!InputRow} */ (row));
+              /** @type {!Blockly.blockRendering.InputRow} */ (row));
         }
         if (prevInput && prevInput.hasStatement &&
             row.width < prevInput.width) {

@@ -30,12 +30,12 @@ goog.require('Blockly.Events.BubbleOpen');
 
 /**
  * Class for a warning.
- * @extends {Icon}
+ * @extends {Blockly.Icon}
  * @alias Blockly.Warning
  */
 class Warning extends Icon {
   /**
-   * @param {!BlockSvg} block The block associated with this warning.
+   * @param {!Blockly.BlockSvg} block The block associated with this warning.
    */
   constructor(block) {
     super(block);
@@ -114,8 +114,8 @@ class Warning extends Icon {
   createBubble_() {
     this.paragraphElement_ = Bubble.textToDom(this.getText());
     this.bubble_ = Bubble.createNonEditableBubble(
-        this.paragraphElement_, /** @type {!BlockSvg} */ (this.block_),
-        /** @type {!Coordinate} */ (this.iconXY_));
+        this.paragraphElement_, /** @type {!Blockly.BlockSvg} */ (this.block_),
+        /** @type {!Blockly.utils.Coordinate} */ (this.iconXY_));
     this.applyColour();
   }
 

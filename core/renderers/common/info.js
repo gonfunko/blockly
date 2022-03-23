@@ -61,8 +61,8 @@ const {inputTypes} = goog.require('Blockly.inputTypes');
  */
 class RenderInfo {
   /**
-   * @param {!Renderer} renderer The renderer in use.
-   * @param {!BlockSvg} block The block to measure.
+   * @param {!Blockly.blockRendering.Renderer} renderer The renderer in use.
+   * @param {!Blockly.BlockSvg} block The block to measure.
    * @package
    */
   constructor(renderer, block) {
@@ -70,14 +70,14 @@ class RenderInfo {
 
     /**
      * The block renderer in use.
-     * @type {!Renderer}
+     * @type {!Blockly.blockRendering.Renderer}
      * @protected
      */
     this.renderer_ = renderer;
 
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      * @protected
      */
     this.constants_ = this.renderer_.getConstants();
@@ -85,13 +85,13 @@ class RenderInfo {
     /**
      * A measurable representing the output connection if the block has one.
      * Otherwise null.
-     * @type {OutputConnection}
+     * @type {Blockly.blockRendering.OutputConnection}
      */
     this.outputConnection = !block.outputConnection ?
         null :
         new OutputConnection(
             this.constants_,
-            /** @type {!RenderedConnection} */ (block.outputConnection));
+            /** @type {!Blockly.RenderedConnection} */ (block.outputConnection));
 
     /**
      * Whether the block should be rendered as a single line, either because
@@ -146,31 +146,31 @@ class RenderInfo {
 
     /**
      * An array of Row objects containing sizing information.
-     * @type {!Array<!Row>}
+     * @type {!Array<!Blockly.blockRendering.Row>}
      */
     this.rows = [];
 
     /**
      * An array of input rows on the block.
-     * @type {!Array<!InputRow>}
+     * @type {!Array<!Blockly.blockRendering.InputRow>}
      */
     this.inputRows = [];
 
     /**
      * An array of measurable objects containing hidden icons.
-     * @type {!Array<!Icon>}
+     * @type {!Array<!Blockly.blockRendering.Icon>}
      */
     this.hiddenIcons = [];
 
     /**
      * An object with rendering information about the top row of the block.
-     * @type {!TopRow}
+     * @type {!Blockly.blockRendering.TopRow}
      */
     this.topRow = new TopRow(this.constants_);
 
     /**
      * An object with rendering information about the bottom row of the block.
-     * @type {!BottomRow}
+     * @type {!Blockly.blockRendering.BottomRow}
      */
     this.bottomRow = new BottomRow(this.constants_);
 
@@ -182,7 +182,7 @@ class RenderInfo {
 
   /**
    * Get the block renderer in use.
-   * @return {!Renderer} The block renderer in use.
+   * @return {!Blockly.blockRendering.Renderer} The block renderer in use.
    * @package
    */
   getRenderer() {
@@ -287,7 +287,7 @@ class RenderInfo {
       this.topRow.hasPreviousConnection = true;
       this.topRow.connection = new PreviousConnection(
           this.constants_,
-          /** @type {!RenderedConnection} */
+          /** @type {!Blockly.RenderedConnection} */
           (this.block_.previousConnection));
       this.topRow.elements.push(this.topRow.connection);
     }
@@ -340,7 +340,7 @@ class RenderInfo {
     if (this.bottomRow.hasNextConnection) {
       this.bottomRow.connection = new NextConnection(
           this.constants_,
-          /** @type {!RenderedConnection} */ (this.block_.nextConnection));
+          /** @type {!Blockly.RenderedConnection} */ (this.block_.nextConnection));
       this.bottomRow.elements.push(this.bottomRow.connection);
     }
 
@@ -356,8 +356,8 @@ class RenderInfo {
   /**
    * Add an input element to the active row, if needed, and record the type of
    * the input on the row.
-   * @param {!Input} input The input to record information about.
-   * @param {!Row} activeRow The row that is currently being
+   * @param {!Blockly.Input} input The input to record information about.
+   * @param {!Blockly.blockRendering.Row} activeRow The row that is currently being
    *     populated.
    * @protected
    */
@@ -389,8 +389,8 @@ class RenderInfo {
 
   /**
    * Decide whether to start a new row between the two Blockly.Inputs.
-   * @param {!Input} input The first input to consider
-   * @param {Input} lastInput The input that follows.
+   * @param {!Blockly.Input} input The first input to consider
+   * @param {Blockly.Input} lastInput The input that follows.
    * @return {boolean} True if the next input should be rendered on a new row.
    * @protected
    */
@@ -448,9 +448,9 @@ class RenderInfo {
    * Calculate the width of a spacer element in a row based on the previous and
    * next elements in that row.  For instance, extra padding is added between
    * two editable fields.
-   * @param {Measurable} prev The element before the
+   * @param {Blockly.blockRendering.Measurable} prev The element before the
    *     spacer.
-   * @param {Measurable} next The element after the spacer.
+   * @param {Blockly.blockRendering.Measurable} next The element after the spacer.
    * @return {number} The size of the spacing between the two elements.
    * @protected
    */
@@ -539,7 +539,7 @@ class RenderInfo {
     for (let i = 0, row; (row = this.rows[i]); i++) {
       if (row.hasStatement) {
         this.alignStatementRow_(
-            /** @type {!InputRow} */ (row));
+            /** @type {!Blockly.blockRendering.InputRow} */ (row));
       } else {
         const currentWidth = row.width;
         const desiredWidth = this.getDesiredRowWidth_(row);
@@ -556,7 +556,7 @@ class RenderInfo {
 
   /**
    * Calculate the desired width of an input row.
-   * @param {!Row} _row The input row.
+   * @param {!Blockly.blockRendering.Row} _row The input row.
    * @return {number} The desired width of the input row.
    * @protected
    */
@@ -568,7 +568,7 @@ class RenderInfo {
    * Modify the given row to add the given amount of padding around its fields.
    * The exact location of the padding is based on the alignment property of the
    * last input in the field.
-   * @param {!Row} row The row to add padding to.
+   * @param {!Blockly.blockRendering.Row} row The row to add padding to.
    * @param {number} missingSpace How much padding to add.
    * @protected
    */
@@ -600,7 +600,7 @@ class RenderInfo {
   /**
    * Align the elements of a statement row based on computed bounds.
    * Unlike other types of rows, statement rows add space in multiple places.
-   * @param {!InputRow} row The statement row to resize.
+   * @param {!Blockly.blockRendering.InputRow} row The statement row to resize.
    * @protected
    */
   alignStatementRow_(row) {
@@ -641,9 +641,9 @@ class RenderInfo {
 
   /**
    * Create a spacer row to go between prev and next, and set its size.
-   * @param {!Row} prev The previous row.
-   * @param {!Row} next The next row.
-   * @return {!SpacerRow} The newly created spacer row.
+   * @param {!Blockly.blockRendering.Row} prev The previous row.
+   * @param {!Blockly.blockRendering.Row} next The next row.
+   * @return {!Blockly.blockRendering.SpacerRow} The newly created spacer row.
    * @protected
    */
   makeSpacerRow_(prev, next) {
@@ -661,8 +661,8 @@ class RenderInfo {
 
   /**
    * Calculate the width of a spacer row.
-   * @param {!Row} _prev The row before the spacer.
-   * @param {!Row} _next The row after the spacer.
+   * @param {!Blockly.blockRendering.Row} _prev The row before the spacer.
+   * @param {!Blockly.blockRendering.Row} _next The row after the spacer.
    * @return {number} The desired width of the spacer row between these two
    *     rows.
    * @protected
@@ -673,8 +673,8 @@ class RenderInfo {
 
   /**
    * Calculate the height of a spacer row.
-   * @param {!Row} _prev The row before the spacer.
-   * @param {!Row} _next The row after the spacer.
+   * @param {!Blockly.blockRendering.Row} _prev The row before the spacer.
+   * @param {!Blockly.blockRendering.Row} _next The row after the spacer.
    * @return {number} The desired height of the spacer row between these two
    *     rows.
    * @protected
@@ -688,8 +688,8 @@ class RenderInfo {
    * This base implementation puts the centerline at the middle of the row
    * vertically, with no special cases.  You will likely need extra logic to
    * handle (at minimum) top and bottom rows.
-   * @param {!Row} row The row containing the element.
-   * @param {!Measurable} elem The element to place.
+   * @param {!Blockly.blockRendering.Row} row The row containing the element.
+   * @param {!Blockly.blockRendering.Measurable} elem The element to place.
    * @return {number} The desired centerline of the given element, as an offset
    *     from the top left of the block.
    * @protected
@@ -699,7 +699,7 @@ class RenderInfo {
       return row.yPos + elem.height / 2;
     }
     if (Types.isBottomRow(row)) {
-      const bottomRow = /** @type {!BottomRow} */ (row);
+      const bottomRow = /** @type {!Blockly.blockRendering.BottomRow} */ (row);
       const baseline =
           bottomRow.yPos + bottomRow.height - bottomRow.descenderHeight;
       if (Types.isNextConnection(elem)) {
@@ -708,7 +708,7 @@ class RenderInfo {
       return baseline - elem.height / 2;
     }
     if (Types.isTopRow(row)) {
-      const topRow = /** @type {!TopRow} */ (row);
+      const topRow = /** @type {!Blockly.blockRendering.TopRow} */ (row);
       if (Types.isHat(elem)) {
         return topRow.capline - elem.height / 2;
       }
@@ -720,7 +720,7 @@ class RenderInfo {
   /**
    * Record final position information on elements on the given row, for use in
    * drawing.  At minimum this records xPos and centerline on each element.
-   * @param {!Row} row The row containing the elements.
+   * @param {!Blockly.blockRendering.Row} row The row containing the elements.
    * @protected
    */
   recordElemPositions_(row) {

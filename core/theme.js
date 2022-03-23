@@ -26,12 +26,12 @@ const registry = goog.require('Blockly.registry');
 class Theme {
   /**
    * @param {string} name Theme name.
-   * @param {!Object<string, Theme.BlockStyle>=} opt_blockStyles A map
+   * @param {!Object<string, Blockly.Theme.BlockStyle>=} opt_blockStyles A map
    *     from style names (strings) to objects with style attributes for blocks.
-   * @param {!Object<string, Theme.CategoryStyle>=} opt_categoryStyles A
+   * @param {!Object<string, Blockly.Theme.CategoryStyle>=} opt_categoryStyles A
    *     map from style names (strings) to objects with style attributes for
    *     categories.
-   * @param {!Theme.ComponentStyle=} opt_componentStyles A map of Blockly
+   * @param {!Blockly.Theme.ComponentStyle=} opt_componentStyles A map of Blockly
    *     component names to style value.
    */
   constructor(name, opt_blockStyles, opt_categoryStyles, opt_componentStyles) {
@@ -43,32 +43,32 @@ class Theme {
 
     /**
      * The block styles map.
-     * @type {!Object<string, !Theme.BlockStyle>}
+     * @type {!Object<string, !Blockly.Theme.BlockStyle>}
      * @package
      */
     this.blockStyles = opt_blockStyles || Object.create(null);
 
     /**
      * The category styles map.
-     * @type {!Object<string, Theme.CategoryStyle>}
+     * @type {!Object<string, Blockly.Theme.CategoryStyle>}
      * @package
      */
     this.categoryStyles = opt_categoryStyles || Object.create(null);
 
     /**
      * The UI components styles map.
-     * @type {!Theme.ComponentStyle}
+     * @type {!Blockly.Theme.ComponentStyle}
      * @package
      */
     this.componentStyles = opt_componentStyles ||
-        (/** @type {Theme.ComponentStyle} */ (Object.create(null)));
+        (/** @type {Blockly.Theme.ComponentStyle} */ (Object.create(null)));
 
     /**
      * The font style.
-     * @type {!Theme.FontStyle}
+     * @type {!Blockly.Theme.FontStyle}
      * @package
      */
-    this.fontStyle = /** @type {Theme.FontStyle} */ (Object.create(null));
+    this.fontStyle = /** @type {Blockly.Theme.FontStyle} */ (Object.create(null));
 
     /**
      * Whether or not to add a 'hat' on top of all blocks with no previous or
@@ -92,7 +92,7 @@ class Theme {
   /**
    * Overrides or adds a style to the blockStyles map.
    * @param {string} blockStyleName The name of the block style.
-   * @param {Theme.BlockStyle} blockStyle The block style.
+   * @param {Blockly.Theme.BlockStyle} blockStyle The block style.
    */
   setBlockStyle(blockStyleName, blockStyle) {
     this.blockStyles[blockStyleName] = blockStyle;
@@ -100,7 +100,7 @@ class Theme {
   /**
    * Overrides or adds a style to the categoryStyles map.
    * @param {string} categoryStyleName The name of the category style.
-   * @param {Theme.CategoryStyle} categoryStyle The category style.
+   * @param {Blockly.Theme.CategoryStyle} categoryStyle The category style.
    */
   setCategoryStyle(categoryStyleName, categoryStyle) {
     this.categoryStyles[categoryStyleName] = categoryStyle;
@@ -129,7 +129,7 @@ class Theme {
   }
   /**
    * Configure a theme's font style.
-   * @param {Theme.FontStyle} fontStyle The font style.
+   * @param {Blockly.Theme.FontStyle} fontStyle The font style.
    */
   setFontStyle(fontStyle) {
     this.fontStyle = fontStyle;
@@ -144,9 +144,9 @@ class Theme {
   }
   /**
    * Define a new Blockly theme.
-   * @param {string} name The name of the theme.
+   * @param {string} name The name of the Blockly.Theme.
    * @param {!Object} themeObj An object containing theme properties.
-   * @return {!Theme} A new Blockly theme.
+   * @return {!Blockly.Theme} A new Blockly Blockly.Theme.
    */
   static defineTheme(name, themeObj) {
     const theme = new Theme(name);

@@ -31,7 +31,7 @@ const {IRegistrableField} = goog.requireType('Blockly.IRegistrableField');
  * fieldRegistry.fromJson uses this registry to
  * find the appropriate field type.
  * @param {string} type The field type name as used in the JSON definition.
- * @param {!IRegistrableField} fieldClass The field class containing a
+ * @param {!Blockly.IRegistrableField} fieldClass The field class containing a
  *     fromJson function that can construct an instance of the field.
  * @throws {Error} if the type name is empty, the field is already
  *     registered, or the fieldClass is not an object containing a fromJson
@@ -59,13 +59,13 @@ exports.unregister = unregister;
  * fieldRegistry.register.
  * @param {!Object} options A JSON object with a type and options specific
  *     to the field type.
- * @return {?Field} The new field instance or null if a field wasn't
+ * @return {?Blockly.Field} The new field instance or null if a field wasn't
  *     found with the given type name
  * @alias Blockly.fieldRegistry.fromJson
  * @package
  */
 const fromJson = function(options) {
-  const fieldObject = /** @type {?IRegistrableField} */ (
+  const fieldObject = /** @type {?IRegistrableBlockly.Field} */ (
       registry.getObject(registry.Type.FIELD, options['type']));
   if (!fieldObject) {
     console.warn(

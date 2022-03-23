@@ -39,12 +39,12 @@ goog.require('Blockly.Events.BlockChange');
 
 /**
  * Class for a variable's dropdown field.
- * @extends {FieldDropdown}
+ * @extends {Blockly.FieldDropdown}
  * @alias Blockly.FieldVariable
  */
 class FieldVariable extends FieldDropdown {
   /**
-   * @param {?string|!Sentinel} varName The default name for the variable.
+   * @param {?string|!Blockly.utils.Sentinel} varName The default name for the variable.
    *     If null, a unique variable name will be generated.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
    *     subclasses that want to handle configuration and setting the field
@@ -100,7 +100,7 @@ class FieldVariable extends FieldDropdown {
 
     /**
      * The size of the area rendered by the field.
-     * @type {Size}
+     * @type {Blockly.utils.Size}
      * @protected
      * @override
      */
@@ -108,7 +108,7 @@ class FieldVariable extends FieldDropdown {
 
     /**
      * The variable model associated with this field.
-     * @type {?VariableModel}
+     * @type {?Blockly.VariableModel}
      * @private
      */
     this.variable_ = null;
@@ -257,7 +257,7 @@ class FieldVariable extends FieldDropdown {
 
   /**
    * Attach this field to a block.
-   * @param {!Block} block The block containing this field.
+   * @param {!Blockly.Block} block The block containing this field.
    */
   setSourceBlock(block) {
     if (block.isShadow()) {
@@ -287,7 +287,7 @@ class FieldVariable extends FieldDropdown {
    * Get the variable model for the selected variable.
    * Not guaranteed to be in the variable map on the workspace (e.g. if accessed
    * after the variable has been deleted).
-   * @return {?VariableModel} The selected variable, or null if none was
+   * @return {?Blockly.VariableModel} The selected variable, or null if none was
    *     selected.
    * @package
    */
@@ -456,8 +456,8 @@ class FieldVariable extends FieldDropdown {
    * Handle the selection of an item in the variable dropdown menu.
    * Special case the 'Rename variable...' and 'Delete variable...' options.
    * In the rename case, prompt the user for a new name.
-   * @param {!Menu} menu The Menu component clicked.
-   * @param {!MenuItem} menuItem The MenuItem selected within menu.
+   * @param {!Blockly.Menu} menu The Menu component clicked.
+   * @param {!Blockly.MenuItem} menuItem The MenuItem selected within menu.
    * @protected
    */
   onItemSelected_(menu, menuItem) {
@@ -468,7 +468,7 @@ class FieldVariable extends FieldDropdown {
         // Rename variable.
         Variables.renameVariable(
             this.sourceBlock_.workspace,
-            /** @type {!VariableModel} */ (this.variable_));
+            /** @type {!Blockly.VariableModel} */ (this.variable_));
         return;
       } else if (id === internalConstants.DELETE_VARIABLE_ID) {
         // Delete variable.
@@ -496,7 +496,7 @@ class FieldVariable extends FieldDropdown {
    * dereferencing any string table references.
    * @param {!Object} options A JSON object with options (variable,
    *                          variableTypes, and defaultType).
-   * @return {!FieldVariable} The new field instance.
+   * @return {!Blockly.FieldVariable} The new field instance.
    * @package
    * @nocollapse
    * @override
@@ -512,7 +512,7 @@ class FieldVariable extends FieldDropdown {
    * Return a sorted list of variable names for variable dropdown menus.
    * Include a special option at the end for creating a new variable name.
    * @return {!Array<!Array>} Array of variable names/id tuples.
-   * @this {FieldVariable}
+   * @this {Blockly.FieldVariable}
    */
   static dropdownCreate() {
     if (!this.variable_) {

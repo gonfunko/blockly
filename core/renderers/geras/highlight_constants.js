@@ -29,14 +29,14 @@ const {ConstantProvider} = goog.requireType('Blockly.blockRendering.ConstantProv
  */
 class HighlightConstantProvider {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */
   constructor(constants) {
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      */
     this.constantProvider = constants;
 

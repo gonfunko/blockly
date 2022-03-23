@@ -12,7 +12,7 @@
 
 /**
  * The interface for an object that is draggable.
- * @namespace Blockly.IDraggable
+
  */
 goog.module('Blockly.IDraggable');
 
@@ -22,7 +22,7 @@ const {IDeletable} = goog.require('Blockly.IDeletable');
 
 /**
  * The interface for an object that can be dragged.
- * @extends {IDeletable}
+ * @extends {Blockly.IDeletable}
  * @interface
  * @alias Blockly.IDraggable
  */

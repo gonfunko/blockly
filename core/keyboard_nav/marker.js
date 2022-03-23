@@ -41,7 +41,7 @@ class Marker {
 
     /**
      * The current location of the marker.
-     * @type {ASTNode}
+     * @type {Blockly.ASTNode}
      * @private
      */
     this.curNode_ = null;
@@ -49,7 +49,7 @@ class Marker {
     /**
      * The object in charge of drawing the visual representation of the current
      * node.
-     * @type {MarkerSvg}
+     * @type {Blockly.blockRendering.MarkerSvg}
      * @private
      */
     this.drawer_ = null;
@@ -63,7 +63,7 @@ class Marker {
 
   /**
    * Sets the object in charge of drawing the marker.
-   * @param {MarkerSvg} drawer The object in charge of
+   * @param {Blockly.blockRendering.MarkerSvg} drawer The object in charge of
    *     drawing the marker.
    */
   setDrawer(drawer) {
@@ -72,7 +72,7 @@ class Marker {
 
   /**
    * Get the current drawer for the marker.
-   * @return {MarkerSvg} The object in charge of drawing
+   * @return {Blockly.blockRendering.MarkerSvg} The object in charge of drawing
    *     the marker.
    */
   getDrawer() {
@@ -81,7 +81,7 @@ class Marker {
 
   /**
    * Gets the current location of the marker.
-   * @return {ASTNode} The current field, connection, or block the marker
+   * @return {Blockly.ASTNode} The current field, connection, or block the marker
    *     is on.
    */
   getCurNode() {
@@ -92,7 +92,7 @@ class Marker {
    * Set the location of the marker and call the update method.
    * Setting isStack to true will only work if the newLocation is the top most
    * output or previous connection on a stack.
-   * @param {ASTNode} newNode The new location of the marker.
+   * @param {Blockly.ASTNode} newNode The new location of the marker.
    */
   setCurNode(newNode) {
     const oldNode = this.curNode_;

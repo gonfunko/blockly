@@ -33,22 +33,22 @@ const {Theme} = goog.requireType('Blockly.Theme');
 /**
  * An object that handles creating and setting each of the SVG elements
  * used by the renderer.
- * @implements {IPathObject}
+ * @implements {Blockly.blockRendering.IPathObject}
  * @alias Blockly.blockRendering.PathObject
  */
 class PathObject {
   /**
    * @param {!SVGElement} root The root SVG element.
-   * @param {!Theme.BlockStyle} style The style object to use for
+   * @param {!Blockly.Theme.BlockStyle} style The style object to use for
    *     colouring.
-   * @param {!ConstantProvider} constants The renderer's
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The renderer's
    *     constants.
    * @package
    */
   constructor(root, style, constants) {
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      * @package
      */
     this.constants = constants;
@@ -65,7 +65,7 @@ class PathObject {
 
     /**
      * The style object to use when colouring block paths.
-     * @type {!Theme.BlockStyle}
+     * @type {!Blockly.Theme.BlockStyle}
      * @package
      */
     this.style = style;
@@ -144,7 +144,7 @@ class PathObject {
   /**
    * Apply the stored colours to the block's path, taking into account whether
    * the paths belong to a shadow block.
-   * @param {!BlockSvg} block The source block.
+   * @param {!Blockly.BlockSvg} block The source block.
    * @package
    */
   applyColour(block) {
@@ -157,7 +157,7 @@ class PathObject {
 
   /**
    * Set the style.
-   * @param {!Theme.BlockStyle} blockStyle The block style to use.
+   * @param {!Blockly.Theme.BlockStyle} blockStyle The block style to use.
    * @package
    */
   setStyle(blockStyle) {
@@ -271,7 +271,7 @@ class PathObject {
   /**
    * Add or remove styling that shows that if the dragging block is dropped,
    * this block will be connected to the input.
-   * @param {Connection} _conn The connection on the input to highlight.
+   * @param {Blockly.Connection} _conn The connection on the input to highlight.
    * @param {boolean} _enable True if styling should be added.
    * @package
    */

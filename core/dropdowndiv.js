@@ -251,8 +251,8 @@ exports.setColour = setColour;
  * by a particular block. The primary position will be below the block,
  * and the secondary position above the block. Drop-down will be
  * constrained to the block's workspace.
- * @param {!Field} field The field showing the drop-down.
- * @param {!BlockSvg} block Block to position the drop-down around.
+ * @param {!Blockly.Field} field The field showing the drop-down.
+ * @param {!Blockly.BlockSvg} block Block to position the drop-down around.
  * @param {Function=} opt_onHide Optional callback for when the drop-down is
  *   hidden.
  * @param {number=} opt_secondaryYOffset Optional Y offset for above-block
@@ -271,7 +271,7 @@ exports.showPositionedByBlock = showPositionedByBlock;
  * by a particular field. The primary position will be below the field,
  * and the secondary position above the field. Drop-down will be
  * constrained to the block's workspace.
- * @param {!Field} field The field to position the dropdown against.
+ * @param {!Blockly.Field} field The field to position the dropdown against.
  * @param {Function=} opt_onHide Optional callback for when the drop-down is
  *   hidden.
  * @param {number=} opt_secondaryYOffset Optional Y offset for above-block
@@ -288,8 +288,8 @@ exports.showPositionedByField = showPositionedByField;
 
 /**
  * Get the scaled bounding box of a block.
- * @param {!BlockSvg} block The block.
- * @return {!Rect} The scaled bounding box of the block.
+ * @param {!Blockly.BlockSvg} block The block.
+ * @return {!Blockly.utils.Rect} The scaled bounding box of the block.
  */
 const getScaledBboxOfBlock = function(block) {
   const blockSvg = block.getSvgRoot();
@@ -303,8 +303,8 @@ const getScaledBboxOfBlock = function(block) {
 
 /**
  * Get the scaled bounding box of a field.
- * @param {!Field} field The field.
- * @return {!Rect} The scaled bounding box of the field.
+ * @param {!Blockly.Field} field The field.
+ * @return {!Blockly.utils.Rect} The scaled bounding box of the field.
  */
 const getScaledBboxOfField = function(field) {
   const bBox = field.getScaledBBox();
@@ -316,8 +316,8 @@ const getScaledBboxOfField = function(field) {
  * by a scaled bounding box.  The primary position will be below the rect,
  * and the secondary position above the rect. Drop-down will be constrained to
  * the block's workspace.
- * @param {!Rect} bBox The scaled bounding box.
- * @param {!Field} field The field to position the dropdown against.
+ * @param {!Blockly.utils.Rect} bBox The scaled bounding box.
+ * @param {!Blockly.Field} field The field to position the dropdown against.
  * @param {Function=} opt_onHide Optional callback for when the drop-down is
  *   hidden.
  * @param {number=} opt_secondaryYOffset Optional Y offset for above-block
@@ -335,12 +335,12 @@ const showPositionedByRect = function(
   if (opt_secondaryYOffset) {
     secondaryY += opt_secondaryYOffset;
   }
-  const sourceBlock = /** @type {!BlockSvg} */ (field.getSourceBlock());
+  const sourceBlock = /** @type {!Blockly.BlockSvg} */ (field.getSourceBlock());
   // Set bounds to main workspace; show the drop-down.
   let workspace = sourceBlock.workspace;
   while (workspace.options.parentWorkspace) {
     workspace =
-        /** @type {!WorkspaceSvg} */ (workspace.options.parentWorkspace);
+        /** @type {!Blockly.WorkspaceSvg} */ (workspace.options.parentWorkspace);
   }
   setBoundsElement(
       /** @type {?Element} */ (workspace.getParentSvg().parentNode));
@@ -378,7 +378,7 @@ const show = function(
   div.style.direction = rtl ? 'rtl' : 'ltr';
 
   const mainWorkspace =
-      /** @type {!WorkspaceSvg} */ (common.getMainWorkspace());
+      /** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace());
   renderedClassName = mainWorkspace.getRenderer().getClassName();
   themeClassName = mainWorkspace.getTheme().getClassName();
   dom.addClass(div, renderedClassName);
@@ -465,7 +465,7 @@ internal.getPositionMetrics = function(
  * @param {number} primaryY Desired origin point y, in absolute px.
  * @param {!BoundsInfo} boundsInfo An object containing size
  *     information about the bounding element (bounding box and width/height).
- * @param {!Size} divSize An object containing information about
+ * @param {!Blockly.utils.Size} divSize An object containing information about
  *     the size of the DropDownDiv (width & height).
  * @return {!PositionMetrics} Various final metrics,
  *     including rendered positions for drop-down and arrow.
@@ -498,7 +498,7 @@ const getPositionBelowMetrics = function(
  *     in absolute px.
  * @param {!BoundsInfo} boundsInfo An object containing size
  *     information about the bounding element (bounding box and width/height).
- * @param {!Size} divSize An object containing information about
+ * @param {!Blockly.utils.Size} divSize An object containing information about
  *     the size of the DropDownDiv (width & height).
  * @return {!PositionMetrics} Various final metrics,
  *     including rendered positions for drop-down and arrow.
@@ -529,7 +529,7 @@ const getPositionAboveMetrics = function(
  * @param {number} sourceX Desired origin point x, in absolute px.
  * @param {!BoundsInfo} boundsInfo An object containing size
  *     information about the bounding element (bounding box and width/height).
- * @param {!Size} divSize An object containing information about
+ * @param {!Blockly.utils.Size} divSize An object containing information about
  *     the size of the DropDownDiv (width & height).
  * @return {!PositionMetrics} Various final metrics,
  *     including rendered positions for drop-down and arrow.
@@ -669,7 +669,7 @@ const hideWithoutAnimation = function() {
     dom.removeClass(div, themeClassName);
     themeClassName = '';
   }
-  (/** @type {!WorkspaceSvg} */ (common.getMainWorkspace())).markFocused();
+  (/** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace())).markFocused();
 };
 exports.hideWithoutAnimation = hideWithoutAnimation;
 
@@ -734,8 +734,8 @@ const repositionForWindowResize = function() {
   // event and we want the dropdown div to stick around so users can type into
   // it.
   if (owner) {
-    const field = /** @type {!Field} */ (owner);
-    const block = /** @type {!BlockSvg} */ (field.getSourceBlock());
+    const field = /** @type {!Blockly.Field} */ (owner);
+    const block = /** @type {!Blockly.BlockSvg} */ (field.getSourceBlock());
     const bBox = positionToField ? getScaledBboxOfField(field) :
                                    getScaledBboxOfBlock(block);
     // If we can fit it, render below the block.

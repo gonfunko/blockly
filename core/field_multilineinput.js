@@ -32,12 +32,12 @@ const {Svg} = goog.require('Blockly.utils.Svg');
 
 /**
  * Class for an editable text area field.
- * @extends {FieldTextInput}
+ * @extends {Blockly.FieldTextInput}
  * @alias Blockly.FieldMultilineInput
  */
 class FieldMultilineInput extends FieldTextInput {
   /**
-   * @param {(string|!Sentinel)=} opt_value The initial content of the
+   * @param {(string|!Blockly.utils.Sentinel)=} opt_value The initial content of the
    *     field. Should cast to a string. Defaults to an empty string if null or
    *     undefined.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
@@ -428,7 +428,7 @@ class FieldMultilineInput extends FieldTextInput {
    * Construct a FieldMultilineInput from a JSON arg object,
    * dereferencing any string table references.
    * @param {!Object} options A JSON object with options (text, and spellcheck).
-   * @return {!FieldMultilineInput} The new field instance.
+   * @return {!Blockly.FieldMultilineInput} The new field instance.
    * @package
    * @nocollapse
    * @override

@@ -12,7 +12,7 @@
 
 /**
  * The interface for an object that is movable.
- * @namespace Blockly.IMovable
+
  */
 goog.module('Blockly.IMovable');
 

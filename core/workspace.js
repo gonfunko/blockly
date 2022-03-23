@@ -53,25 +53,25 @@ const WorkspaceDB_ = Object.create(null);
 /**
  * Class for a workspace.  This is a data structure that contains blocks.
  * There is no UI, and can be created headlessly.
- * @implements {IASTNodeLocation}
+ * @implements {Blockly.IASTNodeLocation}
  * @alias Blockly.Workspace
  */
 class Workspace {
   /**
-   * @param {!Options=} opt_options Dictionary of options.
+   * @param {!Blockly.Options=} opt_options Dictionary of options.
    */
   constructor(opt_options) {
     /** @type {string} */
     this.id = idGenerator.genUid();
     WorkspaceDB_[this.id] = this;
-    /** @type {!Options} */
+    /** @type {!Blockly.Options} */
     this.options =
-        opt_options || new Options(/** @type {!BlocklyOptions} */ ({}));
+        opt_options || new Options(/** @type {!Blockly.BlocklyOptions} */ ({}));
     /** @type {boolean} */
     this.RTL = !!this.options.RTL;
     /** @type {boolean} */
     this.horizontalLayout = !!this.options.horizontalLayout;
-    /** @type {toolbox.Position} */
+    /** @type {Blockly.utils.toolbox.Position} */
     this.toolboxPosition = this.options.toolboxPosition;
 
     /**
@@ -110,7 +110,7 @@ class Workspace {
 
     /**
      * Set of databases for rapid lookup of connection locations.
-     * @type {Array<!ConnectionDB>}
+     * @type {Array<!Blockly.ConnectionDB>}
      */
     this.connectionDBList = null;
 
@@ -118,17 +118,17 @@ class Workspace {
         registry.Type.CONNECTION_CHECKER, this.options, true);
     /**
      * An object that encapsulates logic for safety, type, and dragging checks.
-     * @type {!IConnectionChecker}
+     * @type {!Blockly.IConnectionChecker}
      */
     this.connectionChecker = new connectionCheckerClass(this);
 
     /**
-     * @type {!Array<!Block>}
+     * @type {!Array<!Blockly.Block>}
      * @private
      */
     this.topBlocks_ = [];
     /**
-     * @type {!Array<!WorkspaceComment>}
+     * @type {!Array<!Blockly.WorkspaceComment>}
      * @private
      */
     this.topComments_ = [];
@@ -143,12 +143,12 @@ class Workspace {
      */
     this.listeners_ = [];
     /**
-     * @type {!Array<!Abstract>}
+     * @type {!Array<!Blockly.Events.Abstract>}
      * @protected
      */
     this.undoStack_ = [];
     /**
-     * @type {!Array<!Abstract>}
+     * @type {!Array<!Blockly.Events.Abstract>}
      * @protected
      */
     this.redoStack_ = [];
@@ -167,7 +167,7 @@ class Workspace {
      * A map from variable type to list of variable names.  The lists contain
      * all of the named variables in the workspace, including variables that are
      * not currently in use.
-     * @type {!VariableMap}
+     * @type {!Blockly.VariableMap}
      * @private
      */
     this.variableMap_ = new VariableMap(this);
@@ -179,7 +179,7 @@ class Workspace {
      * A FieldVariable must always refer to a VariableModel.  We reconcile
      * these by tracking "potential" variables in the flyout.  These variables
      * become real when references to them are dragged into the main workspace.
-     * @type {?VariableMap}
+     * @type {?Blockly.VariableMap}
      * @private
      */
     this.potentialVariableMap_ = null;
@@ -200,9 +200,9 @@ class Workspace {
   /**
    * Compare function for sorting objects (blocks, comments, etc) by position;
    *    top to bottom (with slight LTR or RTL bias).
-   * @param {!Block | !WorkspaceComment} a The first object to
+   * @param {!Block | !Blockly.WorkspaceComment} a The first object to
    *    compare.
-   * @param {!Block | !WorkspaceComment} b The second object to
+   * @param {!Block | !Blockly.WorkspaceComment} b The second object to
    *    compare.
    * @return {number} The comparison value. This tells Array.sort() how to
    *    change object a's index.
@@ -217,7 +217,7 @@ class Workspace {
 
   /**
    * Adds a block to the list of top blocks.
-   * @param {!Block} block Block to add.
+   * @param {!Blockly.Block} block Block to add.
    */
   addTopBlock(block) {
     this.topBlocks_.push(block);
@@ -225,7 +225,7 @@ class Workspace {
 
   /**
    * Removes a block from the list of top blocks.
-   * @param {!Block} block Block to remove.
+   * @param {!Blockly.Block} block Block to remove.
    */
   removeTopBlock(block) {
     if (!arrayUtils.removeElem(this.topBlocks_, block)) {
@@ -237,7 +237,7 @@ class Workspace {
    * Finds the top-level blocks and returns them.  Blocks are optionally sorted
    * by position; top to bottom (with slight LTR or RTL bias).
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!Block>} The top-level block objects.
+   * @return {!Array<!Blockly.Block>} The top-level block objects.
    */
   getTopBlocks(ordered) {
     // Copy the topBlocks_ list.
@@ -254,7 +254,7 @@ class Workspace {
 
   /**
    * Add a block to the list of blocks keyed by type.
-   * @param {!Block} block Block to add.
+   * @param {!Blockly.Block} block Block to add.
    */
   addTypedBlock(block) {
     if (!this.typedBlocksDB_[block.type]) {
@@ -265,7 +265,7 @@ class Workspace {
 
   /**
    * Remove a block from the list of blocks keyed by type.
-   * @param {!Block} block Block to remove.
+   * @param {!Blockly.Block} block Block to remove.
    */
   removeTypedBlock(block) {
     arrayUtils.removeElem(this.typedBlocksDB_[block.type], block);
@@ -279,7 +279,7 @@ class Workspace {
    * optionally sorted by position; top to bottom (with slight LTR or RTL bias).
    * @param {string} type The type of block to search for.
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!Block>} The blocks of the given type.
+   * @return {!Array<!Blockly.Block>} The blocks of the given type.
    */
   getBlocksByType(type, ordered) {
     if (!this.typedBlocksDB_[type]) {
@@ -301,7 +301,7 @@ class Workspace {
 
   /**
    * Adds a comment to the list of top comments.
-   * @param {!WorkspaceComment} comment comment to add.
+   * @param {!Blockly.WorkspaceComment} comment comment to add.
    * @package
    */
   addTopComment(comment) {
@@ -319,7 +319,7 @@ class Workspace {
 
   /**
    * Removes a comment from the list of top comments.
-   * @param {!WorkspaceComment} comment comment to remove.
+   * @param {!Blockly.WorkspaceComment} comment comment to remove.
    * @package
    */
   removeTopComment(comment) {
@@ -337,7 +337,7 @@ class Workspace {
    * Finds the top-level comments and returns them.  Comments are optionally
    * sorted by position; top to bottom (with slight LTR or RTL bias).
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!WorkspaceComment>} The top-level comment objects.
+   * @return {!Array<!Blockly.WorkspaceComment>} The top-level comment objects.
    * @package
    */
   getTopComments(ordered) {
@@ -357,7 +357,7 @@ class Workspace {
    * Find all blocks in workspace.  Blocks are optionally sorted
    * by position; top to bottom (with slight LTR or RTL bias).
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!Block>} Array of blocks.
+   * @return {!Array<!Blockly.Block>} Array of blocks.
    */
   getAllBlocks(ordered) {
     let blocks;
@@ -434,7 +434,7 @@ class Workspace {
    * on their type. This will default to '' which is a specific type.
    * @param {?string=} opt_id The unique ID of the variable. This will default
    *     to a UUID.
-   * @return {!VariableModel} The newly created variable.
+   * @return {!Blockly.VariableModel} The newly created variable.
    */
   createVariable(name, opt_type, opt_id) {
     return this.variableMap_.createVariable(name, opt_type, opt_id);
@@ -443,7 +443,7 @@ class Workspace {
   /**
    * Find all the uses of the given variable, which is identified by ID.
    * @param {string} id ID of the variable to find.
-   * @return {!Array<!Block>} Array of block usages.
+   * @return {!Array<!Blockly.Block>} Array of block usages.
    */
   getVariableUsesById(id) {
     return this.variableMap_.getVariableUsesById(id);
@@ -464,7 +464,7 @@ class Workspace {
    * @param {string} name The name to check for.
    * @param {string=} opt_type The type of the variable.  If not provided it
    *     defaults to the empty string, which is a specific type.
-   * @return {?VariableModel} The variable with the given name.
+   * @return {?Blockly.VariableModel} The variable with the given name.
    */
   getVariable(name, opt_type) {
     // TODO (#1559): Possibly delete this function after resolving #1559.
@@ -474,7 +474,7 @@ class Workspace {
   /**
    * Find the variable by the given ID and return it. Return null if not found.
    * @param {string} id The ID to check for.
-   * @return {?VariableModel} The variable with the given ID.
+   * @return {?Blockly.VariableModel} The variable with the given ID.
    */
   getVariableById(id) {
     return this.variableMap_.getVariableById(id);
@@ -484,7 +484,7 @@ class Workspace {
    * Find the variable with the specified type. If type is null, return list of
    *     variables with empty string type.
    * @param {?string} type Type of the variables to find.
-   * @return {!Array<!VariableModel>} The sought after variables of the
+   * @return {!Array<!Blockly.VariableModel>} The sought after variables of the
    *     passed in type. An empty array if none are found.
    */
   getVariablesOfType(type) {
@@ -502,7 +502,7 @@ class Workspace {
 
   /**
    * Return all variables of all types.
-   * @return {!Array<!VariableModel>} List of variable models.
+   * @return {!Array<!Blockly.VariableModel>} List of variable models.
    */
   getAllVariables() {
     return this.variableMap_.getAllVariables();
@@ -534,7 +534,7 @@ class Workspace {
    *     type-specific functions for this block.
    * @param {string=} opt_id Optional ID.  Use this ID if provided, otherwise
    *     create a new ID.
-   * @return {!Block} The created block.
+   * @return {!Blockly.Block} The created block.
    */
   newBlock(prototypeName, opt_id) {
     const {Block} = goog.module.get('Blockly.Block');
@@ -611,7 +611,7 @@ class Workspace {
 
   /**
    * Gets the undo stack for workplace.
-   * @return {!Array<!Abstract>} undo stack
+   * @return {!Array<!Blockly.Events.Abstract>} undo stack
    * @package
    */
   getUndoStack() {
@@ -620,7 +620,7 @@ class Workspace {
 
   /**
    * Gets the redo stack for workplace.
-   * @return {!Array<!Abstract>} redo stack
+   * @return {!Array<!Blockly.Events.Abstract>} redo stack
    * @package
    */
   getRedoStack() {
@@ -694,7 +694,7 @@ class Workspace {
 
   /**
    * Fire a change event.
-   * @param {!Abstract} event Event to fire.
+   * @param {!Blockly.Events.Abstract} event Event to fire.
    */
   fireChangeListener(event) {
     if (event.recordUndo) {
@@ -713,7 +713,7 @@ class Workspace {
   /**
    * Find the block on this workspace with the specified ID.
    * @param {string} id ID of block to find.
-   * @return {?Block} The sought after block, or null if not found.
+   * @return {?Blockly.Block} The sought after block, or null if not found.
    */
   getBlockById(id) {
     return this.blockDB_[id] || null;
@@ -722,7 +722,7 @@ class Workspace {
   /**
    * Set a block on this workspace with the specified ID.
    * @param {string} id ID of block to set.
-   * @param {Block} block The block to set.
+   * @param {Blockly.Block} block The block to set.
    * @package
    */
   setBlockById(id, block) {
@@ -741,7 +741,7 @@ class Workspace {
   /**
    * Find the comment on this workspace with the specified ID.
    * @param {string} id ID of comment to find.
-   * @return {?WorkspaceComment} The sought after comment, or null if not
+   * @return {?Blockly.WorkspaceComment} The sought after comment, or null if not
    *     found.
    * @package
    */
@@ -771,7 +771,7 @@ class Workspace {
   /**
    * Return the variable map that contains "potential" variables.
    * These exist in the flyout but not in the workspace.
-   * @return {?VariableMap} The potential variable map.
+   * @return {?Blockly.VariableMap} The potential variable map.
    * @package
    */
   getPotentialVariableMap() {
@@ -788,7 +788,7 @@ class Workspace {
 
   /**
    * Return the map of all variables on the workspace.
-   * @return {!VariableMap} The variable map.
+   * @return {!Blockly.VariableMap} The variable map.
    */
   getVariableMap() {
     return this.variableMap_;
@@ -796,7 +796,7 @@ class Workspace {
 
   /**
    * Set the map of all variables on the workspace.
-   * @param {!VariableMap} variableMap The variable map.
+   * @param {!Blockly.VariableMap} variableMap The variable map.
    * @package
    */
   setVariableMap(variableMap) {
@@ -806,7 +806,7 @@ class Workspace {
   /**
    * Find the workspace with the specified ID.
    * @param {string} id ID of workspace to find.
-   * @return {?Workspace} The sought after workspace or null if not found.
+   * @return {?Blockly.Workspace} The sought after workspace or null if not found.
    */
   static getById(id) {
     return WorkspaceDB_[id] || null;
@@ -814,7 +814,7 @@ class Workspace {
 
   /**
    * Find all workspaces.
-   * @return {!Array<!Workspace>} Array of workspaces.
+   * @return {!Array<!Blockly.Workspace>} Array of workspaces.
    */
   static getAll() {
     const workspaces = [];

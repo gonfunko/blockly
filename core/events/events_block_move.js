@@ -26,12 +26,12 @@ const {Coordinate} = goog.require('Blockly.utils.Coordinate');
 
 /**
  * Class for a block move event.  Created before the move.
- * @extends {BlockBase}
+ * @extends {Blockly.Events.BlockBase}
  * @alias Blockly.Events.BlockMove
  */
 class BlockMove extends BlockBase {
   /**
-   * @param {!Block=} opt_block The moved block.  Undefined for a blank
+   * @param {!Blockly.Block=} opt_block The moved block.  Undefined for a blank
    *     event.
    */
   constructor(opt_block) {

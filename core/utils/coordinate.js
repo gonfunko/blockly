@@ -44,7 +44,7 @@ const Coordinate = class {
 
   /**
    * Creates a new copy of this coordinate.
-   * @return {!Coordinate} A copy of this coordinate.
+   * @return {!Blockly.utils.Coordinate} A copy of this coordinate.
    */
   clone() {
     return new Coordinate(this.x, this.y);
@@ -53,7 +53,7 @@ const Coordinate = class {
   /**
    * Scales this coordinate by the given scale factor.
    * @param {number} s The scale factor to use for both x and y dimensions.
-   * @return {!Coordinate} This coordinate after scaling.
+   * @return {!Blockly.utils.Coordinate} This coordinate after scaling.
    */
   scale(s) {
     this.x *= s;
@@ -66,7 +66,7 @@ const Coordinate = class {
    * respectively.
    * @param {number} tx The value to translate x by.
    * @param {number} ty The value to translate y by.
-   * @return {!Coordinate} This coordinate after translating.
+   * @return {!Blockly.utils.Coordinate} This coordinate after translating.
    */
   translate(tx, ty) {
     this.x += tx;
@@ -76,8 +76,8 @@ const Coordinate = class {
 
   /**
    * Compares coordinates for equality.
-   * @param {?Coordinate} a A Coordinate.
-   * @param {?Coordinate} b A Coordinate.
+   * @param {?Blockly.utils.Coordinate} a A Coordinate.
+   * @param {?Blockly.utils.Coordinate} b A Coordinate.
    * @return {boolean} True iff the coordinates are equal, or if both are null.
    */
   static equals(a, b) {
@@ -92,8 +92,8 @@ const Coordinate = class {
 
   /**
    * Returns the distance between two coordinates.
-   * @param {!Coordinate} a A Coordinate.
-   * @param {!Coordinate} b A Coordinate.
+   * @param {!Blockly.utils.Coordinate} a A Coordinate.
+   * @param {!Blockly.utils.Coordinate} b A Coordinate.
    * @return {number} The distance between `a` and `b`.
    */
   static distance(a, b) {
@@ -104,7 +104,7 @@ const Coordinate = class {
 
   /**
    * Returns the magnitude of a coordinate.
-   * @param {!Coordinate} a A Coordinate.
+   * @param {!Blockly.utils.Coordinate} a A Coordinate.
    * @return {number} The distance between the origin and `a`.
    */
   static magnitude(a) {
@@ -114,9 +114,9 @@ const Coordinate = class {
   /**
    * Returns the difference between two coordinates as a new
    * Coordinate.
-   * @param {!Coordinate|!SVGPoint} a An x/y coordinate.
-   * @param {!Coordinate|!SVGPoint} b An x/y coordinate.
-   * @return {!Coordinate} A Coordinate representing the difference
+   * @param {!Blockly.utils.Coordinate|!SVGPoint} a An x/y coordinate.
+   * @param {!Blockly.utils.Coordinate|!SVGPoint} b An x/y coordinate.
+   * @return {!Blockly.utils.Coordinate} A Coordinate representing the difference
    *     between `a` and `b`.
    */
   static difference(a, b) {
@@ -125,9 +125,9 @@ const Coordinate = class {
 
   /**
    * Returns the sum of two coordinates as a new Coordinate.
-   * @param {!Coordinate|!SVGPoint} a An x/y coordinate.
-   * @param {!Coordinate|!SVGPoint} b An x/y coordinate.
-   * @return {!Coordinate} A Coordinate representing the sum of
+   * @param {!Blockly.utils.Coordinate|!SVGPoint} a An x/y coordinate.
+   * @param {!Blockly.utils.Coordinate|!SVGPoint} b An x/y coordinate.
+   * @return {!Blockly.utils.Coordinate} A Coordinate representing the sum of
    *     the two coordinates.
    */
   static sum(a, b) {

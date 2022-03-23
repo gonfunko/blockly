@@ -27,12 +27,12 @@ const {Workspace} = goog.requireType('Blockly.Workspace');
  * Used to notify the developer when the workspace has finished loading (i.e
  * domToWorkspace).
  * Finished loading events do not record undo or redo.
- * @extends {AbstractEvent}
+ * @extends {Blockly.Events.Abstract}
  * @alias Blockly.Events.FinishedLoading
  */
 class FinishedLoading extends AbstractEvent {
   /**
-   * @param {!Workspace=} opt_workspace The workspace that has finished
+   * @param {!Blockly.Workspace=} opt_workspace The workspace that has finished
    *    loading.  Undefined for a blank event.
    */
   constructor(opt_workspace) {

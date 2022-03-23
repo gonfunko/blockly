@@ -30,29 +30,29 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  * The base class to represent an input that takes up space on a block
  * during rendering
  * @package
- * @extends {Connection}
+ * @extends {Blockly.blockRendering.Connection}
  * @alias Blockly.blockRendering.InputConnection
  */
 class InputConnection extends Connection {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!Input} input The input to measure and store information for.
+   * @param {!Blockly.Input} input The input to measure and store information for.
    */
   constructor(constants, input) {
-    super(constants, /** @type {!RenderedConnection} */ (input.connection));
+    super(constants, /** @type {!RenderedBlockly.blockRendering.Connection} */ (input.connection));
 
     this.type |= Types.INPUT;
 
-    /** @type {!Input} */
+    /** @type {!Blockly.Input} */
     this.input = input;
 
     /** @type {number} */
     this.align = input.align;
 
-    /** @type {BlockSvg} */
+    /** @type {Blockly.BlockSvg} */
     this.connectedBlock = input.connection && input.connection.targetBlock() ?
-        /** @type {BlockSvg} */ (input.connection.targetBlock()) :
+        /** @type {Blockly.BlockSvg} */ (input.connection.targetBlock()) :
         null;
 
     if (this.connectedBlock) {

@@ -76,7 +76,7 @@ const BlockDragSurfaceSvg = class {
      * Cached value for the translation of the drag surface.
      * This translation is in pixel units, because the scale is applied to the
      * drag group rather than the top-level SVG.
-     * @type {?Coordinate}
+     * @type {?Blockly.utils.Coordinate}
      * @private
      */
     this.surfaceXY_ = null;
@@ -85,7 +85,7 @@ const BlockDragSurfaceSvg = class {
      * Cached value for the translation of the child drag surface in pixel
      * units. Since the child drag surface tracks the translation of the
      * workspace this is ultimately the translation of the workspace.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @private
      */
     this.childSurfaceXY_ = new Coordinate(0, 0);
@@ -194,7 +194,7 @@ const BlockDragSurfaceSvg = class {
   /**
    * Reports the surface translation in scaled workspace coordinates.
    * Use this when finishing a drag to return blocks to the correct position.
-   * @return {!Coordinate} Current translation of the surface.
+   * @return {!Blockly.utils.Coordinate} Current translation of the surface.
    */
   getSurfaceTranslation() {
     const xy = svgMath.getRelativeXY(/** @type {!SVGElement} */ (this.SVG_));
@@ -232,7 +232,7 @@ const BlockDragSurfaceSvg = class {
    * Gets the translation of the child block surface
    * This surface is in charge of keeping track of how much the workspace has
    * moved.
-   * @return {!Coordinate} The amount the workspace has been moved.
+   * @return {!Blockly.utils.Coordinate} The amount the workspace has been moved.
    */
   getWsTranslation() {
     // Returning a copy so the coordinate can not be changed outside this class.

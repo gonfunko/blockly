@@ -34,12 +34,12 @@ goog.require('Blockly.Events.BlockChange');
 
 /**
  * Class for a colour input field.
- * @extends {Field}
+ * @extends {Blockly.Field}
  * @alias Blockly.FieldColour
  */
 class FieldColour extends Field {
   /**
-   * @param {(string|!Sentinel)=} opt_value The initial value of the
+   * @param {(string|!Blockly.utils.Sentinel)=} opt_value The initial value of the
    *     field. Should be in '#rrggbb' format. Defaults to the first value in
    *     the default colour array.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
@@ -253,7 +253,7 @@ class FieldColour extends Field {
    *     or null to use default (FieldColour.COLOURS).
    * @param {Array<string>=} opt_titles Optional array of colour tooltips,
    *     or null to use default (FieldColour.TITLES).
-   * @return {!FieldColour} Returns itself (for method chaining).
+   * @return {!Blockly.FieldColour} Returns itself (for method chaining).
    */
   setColours(colours, opt_titles) {
     this.colours_ = colours;
@@ -267,7 +267,7 @@ class FieldColour extends Field {
    * Set a custom grid size for this field.
    * @param {number} columns Number of columns for this block,
    *     or 0 to use default (FieldColour.COLUMNS).
-   * @return {!FieldColour} Returns itself (for method chaining).
+   * @return {!Blockly.FieldColour} Returns itself (for method chaining).
    */
   setColumns(columns) {
     this.columns_ = columns;
@@ -557,7 +557,7 @@ class FieldColour extends Field {
   /**
    * Construct a FieldColour from a JSON arg object.
    * @param {!Object} options A JSON object with options (colour).
-   * @return {!FieldColour} The new field instance.
+   * @return {!Blockly.FieldColour} The new field instance.
    * @package
    * @nocollapse
    */

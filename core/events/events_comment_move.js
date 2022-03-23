@@ -25,12 +25,12 @@ const {WorkspaceComment} = goog.requireType('Blockly.WorkspaceComment');
 
 /**
  * Class for a comment move event.  Created before the move.
- * @extends {CommentBase}
+ * @extends {Blockly.Events.CommentBase}
  * @alias Blockly.Events.CommentMove
  */
 class CommentMove extends CommentBase {
   /**
-   * @param {!WorkspaceComment=} opt_comment The comment that is being
+   * @param {!Blockly.WorkspaceComment=} opt_comment The comment that is being
    *     moved.  Undefined for a blank event.
    */
   constructor(opt_comment) {
@@ -49,19 +49,19 @@ class CommentMove extends CommentBase {
     /**
      * The comment that is being moved.  Will be cleared after recording the new
      * location.
-     * @type {WorkspaceComment}
+     * @type {Blockly.WorkspaceComment}
      */
     this.comment_ = opt_comment;
 
     /**
      * The location before the move, in workspace coordinates.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      */
     this.oldCoordinate_ = opt_comment.getXY();
 
     /**
      * The location after the move, in workspace coordinates.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      */
     this.newCoordinate_ = null;
   }
@@ -83,7 +83,7 @@ class CommentMove extends CommentBase {
   /**
    * Override the location before the move.  Use this if you don't create the
    * event until the end of the move, but you know the original location.
-   * @param {!Coordinate} xy The location before the move,
+   * @param {!Blockly.utils.Coordinate} xy The location before the move,
    *     in workspace coordinates.
    */
   setOldCoordinate(xy) {

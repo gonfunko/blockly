@@ -25,20 +25,20 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 /**
  * Calculates metrics for a flyout's workspace.
  * The metrics are mainly used to size scrollbars for the flyout.
- * @extends {MetricsManager}
+ * @extends {Blockly.MetricsManager}
  * @alias Blockly.FlyoutMetricsManager
  */
 class FlyoutMetricsManager extends MetricsManager {
   /**
-   * @param {!WorkspaceSvg} workspace The flyout's workspace.
-   * @param {!IFlyout} flyout The flyout.
+   * @param {!Blockly.WorkspaceSvg} workspace The flyout's workspace.
+   * @param {!Blockly.IFlyout} flyout The flyout.
    */
   constructor(workspace, flyout) {
     super(workspace);
 
     /**
      * The flyout that owns the workspace to calculate metrics for.
-     * @type {!IFlyout}
+     * @type {!Blockly.IFlyout}
      * @protected
      */
     this.flyout_ = flyout;

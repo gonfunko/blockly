@@ -103,7 +103,7 @@ exports.isTargetInput = isTargetInput;
  * Return the coordinates of the top-left corner of this element relative to
  * its parent.  Only for SVG elements and children (e.g. rect, g, path).
  * @param {!Element} element SVG element to find the coordinates of.
- * @return {!Coordinate} Object with .x and .y properties.
+ * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
  * @deprecated
  * @alias Blockly.utils.getRelativeXY
  */
@@ -121,7 +121,7 @@ exports.getRelativeXY = getRelativeXY;
  * @param {!Element} element SVG element to find the coordinates of. If this is
  *     not a child of the div Blockly was injected into, the behaviour is
  *     undefined.
- * @return {!Coordinate} Object with .x and .y properties.
+ * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
  * @deprecated
  * @alias Blockly.utils.getInjectionDivXY_
  */
@@ -269,7 +269,7 @@ exports.is3dSupported = is3dSupported;
 /**
  * Get the position of the current viewport in window coordinates.  This takes
  * scroll into account.
- * @return {!Rect} An object containing window width, height, and
+ * @return {!Blockly.utils.Rect} An object containing window width, height, and
  *     scroll position in window coordinates.
  * @alias Blockly.utils.getViewportBBox
  * @deprecated
@@ -302,7 +302,7 @@ exports.arrayRemove = arrayRemove;
 /**
  * Gets the document scroll distance as a coordinate object.
  * Copied from Closure's goog.dom.getDocumentScroll.
- * @return {!Coordinate} Object with values 'x' and 'y'.
+ * @return {!Blockly.utils.Coordinate} Object with values 'x' and 'y'.
  * @deprecated
  * @alias Blockly.utils.getDocumentScroll
  */
@@ -317,7 +317,7 @@ exports.getDocumentScroll = getDocumentScroll;
 /**
  * Get a map of all the block's descendants mapping their type to the number of
  *    children with that type.
- * @param {!Block} block The block to map.
+ * @param {!Blockly.Block} block The block to map.
  * @param {boolean=} opt_stripFollowing Optionally ignore all following
  *    statements (blocks that are not inside a value or statement input
  *    of the block).
@@ -335,11 +335,11 @@ exports.getBlockTypeCounts = getBlockTypeCounts;
 
 /**
  * Converts screen coordinates to workspace coordinates.
- * @param {!WorkspaceSvg} ws The workspace to find the coordinates on.
- * @param {!Coordinate} screenCoordinates The screen coordinates to
+ * @param {!Blockly.WorkspaceSvg} ws The workspace to find the coordinates on.
+ * @param {!Blockly.utils.Coordinate} screenCoordinates The screen coordinates to
  * be converted to workspace coordinates
  * @deprecated
- * @return {!Coordinate} The workspace coordinates.
+ * @return {!Blockly.utils.Coordinate} The workspace coordinates.
  */
 const screenToWsCoordinates = function(ws, screenCoordinates) {
   deprecation.warn(

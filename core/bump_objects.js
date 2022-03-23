@@ -35,10 +35,10 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * Bumps the given object that has passed out of bounds.
- * @param {!WorkspaceSvg} workspace The workspace containing the object.
- * @param {!MetricsManager.ContainerRegion} scrollMetrics Scroll metrics
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace containing the object.
+ * @param {!Blockly.MetricsManager.ContainerRegion} scrollMetrics Scroll metrics
  *    in workspace coordinates.
- * @param {!IBoundedElement} object The object to bump.
+ * @param {!Blockly.IBoundedElement} object The object to bump.
  * @return {boolean} True if block was bumped.
  * @alias Blockly.bumpObjects.bumpIntoBounds
  */
@@ -87,8 +87,8 @@ exports.bumpIntoBounds = bumpObjectIntoBounds;
 
 /**
  * Creates a handler for bumping objects when they cross fixed bounds.
- * @param {!WorkspaceSvg} workspace The workspace to handle.
- * @return {function(Abstract)} The event handler.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace to handle.
+ * @return {function(Blockly.Events.Abstract)} The event handler.
  * @alias Blockly.bumpObjects.bumpIntoBoundsHandler
  */
 const bumpIntoBoundsHandler = function(workspace) {
@@ -112,7 +112,7 @@ const bumpIntoBoundsHandler = function(workspace) {
 
       const wasBumped = bumpObjectIntoBounds(
           workspace, scrollMetricsInWsCoords,
-          /** @type {!IBoundedElement} */ (object));
+          /** @type {!Blockly.IBoundedElement} */ (object));
 
       if (wasBumped && !e.group) {
         console.warn(
@@ -123,7 +123,7 @@ const bumpIntoBoundsHandler = function(workspace) {
         eventUtils.setGroup(oldGroup);
       }
     } else if (e.type === eventUtils.VIEWPORT_CHANGE) {
-      const viewportEvent = /** @type {!ViewportChange} */ (e);
+      const viewportEvent = /** @type {!Blockly.Events.ViewportChange} */ (e);
       if (viewportEvent.scale > viewportEvent.oldScale) {
         bumpTopObjectsIntoBounds(workspace);
       }
@@ -134,10 +134,10 @@ exports.bumpIntoBoundsHandler = bumpIntoBoundsHandler;
 
 /**
  * Extracts the object from the given event.
- * @param {!WorkspaceSvg} workspace The workspace the event originated
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace the event originated
  *    from.
  * @param {!eventUtils.BumpEvent} e An event containing an object.
- * @return {?BlockSvg|?WorkspaceCommentSvg} The extracted
+ * @return {?Blockly.BlockSvg|?Blockly.WorkspaceCommentSvg} The extracted
  *    object.
  */
 const extractObjectFromEvent = function(workspace, e) {
@@ -153,7 +153,7 @@ const extractObjectFromEvent = function(workspace, e) {
     case eventUtils.COMMENT_CREATE:
     case eventUtils.COMMENT_MOVE:
       object = (
-          /** @type {?WorkspaceCommentSvg} */
+          /** @type {?Blockly.WorkspaceCommentSvg} */
           (workspace.getCommentById(e.commentId)));
       break;
   }
@@ -162,7 +162,7 @@ const extractObjectFromEvent = function(workspace, e) {
 
 /**
  * Bumps the top objects in the given workspace into bounds.
- * @param {!WorkspaceSvg} workspace The workspace.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace.
  * @alias Blockly.bumpObjects.bumpTopObjectsIntoBounds
  */
 const bumpTopObjectsIntoBounds = function(workspace) {

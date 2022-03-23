@@ -26,12 +26,12 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  * An object containing information about the space a hat takes up during
  * rendering.
  * @struct
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @alias Blockly.blockRendering.Hat
  */
 class Hat extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */

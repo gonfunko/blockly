@@ -31,11 +31,11 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
  */
 class WorkspaceDragger {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace to drag.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace to drag.
    */
   constructor(workspace) {
     /**
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
@@ -57,7 +57,7 @@ class WorkspaceDragger {
     /**
      * The scroll position of the workspace at the beginning of the drag.
      * Coordinate system: pixel coordinates.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @protected
      */
     this.startScrollXY_ = new Coordinate(workspace.scrollX, workspace.scrollY);
@@ -82,7 +82,7 @@ class WorkspaceDragger {
   }
   /**
    * Finish dragging the workspace and put everything back where it belongs.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at the start of the drag, in pixel coordinates.
    * @package
    */
@@ -93,7 +93,7 @@ class WorkspaceDragger {
   }
   /**
    * Move the workspace based on the most recent mouse movements.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at the start of the drag, in pixel coordinates.
    * @package
    */

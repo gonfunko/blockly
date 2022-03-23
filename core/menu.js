@@ -40,7 +40,7 @@ const Menu = class {
      * Array of menu items.
      * (Nulls are never in the array, but typing the array as nullable prevents
      * the compiler from objecting to .indexOf(null))
-     * @type {!Array<MenuItem>}
+     * @type {!Array<Blockly.MenuItem>}
      * @private
      */
     this.menuItems_ = [];
@@ -49,7 +49,7 @@ const Menu = class {
      * Coordinates of the mousedown event that caused this menu to open. Used to
      * prevent the consequent mouseup event due to a simple click from
      * activating a menu item immediately.
-     * @type {?Coordinate}
+     * @type {?Blockly.utils.Coordinate}
      * @package
      */
     this.openingCoords = null;
@@ -57,7 +57,7 @@ const Menu = class {
     /**
      * This is the element that we will listen to the real focus events on.
      * A value of null means no menu item is highlighted.
-     * @type {?MenuItem}
+     * @type {?Blockly.MenuItem}
      * @private
      */
     this.highlightedItem_ = null;
@@ -106,7 +106,7 @@ const Menu = class {
 
     /**
      * ARIA name for this menu.
-     * @type {?aria.Role}
+     * @type {?Blockly.utils.aria.Role}
      * @private
      */
     this.roleName_ = null;
@@ -114,7 +114,7 @@ const Menu = class {
 
   /**
    * Add a new menu item to the bottom of this menu.
-   * @param {!MenuItem} menuItem Menu item to append.
+   * @param {!Blockly.MenuItem} menuItem Menu item to append.
    */
   addChild(menuItem) {
     this.menuItems_.push(menuItem);
@@ -190,7 +190,7 @@ const Menu = class {
 
   /**
    * Set the menu accessibility role.
-   * @param {!aria.Role} roleName role name.
+   * @param {!Blockly.utils.aria.Role} roleName role name.
    * @package
    */
   setRole(roleName) {
@@ -236,7 +236,7 @@ const Menu = class {
    * Returns the child menu item that owns the given DOM element,
    * or null if no such menu item is found.
    * @param {Element} elem DOM element whose owner is to be returned.
-   * @return {?MenuItem} Menu item for which the DOM element belongs to.
+   * @return {?Blockly.MenuItem} Menu item for which the DOM element belongs to.
    * @private
    */
   getMenuItem_(elem) {
@@ -263,7 +263,7 @@ const Menu = class {
 
   /**
    * Highlights the given menu item, or clears highlighting if null.
-   * @param {?MenuItem} item Item to highlight, or null.
+   * @param {?Blockly.MenuItem} item Item to highlight, or null.
    * @package
    */
   setHighlighted(item) {
@@ -466,7 +466,7 @@ const Menu = class {
 
   /**
    * Get the size of a rendered menu.
-   * @return {!Size} Object with width and height properties.
+   * @return {!Blockly.utils.Size} Object with width and height properties.
    * @package
    */
   getSize() {

@@ -14,7 +14,7 @@
 /**
  * Interface for a workspace component that can be registered with
  * the ComponentManager.
- * @namespace Blockly.IComponent
+
  */
 goog.module('Blockly.IComponent');
 

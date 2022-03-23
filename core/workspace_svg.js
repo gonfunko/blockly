@@ -119,16 +119,16 @@ goog.require('Blockly.Msg');
 /**
  * Class for a workspace.  This is an onscreen area with optional trashcan,
  * scrollbars, bubbles, and dragging.
- * @extends {Workspace}
- * @implements {IASTNodeLocationSvg}
+ * @extends {Blockly.Workspace}
+ * @implements {Blockly.IASTNodeLocationSvg}
  * @alias Blockly.WorkspaceSvg
  */
 class WorkspaceSvg extends Workspace {
   /**
-   * @param {!Options} options Dictionary of options.
-   * @param {BlockDragSurfaceSvg=} opt_blockDragSurface Drag surface for
+   * @param {!Blockly.Options} options Dictionary of options.
+   * @param {BlockDragSurfaceBlockly.utils.Svg=} opt_blockDragSurface Drag surface for
    *     blocks.
-   * @param {WorkspaceDragSurfaceSvg=} opt_wsDragSurface Drag surface for
+   * @param {WorkspaceDragSurfaceBlockly.utils.Svg=} opt_wsDragSurface Drag surface for
    *     the workspace.
    */
   constructor(options, opt_blockDragSurface, opt_wsDragSurface) {
@@ -137,7 +137,7 @@ class WorkspaceSvg extends Workspace {
     /**
      * A wrapper function called when a resize event occurs.
      * You can pass the result to `eventHandling.unbind`.
-     * @type {?browserEvents.Data}
+     * @type {?Blockly.browserEvents.Data}
      * @private
      */
     this.resizeHandlerWrapper_ = null;
@@ -248,7 +248,7 @@ class WorkspaceSvg extends Workspace {
 
     /**
      * Distance from mouse to object being dragged.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @private
      */
     this.dragDeltaXY_ = null;
@@ -282,19 +282,19 @@ class WorkspaceSvg extends Workspace {
 
     /**
      * The workspace's trashcan (if any).
-     * @type {Trashcan}
+     * @type {Blockly.Trashcan}
      */
     this.trashcan = null;
 
     /**
      * This workspace's scrollbars, if they exist.
-     * @type {ScrollbarPair}
+     * @type {Blockly.ScrollbarPair}
      */
     this.scrollbar = null;
 
     /**
      * Fixed flyout providing blocks which may be dragged into this workspace.
-     * @type {IFlyout}
+     * @type {Blockly.IFlyout}
      * @private
      */
     this.flyout_ = null;
@@ -302,28 +302,28 @@ class WorkspaceSvg extends Workspace {
     /**
      * Category-based toolbox providing blocks which may be dragged into this
      * workspace.
-     * @type {IToolbox}
+     * @type {Blockly.IToolbox}
      * @private
      */
     this.toolbox_ = null;
 
     /**
      * The current gesture in progress on this workspace, if any.
-     * @type {TouchGesture}
+     * @type {TouchBlockly.Gesture}
      * @package
      */
     this.currentGesture_ = null;
 
     /**
      * This workspace's surface for dragging blocks, if it exists.
-     * @type {BlockDragSurfaceSvg}
+     * @type {BlockDragSurfaceBlockly.utils.Svg}
      * @private
      */
     this.blockDragSurface_ = null;
 
     /**
      * This workspace's drag surface, if it exists.
-     * @type {WorkspaceDragSurfaceSvg}
+     * @type {WorkspaceDragSurfaceBlockly.utils.Svg}
      * @private
      */
     this.workspaceDragSurface_ = null;
@@ -358,7 +358,7 @@ class WorkspaceSvg extends Workspace {
      * Last known position of the page scroll.
      * This is used to determine whether we have recalculated screen coordinate
      * stuff since the page scrolled.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @private
      */
     this.lastRecordedPageScroll_ = null;
@@ -375,7 +375,7 @@ class WorkspaceSvg extends Workspace {
     /**
      * In a flyout, the target workspace where blocks should be placed after a
      * drag. Otherwise null.
-     * @type {WorkspaceSvg}
+     * @type {Blockly.WorkspaceSvg}
      * @package
      */
     this.targetWorkspace = null;
@@ -398,14 +398,14 @@ class WorkspaceSvg extends Workspace {
         registry.Type.METRICS_MANAGER, options, true);
     /**
      * Object in charge of calculating metrics for the workspace.
-     * @type {!IMetricsManager}
+     * @type {!Blockly.IMetricsManager}
      * @private
      */
     this.metricsManager_ = new MetricsManagerClass(this);
 
     /**
      * Method to get all the metrics that have to do with a workspace.
-     * @type {function():!Metrics}
+     * @type {function():!Blockly.utils.Metrics}
      * @package
      */
     this.getMetrics = options.getMetrics ||
@@ -420,7 +420,7 @@ class WorkspaceSvg extends Workspace {
         options.setMetrics || WorkspaceSvg.setTopLevelWorkspaceMetrics_;
 
     /**
-     * @type {!ComponentManager}
+     * @type {!Blockly.ComponentManager}
      * @private
      */
     this.componentManager_ = new ComponentManager();
@@ -441,22 +441,22 @@ class WorkspaceSvg extends Workspace {
     /**
      * List of currently highlighted blocks.  Block highlighting is often used
      * to visually mark blocks currently being executed.
-     * @type {!Array<!BlockSvg>}
+     * @type {!Array<!Blockly.BlockSvg>}
      * @private
      */
     this.highlightedBlocks_ = [];
 
     /**
      * Object in charge of loading, storing, and playing audio for a workspace.
-     * @type {!WorkspaceAudio}
+     * @type {!Blockly.WorkspaceAudio}
      * @private
      */
     this.audioManager_ = new WorkspaceAudio(
-        /** @type {WorkspaceSvg} */ (options.parentWorkspace));
+        /** @type {Blockly.WorkspaceSvg} */ (options.parentBlockly.Workspace));
 
     /**
      * This workspace's grid object or null.
-     * @type {Grid}
+     * @type {Blockly.Grid}
      * @private
      */
     this.grid_ = this.options.gridPattern ?
@@ -465,7 +465,7 @@ class WorkspaceSvg extends Workspace {
 
     /**
      * Manager in charge of markers and cursors.
-     * @type {!MarkerManager}
+     * @type {!Blockly.MarkerManager}
      * @private
      */
     this.markerManager_ = new MarkerManager(this);
@@ -473,8 +473,8 @@ class WorkspaceSvg extends Workspace {
     /**
      * Map from function names to callbacks, for deciding what to do when a
      * custom toolbox category is opened.
-     * @type {!Object<string, ?function(!WorkspaceSvg):
-     *     !toolbox.FlyoutDefinition>}
+     * @type {!Object<string, ?function(!Blockly.WorkspaceSvg):
+     *     !Blockly.utils.toolbox.FlyoutDefinition>}
      * @private
      */
     this.toolboxCategoryCallbacks_ = Object.create(null);
@@ -482,7 +482,7 @@ class WorkspaceSvg extends Workspace {
     /**
      * Map from function names to callbacks, for deciding what to do when a
      * button is clicked.
-     * @type {!Object<string, ?function(!FlyoutButton)>}
+     * @type {!Object<string, ?function(!Blockly.FlyoutButton)>}
      * @private
      */
     this.flyoutButtonCallbacks_ = Object.create(null);
@@ -508,7 +508,7 @@ class WorkspaceSvg extends Workspace {
 
     /**
      * Object in charge of storing and updating the workspace theme.
-     * @type {!ThemeManager}
+     * @type {!Blockly.ThemeManager}
      * @protected
      */
     this.themeManager_ = this.options.parentWorkspace ?
@@ -518,7 +518,7 @@ class WorkspaceSvg extends Workspace {
 
     /**
      * The block renderer used for rendering blocks on this workspace.
-     * @type {!Renderer}
+     * @type {!Blockly.blockRendering.Renderer}
      * @private
      */
     this.renderer_ = blockRendering.init(
@@ -540,7 +540,7 @@ class WorkspaceSvg extends Workspace {
 
     /**
      * The list of top-level bounded elements on the workspace.
-     * @type {!Array<!IBoundedElement>}
+     * @type {!Array<!Blockly.IBoundedElement>}
      * @private
      */
     this.topBoundedElements_ = [];
@@ -559,7 +559,7 @@ class WorkspaceSvg extends Workspace {
     /**
      * The cached size of the parent svg element.
      * Used to compute svg metrics.
-     * @type {!Size}
+     * @type {!Blockly.utils.Size}
      * @private
      */
     this.cachedParentSvgSize_ = new Size(0, 0);
@@ -567,7 +567,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Get the marker manager for this workspace.
-   * @return {!MarkerManager} The marker manager.
+   * @return {!Blockly.MarkerManager} The marker manager.
    */
   getMarkerManager() {
     return this.markerManager_;
@@ -575,7 +575,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Gets the metrics manager for this workspace.
-   * @return {!IMetricsManager} The metrics manager.
+   * @return {!Blockly.IMetricsManager} The metrics manager.
    * @public
    */
   getMetricsManager() {
@@ -584,7 +584,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Sets the metrics manager for the workspace.
-   * @param {!IMetricsManager} metricsManager The metrics manager.
+   * @param {!Blockly.IMetricsManager} metricsManager The metrics manager.
    * @package
    */
   setMetricsManager(metricsManager) {
@@ -595,7 +595,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Gets the component manager for this workspace.
-   * @return {!ComponentManager} The component manager.
+   * @return {!Blockly.ComponentManager} The component manager.
    * @public
    */
   getComponentManager() {
@@ -625,7 +625,7 @@ class WorkspaceSvg extends Workspace {
   /**
    * Get the marker with the given ID.
    * @param {string} id The ID of the marker.
-   * @return {?Marker} The marker with the given ID or null if no marker
+   * @return {?Blockly.Marker} The marker with the given ID or null if no marker
    *     with the given ID exists.
    * @package
    */
@@ -638,7 +638,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * The cursor for this workspace.
-   * @return {?Cursor} The cursor for the workspace.
+   * @return {?Blockly.Cursor} The cursor for the workspace.
    */
   getCursor() {
     if (this.markerManager_) {
@@ -649,7 +649,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Get the block renderer attached to this workspace.
-   * @return {!Renderer} The renderer attached to this
+   * @return {!Blockly.blockRendering.Renderer} The renderer attached to this
    *     workspace.
    */
   getRenderer() {
@@ -658,7 +658,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Get the theme manager for this workspace.
-   * @return {!ThemeManager} The theme manager for this workspace.
+   * @return {!Blockly.ThemeManager} The theme manager for this workspace.
    * @package
    */
   getThemeManager() {
@@ -667,7 +667,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Get the workspace theme object.
-   * @return {!Theme} The workspace theme object.
+   * @return {!Blockly.Theme} The workspace theme object.
    */
   getTheme() {
     return this.themeManager_.getTheme();
@@ -676,11 +676,11 @@ class WorkspaceSvg extends Workspace {
   /**
    * Set the workspace theme object.
    * If no theme is passed, default to the `Classic` theme.
-   * @param {Theme} theme The workspace theme object.
+   * @param {Blockly.Theme} theme The workspace theme object.
    */
   setTheme(theme) {
     if (!theme) {
-      theme = /** @type {!Theme} */ (Classic);
+      theme = /** @type {!Blockly.Theme} */ (Blockly.Themes.Classic);
     }
     this.themeManager_.setTheme(theme);
   }
@@ -717,7 +717,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Updates all the blocks with new style.
-   * @param {!Array<!Block>} blocks List of blocks to update the style
+   * @param {!Array<!Blockly.Block>} blocks List of blocks to update the style
    *     on.
    * @private
    */
@@ -772,7 +772,7 @@ class WorkspaceSvg extends Workspace {
    * scales that after canvas SVG element, if it's a descendant.
    * The origin (0,0) is the top-left corner of the Blockly SVG.
    * @param {!SVGElement} element SVG element to find the coordinates of.
-   * @return {!Coordinate} Object with .x and .y properties.
+   * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
    * @package
    */
   getSvgXY(element) {
@@ -800,7 +800,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Gets the size of the workspace's parent SVG element.
-   * @return {!Size} The cached width and height of the workspace's
+   * @return {!Blockly.utils.Size} The cached width and height of the workspace's
    *     parent SVG element.
    * @package
    */
@@ -814,7 +814,7 @@ class WorkspaceSvg extends Workspace {
    * origin in pixels.
    * The workspace origin is where a block would render at position (0, 0).
    * It is not the upper left corner of the workspace SVG.
-   * @return {!Coordinate} Offset in pixels.
+   * @return {!Blockly.utils.Coordinate} Offset in pixels.
    * @package
    */
   getOriginOffsetInPixels() {
@@ -857,7 +857,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Save resize handler data so we can delete it later in dispose.
-   * @param {!browserEvents.Data} handler Data that can be passed to
+   * @param {!Blockly.browserEvents.Data} handler Data that can be passed to
    *     eventHandling.unbind.
    */
   setResizeHandlerWrapper(handler) {
@@ -1035,7 +1035,7 @@ class WorkspaceSvg extends Workspace {
    *     type-specific functions for this block.
    * @param {string=} opt_id Optional ID.  Use this ID if provided, otherwise
    *     create a new ID.
-   * @return {!BlockSvg} The created block.
+   * @return {!Blockly.BlockSvg} The created block.
    * @override
    */
   newBlock(prototypeName, opt_id) {
@@ -1051,7 +1051,7 @@ class WorkspaceSvg extends Workspace {
     if (!Trashcan) {
       throw Error('Missing require for Blockly.Trashcan');
     }
-    /** @type {Trashcan} */
+    /** @type {Blockly.Trashcan} */
     this.trashcan = new Trashcan(this);
     const svgTrashcan = this.trashcan.createDom();
     this.svgGroup_.insertBefore(svgTrashcan, this.svgBlockCanvas_);
@@ -1066,7 +1066,7 @@ class WorkspaceSvg extends Workspace {
     if (!ZoomControls) {
       throw Error('Missing require for Blockly.ZoomControls');
     }
-    /** @type {ZoomControls} */
+    /** @type {Blockly.ZoomControls} */
     this.zoomControls_ = new ZoomControls(this);
     const svgZoomControls = this.zoomControls_.createDom();
     this.svgGroup_.appendChild(svgZoomControls);
@@ -1075,15 +1075,15 @@ class WorkspaceSvg extends Workspace {
   /**
    * Add a flyout element in an element with the given tag name.
    * @param {string|
-   * !Svg<!SVGSVGElement>|
-   * !Svg<!SVGGElement>} tagName What type of tag the
+   * !Blockly.utils.Svg<!SVGSVGElement>|
+   * !Blockly.utils.Svg<!SVGGElement>} tagName What type of tag the
    *     flyout belongs in.
    * @return {!Element} The element containing the flyout DOM.
    * @package
    */
   addFlyout(tagName) {
     const workspaceOptions = new Options(
-        /** @type {!BlocklyOptions} */
+        /** @type {!Blockly.BlocklyOptions} */
         ({
           'parentWorkspace': this,
           'rtl': this.RTL,
@@ -1120,7 +1120,7 @@ class WorkspaceSvg extends Workspace {
    * configuration.  It will be null if there is no flyout.
    * @param {boolean=} opt_own Whether to only return the workspace's own
    *     flyout.
-   * @return {?IFlyout} The flyout on this workspace.
+   * @return {?Blockly.IFlyout} The flyout on this workspace.
    * @package
    */
   getFlyout(opt_own) {
@@ -1135,7 +1135,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Getter for the toolbox associated with this workspace, if one exists.
-   * @return {?IToolbox} The toolbox on this workspace.
+   * @return {?Blockly.IToolbox} The toolbox on this workspace.
    * @package
    */
   getToolbox() {
@@ -1389,7 +1389,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Gets the drag surface blocks are moved to when a drag is started.
-   * @return {?BlockDragSurfaceSvg} This workspace's block drag surface,
+   * @return {?Blockly.BlockDragSurfaceSvg} This workspace's block drag surface,
    *     if one is in use.
    * @package
    */
@@ -1509,7 +1509,7 @@ class WorkspaceSvg extends Workspace {
    * should be done before calling this method.
    * @param {!Object|!Element|!DocumentFragment} state The representation of the
    *     thing to paste.
-   * @return {!ICopyable|null} The pasted thing, or null if
+   * @return {!Blockly.ICopyable|null} The pasted thing, or null if
    *     the paste was not successful.
    */
   paste(state) {
@@ -1546,9 +1546,9 @@ class WorkspaceSvg extends Workspace {
   /**
    * Paste the provided block onto the workspace.
    * @param {?Element} xmlBlock XML block element.
-   * @param {?blocks.State} jsonBlock JSON block
+   * @param {?Blockly.serialization.blocks.State} jsonBlock JSON block
    *     representation.
-   * @return {!BlockSvg} The pasted block.
+   * @return {!Blockly.BlockSvg} The pasted block.
    * @private
    */
   pasteBlock_(xmlBlock, jsonBlock) {
@@ -1558,14 +1558,14 @@ class WorkspaceSvg extends Workspace {
       let blockX = 0;
       let blockY = 0;
       if (xmlBlock) {
-        block = /** @type {!BlockSvg} */ (Xml.domToBlock(xmlBlock, this));
+        block = /** @type {!Blockly.BlockSvg} */ (Xml.domToBlock(xmlBlockly.Block, this));
         blockX = parseInt(xmlBlock.getAttribute('x'), 10);
         if (this.RTL) {
           blockX = -blockX;
         }
         blockY = parseInt(xmlBlock.getAttribute('y'), 10);
       } else if (jsonBlock) {
-        block = /** @type {!BlockSvg} */ (blocks.append(jsonBlock, this));
+        block = /** @type {!Blockly.BlockSvg} */ (blocks.append(jsonBlockly.Block, this));
         blockX = jsonBlock['x'] || 10;
         if (this.RTL) {
           blockX = this.getWidth() - blockX;
@@ -1594,7 +1594,7 @@ class WorkspaceSvg extends Workspace {
             const connections = block.getConnections_(false);
             for (let i = 0, connection; (connection = connections[i]); i++) {
               const neighbour =
-                  /** @type {!RenderedConnection} */ (connection)
+                  /** @type {!Blockly.RenderedConnection} */ (connection)
                       .closest(
                           config.snapRadius, new Coordinate(blockX, blockY));
               if (neighbour.connection) {
@@ -1627,7 +1627,7 @@ class WorkspaceSvg extends Workspace {
   /**
    * Paste the provided comment onto the workspace.
    * @param {!Element} xmlComment XML workspace comment element.
-   * @return {!WorkspaceCommentSvg} The pasted workspace comment.
+   * @return {!Blockly.WorkspaceCommentSvg} The pasted workspace comment.
    * @private
    * @suppress {checkTypes} Suppress checks while workspace comments are not
    *     bundled in.
@@ -1703,7 +1703,7 @@ class WorkspaceSvg extends Workspace {
    * on their type. This will default to '' which is a specific type.
    * @param {?string=} opt_id The unique ID of the variable. This will default
    *     to a UUID.
-   * @return {!VariableModel} The newly created variable.
+   * @return {!Blockly.VariableModel} The newly created variable.
    */
   createVariable(name, opt_type, opt_id) {
     const newVar = super.createVariable(name, opt_type, opt_id);
@@ -1744,7 +1744,7 @@ class WorkspaceSvg extends Workspace {
   /**
    * Returns the drag target the mouse event is over.
    * @param {!Event} e Mouse move event.
-   * @return {?IDragTarget} Null if not over a drag target, or the drag
+   * @return {?Blockly.IDragTarget} Null if not over a drag target, or the drag
    *     target the event is over.
    */
   getDragTarget(e) {
@@ -1771,7 +1771,7 @@ class WorkspaceSvg extends Workspace {
   /**
    * Start tracking a drag of an object on this workspace.
    * @param {!Event} e Mouse down event.
-   * @param {!Coordinate} xy Starting location of object.
+   * @param {!Blockly.utils.Coordinate} xy Starting location of object.
    */
   startDrag(e, xy) {
     // Record the starting offset between the bubble's location and the mouse.
@@ -1786,7 +1786,7 @@ class WorkspaceSvg extends Workspace {
   /**
    * Track a drag of an object on this workspace.
    * @param {!Event} e Mouse move event.
-   * @return {!Coordinate} New location of object.
+   * @return {!Blockly.utils.Coordinate} New location of object.
    */
   moveDrag(e) {
     const point = browserEvents.mouseToSvg(
@@ -1795,7 +1795,7 @@ class WorkspaceSvg extends Workspace {
     point.x /= this.scale;
     point.y /= this.scale;
     return Coordinate.sum(
-        /** @type {!Coordinate} */ (this.dragDeltaXY_), point);
+        /** @type {!Blockly.utils.Coordinate} */ (this.dragDeltaXY_), point);
   }
 
   /**
@@ -1916,7 +1916,7 @@ class WorkspaceSvg extends Workspace {
    * Calculate the bounding box for the blocks on the workspace.
    * Coordinate system: workspace coordinates.
    *
-   * @return {!Rect} Contains the position and size of the
+   * @return {!Blockly.utils.Rect} Contains the position and size of the
    *   bounding box containing the blocks on the workspace.
    */
   getBlocksBoundingBox() {
@@ -1997,7 +1997,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Modify the block tree on the existing toolbox.
-   * @param {?toolbox.ToolboxDefinition} toolboxDef
+   * @param {?Blockly.utils.toolbox.ToolboxDefinition} toolboxDef
    *    DOM tree of toolbox contents, string of toolbox contents, or JSON
    *    representing toolbox definition.
    */
@@ -2416,28 +2416,28 @@ class WorkspaceSvg extends Workspace {
   /**
    * Find the block on this workspace with the specified ID.
    * @param {string} id ID of block to find.
-   * @return {?BlockSvg} The sought after block, or null if not found.
+   * @return {?Blockly.BlockSvg} The sought after block, or null if not found.
    * @override
    */
   getBlockById(id) {
-    return /** @type {BlockSvg} */ (super.getBlockById(id));
+    return /** @type {Blockly.BlockSvg} */ (super.getBlockById(id));
   }
 
   /**
    * Find all blocks in workspace.  Blocks are optionally sorted
    * by position; top to bottom (with slight LTR or RTL bias).
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!BlockSvg>} Array of blocks.
+   * @return {!Array<!Blockly.BlockSvg>} Array of blocks.
    */
   getAllBlocks(ordered) {
-    return /** @type {!Array<!BlockSvg>} */ (super.getAllBlocks(ordered));
+    return /** @type {!Array<!Blockly.BlockSvg>} */ (super.getAllBlocks(ordered));
   }
 
   /**
    * Finds the top-level blocks and returns them.  Blocks are optionally sorted
    * by position; top to bottom (with slight LTR or RTL bias).
    * @param {boolean} ordered Sort the list if true.
-   * @return {!Array<!BlockSvg>} The top-level block objects.
+   * @return {!Array<!Blockly.BlockSvg>} The top-level block objects.
    * @override
    */
   getTopBlocks(ordered) {
@@ -2446,45 +2446,45 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Adds a block to the list of top blocks.
-   * @param {!Block} block Block to add.
+   * @param {!Blockly.Block} block Block to add.
    */
   addTopBlock(block) {
-    this.addTopBoundedElement(/** @type {!BlockSvg} */ (block));
+    this.addTopBoundedElement(/** @type {!Blockly.BlockSvg} */ (block));
     super.addTopBlock(block);
   }
 
   /**
    * Removes a block from the list of top blocks.
-   * @param {!Block} block Block to remove.
+   * @param {!Blockly.Block} block Block to remove.
    */
   removeTopBlock(block) {
-    this.removeTopBoundedElement(/** @type {!BlockSvg} */ (block));
+    this.removeTopBoundedElement(/** @type {!Blockly.BlockSvg} */ (block));
     super.removeTopBlock(block);
   }
 
   /**
    * Adds a comment to the list of top comments.
-   * @param {!WorkspaceComment} comment comment to add.
+   * @param {!Blockly.WorkspaceComment} comment comment to add.
    */
   addTopComment(comment) {
     this.addTopBoundedElement(
-        /** @type {!WorkspaceCommentSvg} */ (comment));
+        /** @type {!Blockly.WorkspaceCommentSvg} */ (comment));
     super.addTopComment(comment);
   }
 
   /**
    * Removes a comment from the list of top comments.
-   * @param {!WorkspaceComment} comment comment to remove.
+   * @param {!Blockly.WorkspaceComment} comment comment to remove.
    */
   removeTopComment(comment) {
     this.removeTopBoundedElement(
-        /** @type {!WorkspaceCommentSvg} */ (comment));
+        /** @type {!WorkspaceCommentBlockly.utils.Svg} */ (comment));
     super.removeTopComment(comment);
   }
 
   /**
    * Adds a bounded element to the list of top bounded elements.
-   * @param {!IBoundedElement} element Bounded element to add.
+   * @param {!Blockly.IBoundedElement} element Bounded element to add.
    */
   addTopBoundedElement(element) {
     this.topBoundedElements_.push(element);
@@ -2492,7 +2492,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Removes a bounded element from the list of top bounded elements.
-   * @param {!IBoundedElement} element Bounded element to remove.
+   * @param {!Blockly.IBoundedElement} element Bounded element to remove.
    */
   removeTopBoundedElement(element) {
     arrayUtils.removeElem(this.topBoundedElements_, element);
@@ -2500,7 +2500,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Finds the top-level bounded elements and returns them.
-   * @return {!Array<!IBoundedElement>} The top-level bounded elements.
+   * @return {!Array<!Blockly.IBoundedElement>} The top-level bounded elements.
    */
   getTopBoundedElements() {
     return [].concat(this.topBoundedElements_);
@@ -2541,7 +2541,7 @@ class WorkspaceSvg extends Workspace {
    * should be matched by a call to
    * registerButtonCallback("CREATE_VARIABLE", yourCallbackFunction).
    * @param {string} key The name to use to look up this function.
-   * @param {function(!FlyoutButton)} func The function to call when the
+   * @param {function(!Blockly.FlyoutButton)} func The function to call when the
    *     given button is clicked.
    */
   registerButtonCallback(key, func) {
@@ -2555,7 +2555,7 @@ class WorkspaceSvg extends Workspace {
    * Get the callback function associated with a given key, for clicks on
    * buttons and labels in the flyout.
    * @param {string} key The name to use to look up the function.
-   * @return {?function(!FlyoutButton)} The function corresponding to the
+   * @return {?function(!Blockly.FlyoutButton)} The function corresponding to the
    *     given key for this workspace; null if no callback is registered.
    */
   getButtonCallback(key) {
@@ -2576,7 +2576,7 @@ class WorkspaceSvg extends Workspace {
    * custom toolbox categories in this workspace.  See the variable and
    * procedure categories as an example.
    * @param {string} key The name to use to look up this function.
-   * @param {function(!WorkspaceSvg): !toolbox.FlyoutDefinition} func The
+   * @param {function(!Blockly.WorkspaceSvg): !Blockly.utils.toolbox.FlyoutDefinition} func The
    *     function to call when the given toolbox category is opened.
    */
   registerToolboxCategoryCallback(key, func) {
@@ -2590,7 +2590,7 @@ class WorkspaceSvg extends Workspace {
    * Get the callback function associated with a given key, for populating
    * custom toolbox categories in this workspace.
    * @param {string} key The name to use to look up the function.
-   * @return {?function(!WorkspaceSvg): !toolbox.FlyoutDefinition} The function
+   * @return {?function(!Blockly.WorkspaceSvg): !Blockly.utils.toolbox.FlyoutDefinition} The function
    *     corresponding to the given key for this workspace, or null if no
    * function is registered.
    */
@@ -2610,7 +2610,7 @@ class WorkspaceSvg extends Workspace {
    * Look up the gesture that is tracking this touch stream on this workspace.
    * May create a new gesture.
    * @param {!Event} e Mouse event or touch event.
-   * @return {?TouchGesture} The gesture that is tracking this touch
+   * @return {?Blockly.TouchGesture} The gesture that is tracking this touch
    *     stream, or null if no valid gesture exists.
    * @package
    */
@@ -2661,7 +2661,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Get the audio manager for this workspace.
-   * @return {!WorkspaceAudio} The audio manager for this workspace.
+   * @return {!Blockly.WorkspaceAudio} The audio manager for this workspace.
    */
   getAudioManager() {
     return this.audioManager_;
@@ -2669,7 +2669,7 @@ class WorkspaceSvg extends Workspace {
 
   /**
    * Get the grid object for this workspace, or null if there is none.
-   * @return {?Grid} The grid object for this workspace.
+   * @return {?Blockly.Grid} The grid object for this workspace.
    * @package
    */
   getGrid() {
@@ -2697,7 +2697,7 @@ class WorkspaceSvg extends Workspace {
    * @param {!Object} xyRatio Contains an x and/or y property which is a float
    *     between 0 and 1 specifying the degree of scrolling.
    * @private
-   * @this {WorkspaceSvg}
+   * @this {Blockly.WorkspaceSvg}
    */
   static setTopLevelWorkspaceMetrics_(xyRatio) {
     const metrics = this.getMetrics();
@@ -2724,7 +2724,7 @@ class WorkspaceSvg extends Workspace {
 /**
  * Size the workspace when the contents change.  This also updates
  * scrollbars accordingly.
- * @param {!WorkspaceSvg} workspace The workspace to resize.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace to resize.
  * @alias Blockly.WorkspaceSvg.resizeSvgContents
  */
 const resizeSvgContents = function(workspace) {

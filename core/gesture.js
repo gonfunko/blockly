@@ -61,7 +61,7 @@ goog.require('Blockly.Events.Click');
 class Gesture {
   /**
    * @param {!Event} e The event that kicked off this gesture.
-   * @param {!WorkspaceSvg} creatorWorkspace The workspace that created
+   * @param {!Blockly.WorkspaceSvg} creatorWorkspace The workspace that created
    *     this gesture and has a reference to it.
    */
   constructor(e, creatorWorkspace) {
@@ -69,7 +69,7 @@ class Gesture {
      * The position of the mouse when the gesture started.  Units are CSS
      * pixels, with (0, 0) at the top left of the browser window (mouseEvent
      * clientX/Y).
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @private
      */
     this.mouseDownXY_ = null;
@@ -77,7 +77,7 @@ class Gesture {
     /**
      * How far the mouse has moved during this drag, in pixel units.
      * (0, 0) is at this.mouseDownXY_.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @private
      */
     this.currentDragDeltaXY_ = new Coordinate(0, 0);
@@ -85,7 +85,7 @@ class Gesture {
     /**
      * The bubble that the gesture started on, or null if it did not start on a
      * bubble.
-     * @type {IBubble}
+     * @type {Blockly.IBubble}
      * @private
      */
     this.startBubble_ = null;
@@ -93,7 +93,7 @@ class Gesture {
     /**
      * The field that the gesture started on, or null if it did not start on a
      * field.
-     * @type {Field}
+     * @type {Blockly.Field}
      * @private
      */
     this.startField_ = null;
@@ -101,7 +101,7 @@ class Gesture {
     /**
      * The block that the gesture started on, or null if it did not start on a
      * block.
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @private
      */
     this.startBlock_ = null;
@@ -111,7 +111,7 @@ class Gesture {
      * shadow block, this is the first non-shadow parent of the block.  If the
      * gesture started in the flyout, this is the root block of the block group
      * that was clicked or dragged.
-     * @type {BlockSvg}
+     * @type {Blockly.BlockSvg}
      * @private
      */
     this.targetBlock_ = null;
@@ -120,7 +120,7 @@ class Gesture {
      * The workspace that the gesture started on.  There may be multiple
      * workspaces on a page; this is more accurate than using
      * Blockly.common.getMainWorkspace().
-     * @type {WorkspaceSvg}
+     * @type {Blockly.WorkspaceSvg}
      * @protected
      */
     this.startWorkspace_ = null;
@@ -130,7 +130,7 @@ class Gesture {
      * reference to the gesture, which will need to be cleared at deletion. This
      * may be different from the start workspace.  For instance, a flyout is a
      * workspace, but its parent workspace manages gestures for it.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.creatorWorkspace_ = creatorWorkspace;
@@ -175,7 +175,7 @@ class Gesture {
     /**
      * A handle to use to unbind a mouse move listener at the end of a drag.
      * Opaque data returned from Blockly.bindEventWithChecks_.
-     * @type {?browserEvents.Data}
+     * @type {?Blockly.browserEvents.Data}
      * @protected
      */
     this.onMoveWrapper_ = null;
@@ -183,21 +183,21 @@ class Gesture {
     /**
      * A handle to use to unbind a mouse up listener at the end of a drag.
      * Opaque data returned from Blockly.bindEventWithChecks_.
-     * @type {?browserEvents.Data}
+     * @type {?Blockly.browserEvents.Data}
      * @protected
      */
     this.onUpWrapper_ = null;
 
     /**
      * The object tracking a bubble drag, or null if none is in progress.
-     * @type {BubbleDragger}
+     * @type {Blockly.BubbleDragger}
      * @private
      */
     this.bubbleDragger_ = null;
 
     /**
      * The object tracking a block drag, or null if none is in progress.
-     * @type {?IBlockDragger}
+     * @type {?Blockly.IBlockDragger}
      * @private
      */
     this.blockDragger_ = null;
@@ -205,14 +205,14 @@ class Gesture {
     /**
      * The object tracking a workspace or flyout workspace drag, or null if none
      * is in progress.
-     * @type {WorkspaceDragger}
+     * @type {Blockly.WorkspaceDragger}
      * @private
      */
     this.workspaceDragger_ = null;
 
     /**
      * The flyout a gesture started in, if any.
-     * @type {IFlyout}
+     * @type {Blockly.IFlyout}
      * @private
      */
     this.flyout_ = null;
@@ -293,7 +293,7 @@ class Gesture {
 
   /**
    * DO MATH to set currentDragDeltaXY_ based on the most recent mouse position.
-   * @param {!Coordinate} currentXY The most recent mouse/pointer
+   * @param {!Blockly.utils.Coordinate} currentXY The most recent mouse/pointer
    *     position, in pixel units, with (0, 0) at the window's top left corner.
    * @return {boolean} True if the drag just exceeded the drag radius for the
    *     first time.
@@ -302,7 +302,7 @@ class Gesture {
   updateDragDelta_(currentXY) {
     this.currentDragDeltaXY_ = Coordinate.difference(
         currentXY,
-        /** @type {!Coordinate} */ (this.mouseDownXY_));
+        /** @type {!Blockly.utils.Coordinate} */ (this.mouseDownXY_));
 
     if (!this.hasExceededDragRadius_) {
       const currentDragDelta = Coordinate.magnitude(this.currentDragDeltaXY_);
@@ -418,7 +418,7 @@ class Gesture {
     }
 
     this.workspaceDragger_ = new WorkspaceDragger(
-        /** @type {!WorkspaceSvg} */ (this.startWorkspace_));
+        /** @type {!Blockly.WorkspaceSvg} */ (this.startWorkspace_));
 
     this.isDraggingWorkspace_ = true;
     this.workspaceDragger_.startDrag();
@@ -460,8 +460,8 @@ class Gesture {
         registry.Type.BLOCK_DRAGGER, this.creatorWorkspace_.options, true);
 
     this.blockDragger_ = new BlockDraggerClass(
-        /** @type {!BlockSvg} */ (this.targetBlock_),
-        /** @type {!WorkspaceSvg} */ (this.startWorkspace_));
+        /** @type {!Blockly.BlockSvg} */ (this.targetBlock_),
+        /** @type {!Blockly.WorkspaceSvg} */ (this.startWorkspace_));
     this.blockDragger_.startDrag(this.currentDragDeltaXY_, this.healStack_);
     this.blockDragger_.drag(this.mostRecentEvent_, this.currentDragDeltaXY_);
   }
@@ -473,8 +473,8 @@ class Gesture {
    */
   startDraggingBubble_() {
     this.bubbleDragger_ = new BubbleDragger(
-        /** @type {!IBubble} */ (this.startBubble_),
-        /** @type {!WorkspaceSvg} */ (this.startWorkspace_));
+        /** @type {!Blockly.IBubble} */ (this.startBubble_),
+        /** @type {!Blockly.WorkspaceSvg} */ (this.startWorkspace_));
     this.bubbleDragger_.startBubbleDrag();
     this.bubbleDragger_.dragBubble(
         this.mostRecentEvent_, this.currentDragDeltaXY_);
@@ -659,7 +659,7 @@ class Gesture {
   /**
    * Handle a mousedown/touchstart event on a workspace.
    * @param {!Event} e A mouse down or touch start event.
-   * @param {!WorkspaceSvg} ws The workspace the event hit.
+   * @param {!Blockly.WorkspaceSvg} ws The workspace the event hit.
    * @package
    */
   handleWsStart(e, ws) {
@@ -675,7 +675,7 @@ class Gesture {
 
   /**
    * Fires a workspace click event.
-   * @param {!WorkspaceSvg} ws The workspace that a user clicks on.
+   * @param {!Blockly.WorkspaceSvg} ws The workspace that a user clicks on.
    * @private
    */
   fireWorkspaceClick_(ws) {
@@ -686,7 +686,7 @@ class Gesture {
   /**
    * Handle a mousedown/touchstart event on a flyout.
    * @param {!Event} e A mouse down or touch start event.
-   * @param {!IFlyout} flyout The flyout the event hit.
+   * @param {!Blockly.IFlyout} flyout The flyout the event hit.
    * @package
    */
   handleFlyoutStart(e, flyout) {
@@ -702,7 +702,7 @@ class Gesture {
   /**
    * Handle a mousedown/touchstart event on a block.
    * @param {!Event} e A mouse down or touch start event.
-   * @param {!BlockSvg} block The block the event hit.
+   * @param {!Blockly.BlockSvg} block The block the event hit.
    * @package
    */
   handleBlockStart(e, block) {
@@ -718,7 +718,7 @@ class Gesture {
   /**
    * Handle a mousedown/touchstart event on a bubble.
    * @param {!Event} e A mouse down or touch start event.
-   * @param {!IBubble} bubble The bubble the event hit.
+   * @param {!Blockly.IBubble} bubble The bubble the event hit.
    * @package
    */
   handleBubbleStart(e, bubble) {
@@ -813,7 +813,7 @@ class Gesture {
 
   /**
    * Record the field that a gesture started on.
-   * @param {Field} field The field the gesture started on.
+   * @param {Blockly.Field} field The field the gesture started on.
    * @package
    */
   setStartField(field) {
@@ -829,7 +829,7 @@ class Gesture {
 
   /**
    * Record the bubble that a gesture started on
-   * @param {IBubble} bubble The bubble the gesture started on.
+   * @param {Blockly.IBubble} bubble The bubble the gesture started on.
    * @package
    */
   setStartBubble(bubble) {
@@ -841,7 +841,7 @@ class Gesture {
   /**
    * Record the block that a gesture started on, and set the target block
    * appropriately.
-   * @param {BlockSvg} block The block the gesture started on.
+   * @param {Blockly.BlockSvg} block The block the gesture started on.
    * @package
    */
   setStartBlock(block) {
@@ -860,7 +860,7 @@ class Gesture {
    * Record the block that a gesture targets, meaning the block that will be
    * dragged if this turns into a drag.  If this block is a shadow, that will be
    * its first non-shadow parent.
-   * @param {BlockSvg} block The block the gesture targets.
+   * @param {Blockly.BlockSvg} block The block the gesture targets.
    * @private
    */
   setTargetBlock_(block) {
@@ -873,7 +873,7 @@ class Gesture {
 
   /**
    * Record the workspace that a gesture started on.
-   * @param {WorkspaceSvg} ws The workspace the gesture started on.
+   * @param {Blockly.WorkspaceSvg} ws The workspace the gesture started on.
    * @private
    */
   setStartWorkspace_(ws) {
@@ -884,7 +884,7 @@ class Gesture {
 
   /**
    * Record the flyout that a gesture started on.
-   * @param {IFlyout} flyout The flyout the gesture started on.
+   * @param {Blockly.IFlyout} flyout The flyout the gesture started on.
    * @private
    */
   setStartFlyout_(flyout) {
@@ -977,7 +977,7 @@ class Gesture {
   /**
    * Get a list of the insertion markers that currently exist.  Block drags have
    * 0, 1, or 2 insertion markers.
-   * @return {!Array<!BlockSvg>} A possibly empty list of insertion
+   * @return {!Array<!Blockly.BlockSvg>} A possibly empty list of insertion
    *     marker blocks.
    * @package
    */
@@ -991,7 +991,7 @@ class Gesture {
   /**
    * Gets the current dragger if an item is being dragged. Null if nothing is
    * being dragged.
-   * @return {!WorkspaceDragger|!BubbleDragger|!IBlockDragger|null}
+   * @return {!Blockly.WorkspaceDragger|!Blockly.BubbleDragger|!Blockly.IBlockDragger|null}
    *    The dragger that is currently in use or null if no drag is in progress.
    */
   getCurrentDragger() {
@@ -1015,7 +1015,7 @@ class Gesture {
       // Not actually necessarily a WorkspaceSvg, but it doesn't matter b/c
       // we're just checking if the property exists. Theoretically we would
       // want to use instanceof, but that causes a circular dependency.
-      if (/** @type {!WorkspaceSvg} */ (workspace).currentGesture_) {
+      if (/** @type {!Blockly.WorkspaceSvg} */ (workspace).currentGesture_) {
         return true;
       }
     }

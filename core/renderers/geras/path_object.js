@@ -30,20 +30,21 @@ const {Theme} = goog.requireType('Blockly.Theme');
  * An object that handles creating and setting each of the SVG elements
  * used by the renderer.
  * @alias Blockly.geras.PathObject
+ * @extends {Blockly.blockRendering.PathObject}
  */
 class PathObject extends BasePathObject {
   /**
    * @param {!SVGElement} root The root SVG element.
-   * @param {!Theme.BlockStyle} style The style object to use for
+   * @param {!Blockly.Theme.BlockStyle} style The style object to use for
    *     colouring.
-   * @param {!ConstantProvider} constants The renderer's constants.
+   * @param {!Blockly.geras.ConstantProvider} constants The renderer's constants.
    * @package
    */
   constructor(root, style, constants) {
     super(root, style, constants);
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.geras.ConstantProvider}
      */
     this.constants = constants;
 

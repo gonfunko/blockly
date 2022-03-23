@@ -48,7 +48,7 @@ const categoryStyles = {
 /**
  * Classic theme.
  * Contains multi-coloured border to create shadow effect.
- * @type {Theme}
+ * @type {Blockly.Theme}
  * @alias Blockly.Themes.Classic
  */
 const Classic = new Theme('classic', defaultBlockStyles, categoryStyles);

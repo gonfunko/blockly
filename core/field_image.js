@@ -27,19 +27,19 @@ const {Svg} = goog.require('Blockly.utils.Svg');
 
 /**
  * Class for an image on a block.
- * @extends {Field}
+ * @extends {Blockly.Field}
  * @alias Blockly.FieldImage
  */
 class FieldImage extends Field {
   /**
-   * @param {string|!Sentinel} src The URL of the image.
+   * @param {string|!Blockly.utils.Sentinel} src The URL of the image.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
    *     subclasses that want to handle configuration and setting the field
    *     value after their own constructors have run).
    * @param {!(string|number)} width Width of the image.
    * @param {!(string|number)} height Height of the image.
    * @param {string=} opt_alt Optional alt text for when block is collapsed.
-   * @param {function(!FieldImage)=} opt_onClick Optional function to be
+   * @param {function(!Blockly.FieldImage)=} opt_onClick Optional function to be
    *     called when the image is clicked. If opt_onClick is defined, opt_alt
    *     must also be defined.
    * @param {boolean=} opt_flipRtl Whether to flip the icon in RTL.
@@ -71,7 +71,7 @@ class FieldImage extends Field {
 
     /**
      * The size of the area rendered by the field.
-     * @type {Size}
+     * @type {Blockly.utils.Size}
      * @protected
      * @override
      */
@@ -86,7 +86,7 @@ class FieldImage extends Field {
 
     /**
      * The function to be called when this field is clicked.
-     * @type {?function(!FieldImage)}
+     * @type {?function(!Blockly.FieldImage)}
      * @private
      */
     this.clickHandler_ = null;
@@ -247,7 +247,7 @@ class FieldImage extends Field {
 
   /**
    * Set the function that is called when this image  is clicked.
-   * @param {?function(!FieldImage)} func The function that is called
+   * @param {?function(!Blockly.FieldImage)} func The function that is called
    *    when the image is clicked, or null to remove.
    */
   setOnClickHandler(func) {
@@ -271,7 +271,7 @@ class FieldImage extends Field {
    * dereferencing any string table references.
    * @param {!Object} options A JSON object with options (src, width, height,
    *    alt, and flipRtl).
-   * @return {!FieldImage} The new field instance.
+   * @return {!Blockly.FieldImage} The new field instance.
    * @package
    * @nocollapse
    */

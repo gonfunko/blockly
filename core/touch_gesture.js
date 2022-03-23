@@ -45,13 +45,13 @@ const ZOOM_OUT_MULTIPLIER = 6;
 
 /**
  * Class for one gesture.
- * @extends {Gesture}
+ * @extends {Blockly.Gesture}
  * @alias Blockly.TouchGesture
  */
 class TouchGesture extends Gesture {
   /**
    * @param {!Event} e The event that kicked off this gesture.
-   * @param {!WorkspaceSvg} creatorWorkspace The workspace that created
+   * @param {!Blockly.WorkspaceSvg} creatorWorkspace The workspace that created
    *     this gesture and has a reference to it.
    */
   constructor(e, creatorWorkspace) {
@@ -66,7 +66,7 @@ class TouchGesture extends Gesture {
 
     /**
      * A map of cached points used for tracking multi-touch gestures.
-     * @type {!Object<number|string, Coordinate>}
+     * @type {!Object<number|string, Blockly.utils.Coordinate>}
      * @private
      */
     this.cachedPoints_ = Object.create(null);
@@ -244,9 +244,9 @@ class TouchGesture extends Gesture {
     // If two pointers are down, store info
     if (pointers.length === 2) {
       const point0 =
-          /** @type {!Coordinate} */ (this.cachedPoints_[pointers[0]]);
+          /** @type {!Blockly.utils.Coordinate} */ (this.cachedPoints_[pointers[0]]);
       const point1 =
-          /** @type {!Coordinate} */ (this.cachedPoints_[pointers[1]]);
+          /** @type {!Blockly.utils.Coordinate} */ (this.cachedPoints_[pointers[1]]);
       this.startDistance_ = Coordinate.distance(point0, point1);
       this.isMultiTouch_ = true;
       e.preventDefault();
@@ -280,8 +280,8 @@ class TouchGesture extends Gesture {
   handlePinch_(e) {
     const pointers = Object.keys(this.cachedPoints_);
     // Calculate the distance between the two pointers
-    const point0 = /** @type {!Coordinate} */ (this.cachedPoints_[pointers[0]]);
-    const point1 = /** @type {!Coordinate} */ (this.cachedPoints_[pointers[1]]);
+    const point0 = /** @type {!Blockly.utils.Coordinate} */ (this.cachedPoints_[pointers[0]]);
+    const point1 = /** @type {!Blockly.utils.Coordinate} */ (this.cachedPoints_[pointers[1]]);
     const moveDistance = Coordinate.distance(point0, point1);
     const scale = moveDistance / this.startDistance_;
 
@@ -317,7 +317,7 @@ class TouchGesture extends Gesture {
   /**
    * Helper function returning the current touch point coordinate.
    * @param {!Event} e A touch or pointer event.
-   * @return {?Coordinate} The current touch point coordinate
+   * @return {?Blockly.utils.Coordinate} The current touch point coordinate
    * @package
    */
   getTouchPoint(e) {

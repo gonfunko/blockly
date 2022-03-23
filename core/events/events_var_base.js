@@ -22,12 +22,12 @@ const {VariableModel} = goog.requireType('Blockly.VariableModel');
 
 /**
  * Abstract class for a variable event.
- * @extends {AbstractEvent}
+ * @extends {Blockly.Events.Abstract}
  * @alias Blockly.Events.VarBase
  */
 class VarBase extends AbstractEvent {
   /**
-   * @param {!VariableModel=} opt_variable The variable this event
+   * @param {!Blockly.VariableModel=} opt_variable The variable this event
    *     corresponds to.  Undefined for a blank event.
    */
   constructor(opt_variable) {

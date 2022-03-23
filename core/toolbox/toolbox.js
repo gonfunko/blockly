@@ -62,16 +62,16 @@ goog.require('Blockly.Events.ToolboxItemSelect');
 /**
  * Class for a Toolbox.
  * Creates the toolbox's DOM.
- * @implements {IAutoHideable}
- * @implements {IKeyboardAccessible}
- * @implements {IStyleable}
- * @implements {IToolbox}
- * @extends {DeleteArea}
+ * @implements {Blockly.IAutoHideable}
+ * @implements {Blockly.IKeyboardAccessible}
+ * @implements {Blockly.IStyleable}
+ * @implements {Blockly.IToolbox}
+ * @extends {Blockly.DeleteArea}
  * @alias Blockly.Toolbox
  */
 class Toolbox extends DeleteArea {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace in which to create new
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace in which to create new
    *     blocks.
    */
   constructor(workspace) {
@@ -79,7 +79,7 @@ class Toolbox extends DeleteArea {
 
     /**
      * The workspace this toolbox is on.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @protected
      */
     this.workspace_ = workspace;
@@ -93,7 +93,7 @@ class Toolbox extends DeleteArea {
 
     /**
      * The JSON describing the contents of this toolbox.
-     * @type {!toolbox.ToolboxInfo}
+     * @type {!Blockly.utils.toolbox.ToolboxInfo}
      * @protected
      */
     this.toolboxDef_ = workspace.options.languageTree || {'contents': []};
@@ -127,7 +127,7 @@ class Toolbox extends DeleteArea {
 
     /**
      * The list of items in the toolbox.
-     * @type {!Array<!IToolboxItem>}
+     * @type {!Array<!Blockly.IToolboxItem>}
      * @protected
      */
     this.contents_ = [];
@@ -154,14 +154,14 @@ class Toolbox extends DeleteArea {
 
     /**
      * The flyout for the toolbox.
-     * @type {?IFlyout}
+     * @type {?Blockly.IFlyout}
      * @private
      */
     this.flyout_ = null;
 
     /**
      * A map from toolbox item IDs to toolbox items.
-     * @type {!Object<string, !IToolboxItem>}
+     * @type {!Object<string, !Blockly.IToolboxItem>}
      * @protected
      */
     this.contentMap_ = Object.create(null);
@@ -174,14 +174,14 @@ class Toolbox extends DeleteArea {
 
     /**
      * The currently selected item.
-     * @type {?ISelectableToolboxItem}
+     * @type {?Blockly.ISelectableToolboxItem}
      * @protected
      */
     this.selectedItem_ = null;
 
     /**
      * The previously selected item.
-     * @type {?ISelectableToolboxItem}
+     * @type {?Blockly.ISelectableToolboxItem}
      * @protected
      */
     this.previouslySelectedItem_ = null;
@@ -190,7 +190,7 @@ class Toolbox extends DeleteArea {
      * Array holding info needed to unbind event handlers.
      * Used for disposing.
      * Ex: [[node, name, func], [node, name, func]].
-     * @type {!Array<!browserEvents.Data>}
+     * @type {!Array<!Blockly.browserEvents.Data>}
      * @protected
      */
     this.boundEvents_ = [];
@@ -198,7 +198,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Handles the given keyboard shortcut.
-   * @param {!ShortcutRegistry.KeyboardShortcut} _shortcut The shortcut to be
+   * @param {!Blockly.ShortcutRegistry.KeyboardShortcut} _shortcut The shortcut to be
    *     handled.
    * @return {boolean} True if the shortcut has been handled, false otherwise.
    * @public
@@ -240,7 +240,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Creates the DOM for the toolbox.
-   * @param {!WorkspaceSvg} workspace The workspace this toolbox is on.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace this toolbox is on.
    * @return {!HTMLDivElement} The HTML container for the toolbox.
    * @protected
    */
@@ -320,7 +320,7 @@ class Toolbox extends DeleteArea {
   onClick_(e) {
     if (browserEvents.isRightButton(e) || e.target === this.HtmlDiv) {
       // Close flyout.
-      /** @type {!WorkspaceSvg} */ (common.getMainWorkspace()).hideChaff(false);
+      /** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace()).hideChaff(false);
     } else {
       const targetElement = e.target;
       const itemId = targetElement.getAttribute('id');
@@ -332,7 +332,7 @@ class Toolbox extends DeleteArea {
         }
       }
       // Just close popups.
-      /** @type {!WorkspaceSvg} */ (common.getMainWorkspace()).hideChaff(true);
+      /** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace()).hideChaff(true);
     }
     Touch.clearTouchIdentifier();  // Don't block future drags.
   }
@@ -361,7 +361,7 @@ class Toolbox extends DeleteArea {
       case KeyCodes.SPACE:
         if (this.selectedItem_ && this.selectedItem_.isCollapsible()) {
           const collapsibleItem =
-              /** @type {!ICollapsibleToolboxItem} */ (this.selectedItem_);
+              /** @type {!Blockly.ICollapsibleToolboxItem} */ (this.selectedItem_);
           collapsibleItem.toggleExpanded();
           handled = true;
         }
@@ -381,7 +381,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Creates the flyout based on the toolbox layout.
-   * @return {!IFlyout} The flyout for the toolbox.
+   * @return {!Blockly.IFlyout} The flyout for the toolbox.
    * @throws {Error} If missing a require for `Blockly.HorizontalFlyout`,
    *     `Blockly.VerticalFlyout`, and no flyout plugin is specified.
    * @protected
@@ -390,7 +390,7 @@ class Toolbox extends DeleteArea {
     const workspace = this.workspace_;
     // TODO (#4247): Look into adding a makeFlyout method to Blockly Options.
     const workspaceOptions = new Options(
-        /** @type {!BlocklyOptions} */
+        /** @type {!BlocklyBlockly.Options} */
         ({
           'parentWorkspace': workspace,
           'rtl': workspace.RTL,
@@ -418,7 +418,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Fills the toolbox with new toolbox items and removes any old contents.
-   * @param {!toolbox.ToolboxInfo} toolboxDef Object holding information
+   * @param {!Blockly.utils.toolbox.ToolboxInfo} toolboxDef Object holding information
    *     for creating a toolbox.
    * @package
    */
@@ -439,7 +439,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Adds all the toolbox items to the toolbox.
-   * @param {!Array<!toolbox.ToolboxItemInfo>} toolboxDef Array
+   * @param {!Array<!Blockly.utils.toolbox.ToolboxItemInfo>} toolboxDef Array
    *     holding objects containing information on the contents of the toolbox.
    * @protected
    */
@@ -456,7 +456,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Creates and renders the toolbox item.
-   * @param {!toolbox.ToolboxItemInfo} toolboxItemDef Any information
+   * @param {!Blockly.utils.toolbox.ToolboxItemInfo} toolboxItemDef Any information
    *    that can be used to create an item in the toolbox.
    * @param {!DocumentFragment} fragment The document fragment to add the child
    *     toolbox elements to.
@@ -493,14 +493,14 @@ class Toolbox extends DeleteArea {
 
   /**
    * Adds an item to the toolbox.
-   * @param {!IToolboxItem} toolboxItem The item in the toolbox.
+   * @param {!Blockly.IToolboxItem} toolboxItem The item in the toolbox.
    * @protected
    */
   addToolboxItem_(toolboxItem) {
     this.contents_.push(toolboxItem);
     this.contentMap_[toolboxItem.getId()] = toolboxItem;
     if (toolboxItem.isCollapsible()) {
-      const collapsibleItem = /** @type {ICollapsibleToolboxItem} */
+      const collapsibleItem = /** @type {Blockly.ICollapsibleToolboxItem} */
           (toolboxItem);
       const childToolboxItems = collapsibleItem.getChildToolboxItems();
       for (let i = 0; i < childToolboxItems.length; i++) {
@@ -512,7 +512,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Gets the items in the toolbox.
-   * @return {!Array<!IToolboxItem>} The list of items in the toolbox.
+   * @return {!Array<!Blockly.IToolboxItem>} The list of items in the toolbox.
    * @public
    */
   getToolboxItems() {
@@ -540,7 +540,7 @@ class Toolbox extends DeleteArea {
   /**
    * Returns the bounding rectangle of the drag target area in pixel units
    * relative to viewport.
-   * @return {?Rect} The component's bounding box. Null if drag
+   * @return {?Blockly.utils.Rect} The component's bounding box. Null if drag
    *   target area should be ignored.
    */
   getClientRect() {
@@ -577,7 +577,7 @@ class Toolbox extends DeleteArea {
    * this area.
    * This method should check if the element is deletable and is always called
    * before onDragEnter/onDragOver/onDragExit.
-   * @param {!IDraggable} element The block or bubble currently being
+   * @param {!Blockly.IDraggable} element The block or bubble currently being
    *   dragged.
    * @param {boolean} _couldConnect Whether the element could could connect to
    *     another.
@@ -587,7 +587,7 @@ class Toolbox extends DeleteArea {
    */
   wouldDelete(element, _couldConnect) {
     if (element instanceof BlockSvg) {
-      const block = /** @type {BlockSvg} */ (element);
+      const block = /** @type {Blockly.BlockSvg} */ (element);
       // Prefer dragging to the toolbox over connecting to other blocks.
       this.updateWouldDelete_(!block.getParent() && block.isDeletable());
     } else {
@@ -598,7 +598,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Handles when a cursor with a block or bubble enters this drag target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @override
    */
@@ -608,7 +608,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Handles when a cursor with a block or bubble exits this drag target.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @override
    */
@@ -619,7 +619,7 @@ class Toolbox extends DeleteArea {
   /**
    * Handles when a block or bubble is dropped on this component.
    * Should not handle delete here.
-   * @param {!IDraggable} _dragElement The block or bubble currently being
+   * @param {!Blockly.IDraggable} _dragElement The block or bubble currently being
    *   dragged.
    * @override
    */
@@ -667,7 +667,7 @@ class Toolbox extends DeleteArea {
   /**
    * Gets the toolbox item with the given ID.
    * @param {string} id The ID of the toolbox item.
-   * @return {?IToolboxItem} The toolbox item with the given ID, or null
+   * @return {?Blockly.IToolboxItem} The toolbox item with the given ID, or null
    *     if no item exists.
    * @public
    */
@@ -695,7 +695,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Gets the toolbox flyout.
-   * @return {?IFlyout} The toolbox flyout.
+   * @return {?Blockly.IFlyout} The toolbox flyout.
    * @public
    */
   getFlyout() {
@@ -704,7 +704,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Gets the workspace for the toolbox.
-   * @return {!WorkspaceSvg} The parent workspace for the toolbox.
+   * @return {!Blockly.WorkspaceSvg} The parent workspace for the toolbox.
    * @public
    */
   getWorkspace() {
@@ -713,7 +713,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Gets the selected item.
-   * @return {?ISelectableToolboxItem} The selected item, or null if no item is
+   * @return {?Blockly.ISelectableToolboxItem} The selected item, or null if no item is
    *     currently selected.
    * @public
    */
@@ -723,7 +723,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Gets the previously selected item.
-   * @return {?ISelectableToolboxItem} The previously selected item, or null if
+   * @return {?Blockly.ISelectableToolboxItem} The previously selected item, or null if
    *     no item was previously selected.
    * @public
    */
@@ -865,7 +865,7 @@ class Toolbox extends DeleteArea {
   /**
    * Sets the given item as selected.
    * No-op if the item is not selectable.
-   * @param {?IToolboxItem} newItem The toolbox item to select.
+   * @param {?Blockly.IToolboxItem} newItem The toolbox item to select.
    * @public
    */
   setSelectedItem(newItem) {
@@ -874,7 +874,7 @@ class Toolbox extends DeleteArea {
     if ((!newItem && !oldItem) || (newItem && !newItem.isSelectable())) {
       return;
     }
-    newItem = /** @type {ISelectableToolboxItem} */ (newItem);
+    newItem = /** @type {Blockly.ISelectableToolboxItem} */ (newItem);
 
     if (this.shouldDeselectItem_(oldItem, newItem) && oldItem !== null) {
       this.deselectItem_(oldItem);
@@ -890,9 +890,9 @@ class Toolbox extends DeleteArea {
 
   /**
    * Decides whether the old item should be deselected.
-   * @param {?ISelectableToolboxItem} oldItem The previously selected
+   * @param {?Blockly.ISelectableToolboxItem} oldItem The previously selected
    *     toolbox item.
-   * @param {?ISelectableToolboxItem} newItem The newly selected toolbox
+   * @param {?Blockly.ISelectableToolboxItem} newItem The newly selected toolbox
    *     item.
    * @return {boolean} True if the old item should be deselected, false
    *     otherwise.
@@ -907,9 +907,9 @@ class Toolbox extends DeleteArea {
 
   /**
    * Decides whether the new item should be selected.
-   * @param {?ISelectableToolboxItem} oldItem The previously selected
+   * @param {?Blockly.ISelectableToolboxItem} oldItem The previously selected
    *     toolbox item.
-   * @param {?ISelectableToolboxItem} newItem The newly selected toolbox
+   * @param {?Blockly.ISelectableToolboxItem} newItem The newly selected toolbox
    *     item.
    * @return {boolean} True if the new item should be selected, false otherwise.
    * @protected
@@ -921,7 +921,7 @@ class Toolbox extends DeleteArea {
 
   /**
    * Deselects the given item, marks it as unselected, and updates aria state.
-   * @param {!ISelectableToolboxItem} item The previously selected
+   * @param {!Blockly.ISelectableToolboxItem} item The previously selected
    *     toolbox item which should be deselected.
    * @protected
    */
@@ -936,9 +936,9 @@ class Toolbox extends DeleteArea {
 
   /**
    * Selects the given item, marks it selected, and updates aria state.
-   * @param {?ISelectableToolboxItem} oldItem The previously selected
+   * @param {?Blockly.ISelectableToolboxItem} oldItem The previously selected
    *     toolbox item.
-   * @param {!ISelectableToolboxItem} newItem The newly selected toolbox
+   * @param {!Blockly.ISelectableToolboxItem} newItem The newly selected toolbox
    *     item.
    * @protected
    */
@@ -967,9 +967,9 @@ class Toolbox extends DeleteArea {
 
   /**
    * Decides whether to hide or show the flyout depending on the selected item.
-   * @param {?ISelectableToolboxItem} oldItem The previously selected toolbox
+   * @param {?Blockly.ISelectableToolboxItem} oldItem The previously selected toolbox
    *     item.
-   * @param {?ISelectableToolboxItem} newItem The newly selected toolbox item.
+   * @param {?Blockly.ISelectableToolboxItem} newItem The newly selected toolbox item.
    * @protected
    */
   updateFlyout_(oldItem, newItem) {
@@ -984,9 +984,9 @@ class Toolbox extends DeleteArea {
 
   /**
    * Emits an event when a new toolbox item is selected.
-   * @param {?ISelectableToolboxItem} oldItem The previously selected
+   * @param {?Blockly.ISelectableToolboxItem} oldItem The previously selected
    *     toolbox item.
-   * @param {?ISelectableToolboxItem} newItem The newly selected toolbox
+   * @param {?Blockly.ISelectableToolboxItem} newItem The newly selected toolbox
    *     item.
    * @private
    */
@@ -1014,7 +1014,7 @@ class Toolbox extends DeleteArea {
 
     if (this.selectedItem_.isCollapsible() && this.selectedItem_.isExpanded()) {
       const collapsibleItem =
-          /** @type {!ICollapsibleToolboxItem} */ (this.selectedItem_);
+          /** @type {!Blockly.ICollapsibleToolboxItem} */ (this.selectedItem_);
       collapsibleItem.setExpanded(false);
       return true;
     } else if (
@@ -1036,7 +1036,7 @@ class Toolbox extends DeleteArea {
     if (!this.selectedItem_ || !this.selectedItem_.isCollapsible()) {
       return false;
     }
-    const collapsibleItem = /** @type {ICollapsibleToolboxItem} */
+    const collapsibleItem = /** @type {Blockly.ICollapsibleToolboxItem} */
         (this.selectedItem_);
     if (!collapsibleItem.isExpanded()) {
       collapsibleItem.setExpanded(true);

@@ -49,27 +49,27 @@ goog.require('Blockly.constants');
  */
 const BubbleDragger = class {
   /**
-   * @param {!IBubble} bubble The item on the bubble canvas to drag.
-   * @param {!WorkspaceSvg} workspace The workspace to drag on.
+   * @param {!Blockly.IBubble} bubble The item on the bubble canvas to drag.
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace to drag on.
    */
   constructor(bubble, workspace) {
     /**
      * The item on the bubble canvas that is being dragged.
-     * @type {!IBubble}
+     * @type {!Blockly.IBubble}
      * @private
      */
     this.draggingBubble_ = bubble;
 
     /**
      * The workspace on which the bubble is being dragged.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
 
     /**
      * Which drag target the mouse pointer is over, if any.
-     * @type {?IDragTarget}
+     * @type {?Blockly.IDragTarget}
      * @private
      */
     this.dragTarget_ = null;
@@ -84,7 +84,7 @@ const BubbleDragger = class {
     /**
      * The location of the top left corner of the dragging bubble's body at the
      * beginning of the drag, in workspace coordinates.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @private
      */
     this.startXY_ = this.draggingBubble_.getRelativeToSurfaceXY();
@@ -92,7 +92,7 @@ const BubbleDragger = class {
     /**
      * The drag surface to move bubbles to during a drag, or null if none should
      * be used.  Block dragging and bubble dragging use the same surface.
-     * @type {BlockDragSurfaceSvg}
+     * @type {Blockly.BlockDragSurfaceSvg}
      * @private
      */
     this.dragSurface_ =
@@ -134,7 +134,7 @@ const BubbleDragger = class {
    * Execute a step of bubble dragging, based on the given event.  Update the
    * display accordingly.
    * @param {!Event} e The most recent move event.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at the start of the drag, in pixel units.
    * @package
    */
@@ -164,7 +164,7 @@ const BubbleDragger = class {
 
   /**
    * Whether ending the drag would delete the bubble.
-   * @param {?IDragTarget} dragTarget The drag target that the bubblee is
+   * @param {?Blockly.IDragTarget} dragTarget The drag target that the bubblee is
    *     currently over.
    * @return {boolean} Whether dropping the bubble immediately would delete the
    *    block.
@@ -176,7 +176,7 @@ const BubbleDragger = class {
       const isDeleteArea = componentManager.hasCapability(
           dragTarget.id, ComponentManager.Capability.DELETE_AREA);
       if (isDeleteArea) {
-        return (/** @type {!IDeleteArea} */ (dragTarget))
+        return (/** @type {!Blockly.IDeleteArea} */ (dragTarget))
             .wouldDelete(this.draggingBubble_, false);
       }
     }
@@ -195,7 +195,7 @@ const BubbleDragger = class {
   /**
    * Finish a bubble drag and put the bubble back on the workspace.
    * @param {!Event} e The mouseup/touchend event.
-   * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+   * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
    *     moved from the position at the start of the drag, in pixel units.
    * @package
    */
@@ -246,9 +246,9 @@ const BubbleDragger = class {
     if (this.draggingBubble_.isComment) {
       // TODO (adodson): Resolve build errors when requiring
       // WorkspaceCommentSvg.
-      const event = /** @type {!CommentMove} */
+      const event = /** @type {!Blockly.Events.CommentMove} */
           (new (eventUtils.get(eventUtils.COMMENT_MOVE))(
-              /** @type {!WorkspaceCommentSvg} */ (this.draggingBubble_)));
+              /** @type {!Blockly.WorkspaceCommentSvg} */ (this.draggingBubble_)));
       event.setOldCoordinate(this.startXY_);
       event.recordNew();
       eventUtils.fire(event);
@@ -262,9 +262,9 @@ const BubbleDragger = class {
    * correction for mutator workspaces.
    * This function does not consider differing origins.  It simply scales the
    * input's x and y values.
-   * @param {!Coordinate} pixelCoord A coordinate with x and y
+   * @param {!Blockly.utils.Coordinate} pixelCoord A coordinate with x and y
    *     values in CSS pixel units.
-   * @return {!Coordinate} The input coordinate divided by the
+   * @return {!Blockly.utils.Coordinate} The input coordinate divided by the
    *     workspace scale.
    * @private
    */

@@ -25,12 +25,12 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * An object containing information about the space a right connection shape
  * takes up during rendering.
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @alias Blockly.zelos.RightConnectionShape
  */
 class RightConnectionShape extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */

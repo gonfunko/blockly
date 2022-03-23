@@ -37,7 +37,7 @@ goog.require('Blockly.Events.CommentDelete');
  */
 class WorkspaceComment {
   /**
-   * @param {!Workspace} workspace The block's workspace.
+   * @param {!Blockly.Workspace} workspace The block's workspace.
    * @param {string} content The content of this workspace comment.
    * @param {number} height Height of the comment.
    * @param {number} width Width of the comment.
@@ -55,7 +55,7 @@ class WorkspaceComment {
     /**
      * The comment's position in workspace units.  (0, 0) is at the workspace's
      * origin; scale does not change this value.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @protected
      */
     this.xy_ = new Coordinate(0, 0);
@@ -77,7 +77,7 @@ class WorkspaceComment {
     this.width_ = width;
 
     /**
-     * @type {!Workspace}
+     * @type {!Blockly.Workspace}
      */
     this.workspace = workspace;
 
@@ -186,7 +186,7 @@ class WorkspaceComment {
 
   /**
    * Get stored location.
-   * @return {!Coordinate} The comment's stored location.
+   * @return {!Blockly.utils.Coordinate} The comment's stored location.
    *   This is not valid if the comment is currently being dragged.
    * @package
    */
@@ -201,7 +201,7 @@ class WorkspaceComment {
    * @package
    */
   moveBy(dx, dy) {
-    const event = /** @type {!CommentMove} */ (
+    const event = /** @type {!Blockly.Events.CommentMove} */ (
         new (eventUtils.get(eventUtils.COMMENT_MOVE))(this));
     this.xy_.translate(dx, dy);
     event.recordNew();
@@ -320,7 +320,7 @@ class WorkspaceComment {
   /**
    * Fire a create event for the given workspace comment, if comments are
    * enabled.
-   * @param {!WorkspaceComment} comment The comment that was just created.
+   * @param {!Blockly.WorkspaceComment} comment The comment that was just created.
    * @package
    */
   static fireCreateEvent(comment) {
@@ -343,8 +343,8 @@ class WorkspaceComment {
   /**
    * Decode an XML comment tag and create a comment on the workspace.
    * @param {!Element} xmlComment XML comment element.
-   * @param {!Workspace} workspace The workspace.
-   * @return {!WorkspaceComment} The created workspace comment.
+   * @param {!Blockly.Workspace} workspace The workspace.
+   * @return {!Blockly.WorkspaceComment} The created workspace comment.
    * @package
    */
   static fromXml(xmlComment, workspace) {

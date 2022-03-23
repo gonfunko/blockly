@@ -132,7 +132,7 @@ const show = function(newOwner, rtl, newDispose) {
   div.style.direction = rtl ? 'rtl' : 'ltr';
   div.style.display = 'block';
   const mainWorkspace =
-      /** @type {!WorkspaceSvg} */ (common.getMainWorkspace());
+      /** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace());
   rendererClassName = mainWorkspace.getRenderer().getClassName();
   themeClassName = mainWorkspace.getTheme().getClassName();
   dom.addClass(div, rendererClassName);
@@ -166,7 +166,7 @@ const hide = function() {
     dom.removeClass(div, themeClassName);
     themeClassName = '';
   }
-  (/** @type {!WorkspaceSvg} */ (common.getMainWorkspace())).markFocused();
+  (/** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace())).markFocused();
 };
 exports.hide = hide;
 
@@ -211,11 +211,11 @@ const positionInternal = function(x, y, height) {
  * The widget should be placed adjacent to but not overlapping the anchor
  * rectangle.  The preferred position is directly below and aligned to the left
  * (LTR) or right (RTL) side of the anchor.
- * @param {!Rect} viewportBBox The bounding rectangle of the
+ * @param {!Blockly.utils.Rect} viewportBBox The bounding rectangle of the
  *     current viewport, in window coordinates.
- * @param {!Rect} anchorBBox The bounding rectangle of the anchor,
+ * @param {!Blockly.utils.Rect} anchorBBox The bounding rectangle of the anchor,
  *     in window coordinates.
- * @param {!Size} widgetSize The size of the widget that is inside
+ * @param {!Blockly.utils.Size} widgetSize The size of the widget that is inside
  *     the widget div, in window coordinates.
  * @param {boolean} rtl Whether the workspace is in RTL mode.  This determines
  *     horizontal alignment.
@@ -237,11 +237,11 @@ exports.positionWithAnchor = positionWithAnchor;
 /**
  * Calculate an x position (in window coordinates) such that the widget will not
  * be offscreen on the right or left.
- * @param {!Rect} viewportBBox The bounding rectangle of the
+ * @param {!Blockly.utils.Rect} viewportBBox The bounding rectangle of the
  *     current viewport, in window coordinates.
- * @param {!Rect} anchorBBox The bounding rectangle of the anchor,
+ * @param {!Blockly.utils.Rect} anchorBBox The bounding rectangle of the anchor,
  *     in window coordinates.
- * @param {!Size} widgetSize The dimensions of the widget inside
+ * @param {!Blockly.utils.Size} widgetSize The dimensions of the widget inside
  *     the widget div.
  * @param {boolean} rtl Whether the Blockly workspace is in RTL mode.
  * @return {number} A valid x-coordinate for the top left corner of the widget
@@ -267,11 +267,11 @@ const calculateX = function(viewportBBox, anchorBBox, widgetSize, rtl) {
 /**
  * Calculate a y position (in window coordinates) such that the widget will not
  * be offscreen on the top or bottom.
- * @param {!Rect} viewportBBox The bounding rectangle of the
+ * @param {!Blockly.utils.Rect} viewportBBox The bounding rectangle of the
  *     current viewport, in window coordinates.
- * @param {!Rect} anchorBBox The bounding rectangle of the anchor,
+ * @param {!Blockly.utils.Rect} anchorBBox The bounding rectangle of the anchor,
  *     in window coordinates.
- * @param {!Size} widgetSize The dimensions of the widget inside
+ * @param {!Blockly.utils.Size} widgetSize The dimensions of the widget inside
  *     the widget div.
  * @return {number} A valid y-coordinate for the top left corner of the widget
  *     div, in window coordinates.

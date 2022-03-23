@@ -29,12 +29,12 @@ const {WorkspaceComment} = goog.requireType('Blockly.WorkspaceComment');
 
 /**
  * Abstract class for a comment event.
- * @extends {AbstractEvent}
+ * @extends {Blockly.Events.Abstract}
  * @alias Blockly.Events.CommentBase
  */
 class CommentBase extends AbstractEvent {
   /**
-   * @param {!WorkspaceComment=} opt_comment The comment this event
+   * @param {!Blockly.WorkspaceComment=} opt_comment The comment this event
    *     corresponds to.  Undefined for a blank event.
    */
   constructor(opt_comment) {
@@ -95,7 +95,7 @@ class CommentBase extends AbstractEvent {
 
   /**
    * Helper function for Comment[Create|Delete]
-   * @param {!CommentCreate|!CommentDelete} event
+   * @param {!Blockly.Events.CommentCreate|!Blockly.Events.CommentDelete} event
    *     The event to run.
    * @param {boolean} create if True then Create, if False then Delete
    */

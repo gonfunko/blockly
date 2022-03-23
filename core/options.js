@@ -35,7 +35,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
  */
 class Options {
   /**
-   * @param {!BlocklyOptions} options Dictionary of options.
+   * @param {!Blockly.BlocklyOptions} options Dictionary of options.
    *     Specification:
    * https://developers.google.com/blockly/guides/get-started/web#configuration
    */
@@ -140,7 +140,7 @@ class Options {
     this.pathToMedia = pathToMedia;
     /** @type {boolean} */
     this.hasCategories = hasCategories;
-    /** @type {!Options.MoveOptions} */
+    /** @type {!Blockly.Options.MoveOptions} */
     this.moveOptions = Options.parseMoveOptions_(options, hasCategories);
     /** @deprecated  January 2019 */
     this.hasScrollbars = !!this.moveOptions.scrollbars;
@@ -154,15 +154,15 @@ class Options {
     this.hasCss = hasCss;
     /** @type {boolean} */
     this.horizontalLayout = horizontalLayout;
-    /** @type {?toolbox.ToolboxInfo} */
+    /** @type {?Blockly.utils.toolbox.ToolboxInfo} */
     this.languageTree = toolboxJsonDef;
-    /** @type {!Options.GridOptions} */
+    /** @type {!Blockly.Options.GridOptions} */
     this.gridOptions = Options.parseGridOptions_(options);
-    /** @type {!Options.ZoomOptions} */
+    /** @type {!Blockly.Options.ZoomOptions} */
     this.zoomOptions = Options.parseZoomOptions_(options);
-    /** @type {!toolbox.Position} */
+    /** @type {!Blockly.utils.toolbox.Position} */
     this.toolboxPosition = toolboxPosition;
-    /** @type {!Theme} */
+    /** @type {!Blockly.Theme} */
     this.theme = Options.parseThemeOptions_(options);
     /** @type {string} */
     this.renderer = renderer;
@@ -180,7 +180,7 @@ class Options {
      * The parent of the current workspace, or null if there is no parent
      * workspace.  We can assert that this is of type WorkspaceSvg as opposed to
      * Workspace as this is only used in a rendered workspace.
-     * @type {?WorkspaceSvg}
+     * @type {?Blockly.WorkspaceSvg}
      */
     this.parentWorkspace = options['parentWorkspace'];
 
@@ -200,7 +200,7 @@ class Options {
     this.setMetrics = undefined;
 
     /**
-     * @type {undefined|function():!Metrics} A function that returns a metrics
+     * @type {undefined|function():!Blockly.utils.Metrics} A function that returns a metrics
      *     object that describes the current workspace.
      */
     this.getMetrics = undefined;
@@ -211,7 +211,7 @@ class Options {
    *    behaviour is unspecified.
    * @param {!Object} options Dictionary of options.
    * @param {boolean} hasCategories Whether the workspace has categories or not.
-   * @return {!Options.MoveOptions} Normalized move options.
+   * @return {!Blockly.Options.MoveOptions} Normalized move options.
    * @private
    */
   static parseMoveOptions_(options, hasCategories) {
@@ -261,7 +261,7 @@ class Options {
    * behaviour is unspecified.  See zoom documentation:
    *   https://developers.google.com/blockly/guides/configure/web/zoom
    * @param {!Object} options Dictionary of options.
-   * @return {!Options.ZoomOptions} Normalized zoom options.
+   * @return {!Blockly.Options.ZoomOptions} Normalized zoom options.
    * @private
    */
   static parseZoomOptions_(options) {
@@ -310,7 +310,7 @@ class Options {
    * behaviour is unspecified. See grid documentation:
    *   https://developers.google.com/blockly/guides/configure/web/grid
    * @param {!Object} options Dictionary of options.
-   * @return {!Options.GridOptions} Normalized grid options.
+   * @return {!Blockly.Options.GridOptions} Normalized grid options.
    * @private
    */
   static parseGridOptions_(options) {
@@ -328,16 +328,16 @@ class Options {
    * Parse the user-specified theme options, using the classic theme as a
    * default. https://developers.google.com/blockly/guides/configure/web/themes
    * @param {!Object} options Dictionary of options.
-   * @return {!Theme} A Blockly Theme.
+   * @return {!Blockly.Theme} A Blockly Blockly.Theme.
    * @private
    */
   static parseThemeOptions_(options) {
     const theme = options['theme'] || Classic;
     if (typeof theme === 'string') {
-      return /** @type {!Theme} */ (
+      return /** @type {!Blockly.Theme} */ (
           registry.getObject(registry.Type.THEME, theme));
     } else if (theme instanceof Theme) {
-      return /** @type {!Theme} */ (theme);
+      return /** @type {!Blockly.Theme} */ (theme);
     }
     return Theme.defineTheme(
         theme.name || ('builtin' + idGenerator.getNextUniqueId()), theme);
@@ -359,7 +359,7 @@ Options.GridOptions;
  * Move Options.
  * @typedef {{
  *     drag: boolean,
- *     scrollbars: (boolean | !Options.ScrollbarOptions),
+ *     scrollbars: (boolean | !Blockly.Options.ScrollbarOptions),
  *     wheel: boolean
  * }}
  */

@@ -43,8 +43,8 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  */
 class Drawer {
   /**
-   * @param {!BlockSvg} block The block to render.
-   * @param {!RenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!Blockly.blockRendering.RenderInfo} info An object containing all
    *   information needed to render this block.
    * @package
    */
@@ -57,7 +57,7 @@ class Drawer {
 
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      * @protected
      */
     this.constants_ = info.getRenderer().getConstants();
@@ -165,7 +165,7 @@ class Drawer {
 
   /**
    * Add steps for the jagged edge of a row on a collapsed block.
-   * @param {!Row} row The row to draw the side of.
+   * @param {!Blockly.blockRendering.Row} row The row to draw the side of.
    * @protected
    */
   drawJaggedEdge_(row) {
@@ -177,12 +177,12 @@ class Drawer {
   /**
    * Add steps for an external value input, rendered as a notch in the side
    * of the block.
-   * @param {!Row} row The row that this input belongs to.
+   * @param {!Blockly.blockRendering.Row} row The row that this input belongs to.
    * @protected
    */
   drawValueInput_(row) {
     const input =
-        /** @type {ExternalValueInput|InlineInput} */ (row.getLastInput());
+        /** @type {Blockly.blockRendering.ExternalValueInput|Blockly.blockRendering.InlineInput} */ (row.getLastInput());
     this.positionExternalValueConnection_(row);
 
     const pathDown = (typeof input.shape.pathDown === 'function') ?
@@ -196,7 +196,7 @@ class Drawer {
 
   /**
    * Add steps for a statement input.
-   * @param {!Row} row The row that this input belongs to.
+   * @param {!Blockly.blockRendering.Row} row The row that this input belongs to.
    * @protected
    */
   drawStatementInput_(row) {
@@ -223,7 +223,7 @@ class Drawer {
   /**
    * Add steps for the right side of a row that does not have value or
    * statement input connections.
-   * @param {!Row} row The row to draw the side of.
+   * @param {!Blockly.blockRendering.Row} row The row to draw the side of.
    * @protected
    */
   drawRightSideRow_(row) {
@@ -296,10 +296,10 @@ class Drawer {
       for (let j = 0, elem; (elem = row.elements[j]); j++) {
         if (Types.isInlineInput(elem)) {
           this.drawInlineInput_(
-              /** @type {!InlineInput} */ (elem));
+              /** @type {!Blockly.blockRendering.InlineInput} */ (elem));
         } else if (Types.isIcon(elem) || Types.isField(elem)) {
           this.layoutField_(
-              /** @type {!Field|!Icon} */
+              /** @type {!Blockly.blockRendering.Field|!Blockly.blockRendering.Icon} */
               (elem));
         }
       }
@@ -308,7 +308,7 @@ class Drawer {
 
   /**
    * Push a field or icon's new position to its SVG root.
-   * @param {!Icon|!Field} fieldInfo
+   * @param {!Blockly.blockRendering.Icon|!Blockly.blockRendering.Field} fieldInfo
    *     The rendering information for the field or icon.
    * @protected
    */
@@ -349,7 +349,7 @@ class Drawer {
 
   /**
    * Add steps for an inline input.
-   * @param {!InlineInput} input The information about the
+   * @param {!Blockly.blockRendering.InlineInput} input The information about the
    * input to render.
    * @protected
    */
@@ -375,7 +375,7 @@ class Drawer {
    * Position the connection on an inline value input, taking into account
    * RTL and the small gap between the parent block and child block which lets
    * the parent block's dark path show through.
-   * @param {InlineInput} input The information about
+   * @param {Blockly.blockRendering.InlineInput} input The information about
    * the input that the connection is on.
    * @protected
    */
@@ -397,7 +397,7 @@ class Drawer {
    * Position the connection on a statement input, taking into account
    * RTL and the small gap between the parent block and child block which lets
    * the parent block's dark path show through.
-   * @param {!Row} row The row that the connection is on.
+   * @param {!Blockly.blockRendering.Row} row The row that the connection is on.
    * @protected
    */
   positionStatementInputConnection_(row) {
@@ -415,7 +415,7 @@ class Drawer {
    * Position the connection on an external value input, taking into account
    * RTL and the small gap between the parent block and child block which lets
    * the parent block's dark path show through.
-   * @param {!Row} row The row that the connection is on.
+   * @param {!Blockly.blockRendering.Row} row The row that the connection is on.
    * @protected
    */
   positionExternalValueConnection_(row) {

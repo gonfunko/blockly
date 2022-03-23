@@ -27,12 +27,12 @@ const {Block} = goog.requireType('Blockly.Block');
 
 /**
  * Class for a block change event.
- * @extends {BlockBase}
+ * @extends {Blockly.Events.BlockBase}
  * @alias Blockly.Events.BlockChange
  */
 class BlockChange extends BlockBase {
   /**
-   * @param {!Block=} opt_block The changed block.  Undefined for a blank
+   * @param {!Blockly.Block=} opt_block The changed block.  Undefined for a blank
    *     event.
    * @param {string=} opt_element One of 'field', 'comment', 'disabled', etc.
    * @param {?string=} opt_name Name of input or field affected, or null.
@@ -105,7 +105,7 @@ class BlockChange extends BlockBase {
     }
 
     // Assume the block is rendered so that then we can check.
-    const blockSvg = /** @type {!BlockSvg} */ (block);
+    const blockSvg = /** @type {!Blockly.BlockSvg} */ (block);
     if (blockSvg.mutator) {
       // Close the mutator (if open) since we don't want to update it.
       blockSvg.mutator.setVisible(false);
@@ -135,7 +135,7 @@ class BlockChange extends BlockBase {
         break;
       case 'mutation': {
         const oldState = BlockChange.getExtraBlockState_(
-            /** @type {!BlockSvg} */ (block));
+            /** @type {!Blockly.BlockSvg} */ (block));
         if (block.loadExtraState) {
           block.loadExtraState(
               JSON.parse(/** @type {string} */ (value) || '{}'));
@@ -157,7 +157,7 @@ class BlockChange extends BlockBase {
   /**
    * Returns the extra state of the given block (either as XML or a JSO,
    * depending on the block's definition).
-   * @param {!BlockSvg} block The block to get the extra state of.
+   * @param {!Blockly.BlockSvg} block The block to get the extra state of.
    * @return {string} A stringified version of the extra state of the given
    *     block.
    * @package

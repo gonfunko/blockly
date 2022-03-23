@@ -59,13 +59,13 @@ goog.require('Blockly.blockRendering');
 /**
  * Class for a flyout.
  * @abstract
- * @implements {IFlyout}
- * @extends {DeleteArea}
+ * @implements {Blockly.IFlyout}
+ * @extends {Blockly.DeleteArea}
  * @alias Blockly.Flyout
  */
 class Flyout extends DeleteArea {
   /**
-   * @param {!Options} workspaceOptions Dictionary of options for the
+   * @param {!Blockly.Options} workspaceOptions Dictionary of options for the
    *     workspace.
    */
   constructor(workspaceOptions) {
@@ -73,7 +73,7 @@ class Flyout extends DeleteArea {
     workspaceOptions.setMetrics = this.setMetrics_.bind(this);
 
     /**
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @protected
      */
     this.workspace_ = new WorkspaceSvg(workspaceOptions);
@@ -145,7 +145,7 @@ class Flyout extends DeleteArea {
 
     /**
      * List of visible buttons.
-     * @type {!Array<!FlyoutButton>}
+     * @type {!Array<!Blockly.FlyoutButton>}
      * @protected
      */
     this.buttons_ = [];
@@ -159,7 +159,7 @@ class Flyout extends DeleteArea {
 
     /**
      * List of blocks that should always be disabled.
-     * @type {!Array<!Block>}
+     * @type {!Array<!Blockly.Block>}
      * @private
      */
     this.permanentlyDisabled_ = [];
@@ -174,14 +174,14 @@ class Flyout extends DeleteArea {
 
     /**
      * The target workspace
-     * @type {?WorkspaceSvg}
+     * @type {?Blockly.WorkspaceSvg}
      * @package
      */
     this.targetWorkspace = null;
 
     /**
      * A list of blocks that can be reused.
-     * @type {!Array<!BlockSvg>}
+     * @type {!Array<!Blockly.BlockSvg>}
      * @private
      */
     this.recycledBlocks_ = [];
@@ -209,7 +209,7 @@ class Flyout extends DeleteArea {
     /**
      * A map from blocks to the rects which are beneath them to act as input
      * targets.
-     * @type {!WeakMap<!BlockSvg, !SVGElement>}
+     * @type {!WeakMap<!Blockly.BlockSvg, !SVGElement>}
      * @private
      */
     this.rectMap_ = new WeakMap();
@@ -307,8 +307,8 @@ class Flyout extends DeleteArea {
    * either exist as its own SVG element or be a g element nested inside a
    * separate SVG element.
    * @param {string|
-   * !Svg<!SVGSVGElement>|
-   * !Svg<!SVGGElement>} tagName The type of tag to
+   * !Blockly.utils.Svg<!SVGSVGElement>|
+   * !Blockly.utils.Svg<!SVGGElement>} tagName The type of tag to
    *     put the flyout in. This should be <svg> or <g>.
    * @return {!SVGElement} The flyout's SVG group.
    */
@@ -335,7 +335,7 @@ class Flyout extends DeleteArea {
 
   /**
    * Initializes the flyout.
-   * @param {!WorkspaceSvg} targetWorkspace The workspace in which to
+   * @param {!Blockly.WorkspaceSvg} targetWorkspace The workspace in which to
    *     create new blocks.
    */
   init(targetWorkspace) {
@@ -438,7 +438,7 @@ class Flyout extends DeleteArea {
 
   /**
    * Get the workspace inside the flyout.
-   * @return {!WorkspaceSvg} The workspace inside the flyout.
+   * @return {!Blockly.WorkspaceSvg} The workspace inside the flyout.
    * @package
    */
   getWorkspace() {
@@ -568,7 +568,7 @@ class Flyout extends DeleteArea {
 
   /**
    * Show and populate the flyout.
-   * @param {!toolbox.FlyoutDefinition|string} flyoutDef Contents to display
+   * @param {!Blockly.utils.toolbox.FlyoutDefinition|string} flyoutDef Contents to display
    *     in the flyout. This is either an array of Nodes, a NodeList, a
    *     toolbox definition, or a string with the name of the dynamic category.
    */
@@ -711,7 +711,7 @@ class Flyout extends DeleteArea {
    * @param {!toolbox.ButtonOrLabelInfo} btnInfo
    *    The object holding information about a button or a label.
    * @param {boolean} isLabel True if the button is a label, false otherwise.
-   * @return {!FlyoutButton} The object used to display the button in the
+   * @return {!Blockly.FlyoutButton} The object used to display the button in the
    *    flyout.
    * @private
    */
@@ -722,7 +722,7 @@ class Flyout extends DeleteArea {
     }
     const curButton = new FlyoutButton(
         this.workspace_,
-        /** @type {!WorkspaceSvg} */ (this.targetWorkspace), btnInfo, isLabel);
+        /** @type {!Blockly.WorkspaceSvg} */ (this.targetWorkspace), btnInfo, isLabel);
     return curButton;
   }
 
@@ -730,7 +730,7 @@ class Flyout extends DeleteArea {
    * Create a block from the xml and permanently disable any blocks that were
    * defined as disabled.
    * @param {!toolbox.BlockInfo} blockInfo The info of the block.
-   * @return {!BlockSvg} The block created from the blockInfo.
+   * @return {!Blockly.BlockSvg} The block created from the blockInfo.
    * @private
    */
   createFlyoutBlock_(blockInfo) {
@@ -760,14 +760,14 @@ class Flyout extends DeleteArea {
       // Do not enable these blocks as a result of capacity filtering.
       this.permanentlyDisabled_.push(block);
     }
-    return /** @type {!BlockSvg} */ (block);
+    return /** @type {!Blockly.BlockSvg} */ (block);
   }
 
   /**
    * Returns a block from the array of recycled blocks with the given type, or
    * undefined if one cannot be found.
    * @param {string} blockType The type of the block to try to recycle.
-   * @return {(!BlockSvg|undefined)} The recycled block, or undefined if
+   * @return {(!Blockly.BlockSvg|undefined)} The recycled block, or undefined if
    *     one could not be recycled.
    * @private
    */
@@ -872,7 +872,7 @@ class Flyout extends DeleteArea {
 
   /**
    * Returns whether the given block can be recycled or not.
-   * @param {!BlockSvg} _block The block to check for recyclability.
+   * @param {!Blockly.BlockSvg} _block The block to check for recyclability.
    * @return {boolean} True if the block can be recycled. False otherwise.
    * @protected
    */
@@ -885,7 +885,7 @@ class Flyout extends DeleteArea {
    * Puts a previously created block into the recycle bin and moves it to the
    * top of the workspace. Used during large workspace swaps to limit the number
    * of new DOM elements we need to create.
-   * @param {!BlockSvg} block The block to recycle.
+   * @param {!Blockly.BlockSvg} block The block to recycle.
    * @private
    */
   recycleBlock_(block) {
@@ -897,7 +897,7 @@ class Flyout extends DeleteArea {
   /**
    * Add listeners to a block that has been added to the flyout.
    * @param {!SVGElement} root The root node of the SVG group the block is in.
-   * @param {!BlockSvg} block The block to add listeners for.
+   * @param {!Blockly.BlockSvg} block The block to add listeners for.
    * @param {!SVGElement} rect The invisible rectangle under the block that acts
    *     as a mat for that block.
    * @protected
@@ -919,7 +919,7 @@ class Flyout extends DeleteArea {
 
   /**
    * Handle a mouse-down on an SVG block in a non-closing flyout.
-   * @param {!BlockSvg} block The flyout block to copy.
+   * @param {!Blockly.BlockSvg} block The flyout block to copy.
    * @return {!Function} Function to call when block is clicked.
    * @private
    */
@@ -949,7 +949,7 @@ class Flyout extends DeleteArea {
   /**
    * Does this flyout allow you to create a new instance of the given block?
    * Used for deciding if a block can be "dragged out of" the flyout.
-   * @param {!BlockSvg} block The block to copy from the flyout.
+   * @param {!Blockly.BlockSvg} block The block to copy from the flyout.
    * @return {boolean} True if you can create a new instance of the block, false
    *    otherwise.
    * @package
@@ -960,8 +960,8 @@ class Flyout extends DeleteArea {
 
   /**
    * Create a copy of this block on the workspace.
-   * @param {!BlockSvg} originalBlock The block to copy from the flyout.
-   * @return {!BlockSvg} The newly created block.
+   * @param {!Blockly.BlockSvg} originalBlock The block to copy from the flyout.
+   * @return {!Blockly.BlockSvg} The newly created block.
    * @throws {Error} if something went wrong with deserialization.
    * @package
    */
@@ -1006,7 +1006,7 @@ class Flyout extends DeleteArea {
   /**
    * Initialize the given button: move it to the correct location,
    * add listeners, etc.
-   * @param {!FlyoutButton} button The button to initialize and place.
+   * @param {!Blockly.FlyoutButton} button The button to initialize and place.
    * @param {number} x The x position of the cursor during this layout pass.
    * @param {number} y The y position of the cursor during this layout pass.
    * @protected
@@ -1025,7 +1025,7 @@ class Flyout extends DeleteArea {
 
   /**
    * Create and place a rectangle corresponding to the given block.
-   * @param {!BlockSvg} block The block to associate the rect to.
+   * @param {!Blockly.BlockSvg} block The block to associate the rect to.
    * @param {number} x The x position of the cursor during this layout pass.
    * @param {number} y The y position of the cursor during this layout pass.
    * @param {!{height: number, width: number}} blockHW The height and width of
@@ -1062,7 +1062,7 @@ class Flyout extends DeleteArea {
    * Move a rectangle to sit exactly behind a block, taking into account tabs,
    * hats, and any other protrusions we invent.
    * @param {!SVGElement} rect The rectangle to move directly behind the block.
-   * @param {!BlockSvg} block The block the rectangle should be behind.
+   * @param {!Blockly.BlockSvg} block The block the rectangle should be behind.
    * @protected
    */
   moveRectToBlock_(rect, block) {
@@ -1121,8 +1121,8 @@ class Flyout extends DeleteArea {
 
   /**
    * Copy a block from the flyout to the workspace and position it correctly.
-   * @param {!BlockSvg} oldBlock The flyout block to copy.
-   * @return {!BlockSvg} The new block in the main workspace.
+   * @param {!Blockly.BlockSvg} oldBlock The flyout block to copy.
+   * @return {!Blockly.BlockSvg} The new block in the main workspace.
    * @private
    */
   placeNewBlock_(oldBlock) {
@@ -1133,11 +1133,11 @@ class Flyout extends DeleteArea {
     }
 
     // Clone the block.
-    const json = /** @type {!blocks.State} */ (blocks.save(oldBlock));
+    const json = /** @type {!blocks.State} */ (blocks.save(oldBlockly.Block));
     // Normallly this resizes leading to weird jumps. Save it for terminateDrag.
     targetWorkspace.setResizesEnabled(false);
     const block =
-        /** @type {!BlockSvg} */ (blocks.append(json, targetWorkspace));
+        /** @type {!Blockly.BlockSvg} */ (blocks.append(json, targetWorkspace));
 
     this.positionNewBlock_(oldBlock, block);
 
@@ -1146,8 +1146,8 @@ class Flyout extends DeleteArea {
 
   /**
    * Positions a block on the target workspace.
-   * @param {!BlockSvg} oldBlock The flyout block being copied.
-   * @param {!BlockSvg} block The block to posiiton.
+   * @param {!Blockly.BlockSvg} oldBlock The flyout block being copied.
+   * @param {!Blockly.BlockSvg} block The block to posiiton.
    * @private
    */
   positionNewBlock_(oldBlock, block) {
@@ -1186,7 +1186,7 @@ class Flyout extends DeleteArea {
 /**
  * Returns the bounding rectangle of the drag target area in pixel units
  * relative to viewport.
- * @return {Rect} The component's bounding box.
+ * @return {Blockly.utils.Rect} The component's bounding box.
  */
 Flyout.prototype.getClientRect;
 
@@ -1200,7 +1200,7 @@ Flyout.prototype.position;
  * Determine if a drag delta is toward the workspace, based on the position
  * and orientation of the flyout. This is used in determineDragIntention_ to
  * determine if a new block should be created or if the flyout should scroll.
- * @param {!Coordinate} currentDragDeltaXY How far the pointer has
+ * @param {!Blockly.utils.Coordinate} currentDragDeltaXY How far the pointer has
  *     moved from the position at mouse down, in pixel units.
  * @return {boolean} True if the drag is toward the workspace.
  * @package

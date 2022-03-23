@@ -52,7 +52,7 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  */
 class Highlighter {
   /**
-   * @param {!RenderInfo} info An object containing all
+   * @param {!Blockly.geras.RenderInfo} info An object containing all
    *     information needed to render this block.
    * @package
    */
@@ -63,16 +63,16 @@ class Highlighter {
 
     this.RTL_ = this.info_.RTL;
 
-    const renderer = /** @type {!Renderer} */ (info.getRenderer());
+    const renderer = /** @type {!Blockly.geras.Renderer} */ (info.getRenderer());
 
     /**
      * The renderer's constant provider.
-     * @type {!ConstantProvider}
+     * @type {!Blockly.blockRendering.ConstantProvider}
      */
     this.constants_ = renderer.getConstants();
 
     /**
-     * @type {!HighlightConstantProvider}
+     * @type {!Blockly.geras.HighlightConstantProvider}
      */
     this.highlightConstants_ = renderer.getHighlightConstants();
     /**
@@ -101,7 +101,7 @@ class Highlighter {
 
   /**
    * Add a highlight to the top corner of a block.
-   * @param {!TopRow} row The top row of the block.
+   * @param {!Blockly.blockRendering.TopRow} row The top row of the block.
    * @package
    */
   drawTopCorner(row) {
@@ -131,7 +131,7 @@ class Highlighter {
 
   /**
    * Add a highlight on a jagged edge for a collapsed block.
-   * @param {!Row} row  The row to highlight.
+   * @param {!Blockly.blockRendering.Row} row  The row to highlight.
    * @package
    */
   drawJaggedEdge_(row) {
@@ -145,11 +145,11 @@ class Highlighter {
 
   /**
    * Add a highlight on a value input.
-   * @param {!Row} row The row the input belongs to.
+   * @param {!Blockly.blockRendering.Row} row The row the input belongs to.
    * @package
    */
   drawValueInput(row) {
-    const input = /** @type {!InlineInput}} */ (row.getLastInput());
+    const input = /** @type {!Blockly.geras.InlineInput}} */ (row.getLastInput());
     if (this.RTL_) {
       const belowTabHeight = row.height - input.connectionHeight;
 
@@ -166,7 +166,7 @@ class Highlighter {
 
   /**
    * Add a highlight on a statement input.
-   * @param {!Row} row The row to highlight.
+   * @param {!Blockly.blockRendering.Row} row The row to highlight.
    * @package
    */
   drawStatementInput(row) {
@@ -189,7 +189,7 @@ class Highlighter {
 
   /**
    * Add a highlight on the right side of a row.
-   * @param {!Row} row The row to highlight.
+   * @param {!Blockly.blockRendering.Row} row The row to highlight.
    * @package
    */
   drawRightSideRow(row) {
@@ -208,7 +208,7 @@ class Highlighter {
 
   /**
    * Add a highlight to the bottom row.
-   * @param {!BottomRow} row The row to highlight.
+   * @param {!Blockly.blockRendering.BottomRow} row The row to highlight.
    * @package
    */
   drawBottomRow(row) {
@@ -265,7 +265,7 @@ class Highlighter {
 
   /**
    * Add a highlight to an inline input.
-   * @param {!InlineInput} input The input to highlight.
+   * @param {!Blockly.geras.InlineInput} input The input to highlight.
    * @package
    */
   drawInlineInput(input) {

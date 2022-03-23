@@ -27,21 +27,21 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
 /**
  * The base class to represent a connection and the space that it takes up on
  * the block.
- * @extends {Measurable}
+ * @extends {Blockly.blockRendering.Measurable}
  * @alias Blockly.blockRendering.Connection
  */
 class Connection extends Measurable {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!RenderedConnection} connectionModel The connection object on
+   * @param {!Blockly.RenderedConnection} connectionModel The connection object on
    *     the block that this represents.
    * @package
    */
   constructor(constants, connectionModel) {
     super(constants);
 
-    /** @type {!RenderedConnection} */
+    /** @type {!Blockly.RenderedConnection} */
     this.connectionModel = connectionModel;
 
     /** @type {!Object} */

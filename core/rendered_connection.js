@@ -42,24 +42,24 @@ const BUMP_RANDOMNESS = 10;
 
 /**
  * Class for a connection between blocks that may be rendered on screen.
- * @extends {Connection}
+ * @extends {Blockly.Connection}
  * @alias Blockly.RenderedConnection
  */
 class RenderedConnection extends Connection {
   /**
-   * @param {!BlockSvg} source The block establishing this connection.
+   * @param {!Blockly.BlockSvg} source The block establishing this connection.
    * @param {number} type The type of the connection.
    */
   constructor(source, type) {
     super(source, type);
 
-    /** @type {!BlockSvg} */
+    /** @type {!Blockly.BlockSvg} */
     this.sourceBlock_;
 
     /**
      * Connection database for connections of this type on the current
      * workspace.
-     * @const {!ConnectionDB}
+     * @const {!Blockly.ConnectionDB}
      * @private
      */
     this.db_ = source.workspace.connectionDBList[type];
@@ -67,7 +67,7 @@ class RenderedConnection extends Connection {
     /**
      * Connection database for connections compatible with this type on the
      * current workspace.
-     * @const {!ConnectionDB}
+     * @const {!Blockly.ConnectionDB}
      * @private
      */
     this.dbOpposite_ =
@@ -76,21 +76,21 @@ class RenderedConnection extends Connection {
 
     /**
      * Workspace units, (0, 0) is top left of block.
-     * @type {!Coordinate}
+     * @type {!Blockly.utils.Coordinate}
      * @private
      */
     this.offsetInBlock_ = new Coordinate(0, 0);
 
     /**
      * Describes the state of this connection's tracked-ness.
-     * @type {RenderedConnection.TrackedState}
+     * @type {Blockly.RenderedConnection.TrackedState}
      * @private
      */
     this.trackedState_ = RenderedConnection.TrackedState.WILL_TRACK;
 
     /**
      * Connection this connection connects to.  Null if not connected.
-     * @type {RenderedConnection}
+     * @type {Blockly.RenderedConnection}
      */
     this.targetConnection = null;
   }
@@ -110,26 +110,26 @@ class RenderedConnection extends Connection {
 
   /**
    * Get the source block for this connection.
-   * @return {!BlockSvg} The source block.
+   * @return {!Blockly.BlockSvg} The source block.
    * @override
    */
   getSourceBlock() {
-    return /** @type {!BlockSvg} */ (super.getSourceBlock());
+    return /** @type {!Blockly.BlockSvg} */ (super.getSourceBlock());
   }
 
   /**
    * Returns the block that this connection connects to.
-   * @return {?BlockSvg} The connected block or null if none is connected.
+   * @return {?Blockly.BlockSvg} The connected block or null if none is connected.
    * @override
    */
   targetBlock() {
-    return /** @type {BlockSvg} */ (super.targetBlock());
+    return /** @type {Blockly.BlockSvg} */ (super.targetBlock());
   }
 
   /**
    * Returns the distance between this connection and another connection in
    * workspace units.
-   * @param {!Connection} otherConnection The other connection to measure
+   * @param {!Blockly.Connection} otherConnection The other connection to measure
    *     the distance to.
    * @return {number} The distance between connections, in workspace units.
    */
@@ -142,7 +142,7 @@ class RenderedConnection extends Connection {
   /**
    * Move the block(s) belonging to the connection to a point where they don't
    * visually interfere with the specified connection.
-   * @param {!RenderedConnection} staticConnection The connection to move away
+   * @param {!Blockly.RenderedConnection} staticConnection The connection to move away
    *     from.
    * @package
    */
@@ -220,7 +220,7 @@ class RenderedConnection extends Connection {
   /**
    * Move this connection to the location given by its offset within the block
    * and the location of the block's top left corner.
-   * @param {!Coordinate} blockTL The location of the top left
+   * @param {!Blockly.utils.Coordinate} blockTL The location of the top left
    *     corner of the block, in workspace coordinates.
    */
   moveToOffset(blockTL) {
@@ -240,7 +240,7 @@ class RenderedConnection extends Connection {
 
   /**
    * Get the offset of this connection relative to the top left of its block.
-   * @return {!Coordinate} The offset of the connection.
+   * @return {!Blockly.utils.Coordinate} The offset of the connection.
    * @package
    */
   getOffsetInBlock() {
@@ -272,9 +272,9 @@ class RenderedConnection extends Connection {
    * Find the closest compatible connection to this connection.
    * All parameters are in workspace units.
    * @param {number} maxLimit The maximum radius to another connection.
-   * @param {!Coordinate} dxy Offset between this connection's location
+   * @param {!Blockly.utils.Coordinate} dxy Offset between this connection's location
    *     in the database and the current location (as a result of dragging).
-   * @return {!{connection: ?Connection, radius: number}} Contains two
+   * @return {!{connection: ?Blockly.Connection, radius: number}} Contains two
    *     properties: 'connection' which is either another connection or null,
    *     and 'radius' which is the distance.
    */
@@ -287,7 +287,7 @@ class RenderedConnection extends Connection {
    */
   highlight() {
     let steps;
-    const sourceBlockSvg = /** @type {!BlockSvg} */ (this.sourceBlock_);
+    const sourceBlockSvg = /** @type {!Blockly.BlockSvg} */ (this.sourceBlock_);
     const renderConstants =
         sourceBlockSvg.workspace.getRenderer().getConstants();
     const shape = renderConstants.shapeFor(this);
@@ -370,7 +370,7 @@ class RenderedConnection extends Connection {
         // Stop tracking connections of all children.
         const connections = block.getConnections_(true);
         for (let j = 0; j < connections.length; j++) {
-          /** @type {!RenderedConnection} */ (connections[j])
+          /** @type {!Blockly.RenderedConnection} */ (connections[j])
               .setTracking(false);
         }
         // Close all bubbles of all children.
@@ -386,7 +386,7 @@ class RenderedConnection extends Connection {
    * Start tracking this connection, as well as all down-stream connections on
    * any block attached to this connection. This happens when a block is
    * expanded.
-   * @return {!Array<!Block>} List of blocks to render.
+   * @return {!Array<!Blockly.Block>} List of blocks to render.
    */
   startTrackingAll() {
     this.setTracking(true);
@@ -428,7 +428,7 @@ class RenderedConnection extends Connection {
    * Behavior after a connection attempt fails.
    * Bumps this connection away from the other connection. Called when an
    * attempted connection fails.
-   * @param {!Connection} otherConnection Connection that this connection
+   * @param {!Blockly.Connection} otherConnection Connection that this connection
    *     failed to connect to.
    * @package
    */
@@ -440,7 +440,7 @@ class RenderedConnection extends Connection {
         if (!block.isDisposed() && !block.getParent()) {
           eventUtils.setGroup(group);
           this.bumpAwayFrom(
-              /** @type {!RenderedConnection} */ (otherConnection));
+              /** @type {!RenderedConnection} */ (otherBlockly.Connection));
           eventUtils.setGroup(false);
         }
       }.bind(this), config.bumpDelay);
@@ -449,15 +449,15 @@ class RenderedConnection extends Connection {
 
   /**
    * Disconnect two blocks that are connected by this connection.
-   * @param {!Block} parentBlock The superior block.
-   * @param {!Block} childBlock The inferior block.
+   * @param {!Blockly.Block} parentBlock The superior block.
+   * @param {!Blockly.Block} childBlock The inferior block.
    * @protected
    * @override
    */
   disconnectInternal_(parentBlock, childBlock) {
     super.disconnectInternal_(parentBlock, childBlock);
-    const renderedParent = /** @type {!BlockSvg} */ (parentBlock);
-    const renderedChild = /** @type {!BlockSvg} */ (childBlock);
+    const renderedParent = /** @type {!Blockly.BlockSvg} */ (parentBlockly.Block);
+    const renderedChild = /** @type {!Blockly.BlockSvg} */ (childBlockly.Block);
 
     // Rerender the parent so that it may reflow.
     if (renderedParent.rendered) {
@@ -497,7 +497,7 @@ class RenderedConnection extends Connection {
    * Type checking does not apply, since this function is used for bumping.
    * @param {number} maxLimit The maximum radius to another connection, in
    *     workspace units.
-   * @return {!Array<!Connection>} List of connections.
+   * @return {!Array<!Blockly.Connection>} List of connections.
    * @package
    */
   neighbours(maxLimit) {
@@ -507,13 +507,13 @@ class RenderedConnection extends Connection {
   /**
    * Connect two connections together.  This is the connection on the superior
    * block.  Rerender blocks as needed.
-   * @param {!Connection} childConnection Connection on inferior block.
+   * @param {!Blockly.Connection} childConnection Connection on inferior block.
    * @protected
    */
   connect_(childConnection) {
     super.connect_(childConnection);
 
-    const renderedChildConnection = /** @type {!RenderedConnection} */
+    const renderedChildConnection = /** @type {!Blockly.RenderedConnection} */
         (childConnection);
 
     const parentConnection = this;

@@ -26,12 +26,12 @@ goog.require('Blockly.Events.BlockChange');
 
 /**
  * Class for a checkbox field.
- * @extends {Field}
+ * @extends {Blockly.Field}
  * @alias Blockly.FieldCheckbox
  */
 class FieldCheckbox extends Field {
   /**
-   * @param {(string|boolean|!Sentinel)=} opt_value The initial value of
+   * @param {(string|boolean|!Blockly.utils.Sentinel)=} opt_value The initial value of
    *     the field. Should either be 'TRUE', 'FALSE' or a boolean. Defaults to
    *     'FALSE'.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
@@ -225,7 +225,7 @@ class FieldCheckbox extends Field {
   /**
    * Construct a FieldCheckbox from a JSON arg object.
    * @param {!Object} options A JSON object with options (checked).
-   * @return {!FieldCheckbox} The new field instance.
+   * @return {!Blockly.FieldCheckbox} The new field instance.
    * @package
    * @nocollapse
    */

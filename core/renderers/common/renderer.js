@@ -47,7 +47,7 @@ const {WorkspaceSvg} = goog.requireType('Blockly.WorkspaceSvg');
 
 /**
  * The base class for a block renderer.
- * @implements {IRegistrable}
+ * @implements {Blockly.IRegistrable}
  * @alias Blockly.blockRendering.Renderer
  */
 class Renderer {
@@ -65,7 +65,7 @@ class Renderer {
 
     /**
      * The renderer's constant provider.
-     * @type {ConstantProvider}
+     * @type {Blockly.blockRendering.ConstantProvider}
      * @private
      */
     this.constants_ = null;
@@ -89,7 +89,7 @@ class Renderer {
 
   /**
    * Initialize the renderer.
-   * @param {!Theme} theme The workspace theme object.
+   * @param {!Blockly.Theme} theme The workspace theme object.
    * @param {Object=} opt_rendererOverrides Rendering constant overrides.
    * @package
    */
@@ -106,7 +106,7 @@ class Renderer {
   /**
    * Create any DOM elements that this renderer needs.
    * @param {!SVGElement} svg The root of the workspace's SVG.
-   * @param {!Theme} theme The workspace theme object.
+   * @param {!Blockly.Theme} theme The workspace theme object.
    * @package
    */
   createDom(svg, theme) {
@@ -118,7 +118,7 @@ class Renderer {
   /**
    * Refresh the renderer after a theme change.
    * @param {!SVGElement} svg The root of the workspace's SVG.
-   * @param {!Theme} theme The workspace theme object.
+   * @param {!Blockly.Theme} theme The workspace theme object.
    * @package
    */
   refreshDom(svg, theme) {
@@ -148,7 +148,7 @@ class Renderer {
 
   /**
    * Create a new instance of the renderer's constant provider.
-   * @return {!ConstantProvider} The constant provider.
+   * @return {!Blockly.blockRendering.ConstantProvider} The constant provider.
    * @protected
    */
   makeConstants_() {
@@ -157,8 +157,8 @@ class Renderer {
 
   /**
    * Create a new instance of the renderer's render info object.
-   * @param {!BlockSvg} block The block to measure.
-   * @return {!RenderInfo} The render info object.
+   * @param {!Blockly.BlockSvg} block The block to measure.
+   * @return {!Blockly.blockRendering.RenderInfo} The render info object.
    * @protected
    */
   makeRenderInfo_(block) {
@@ -167,10 +167,10 @@ class Renderer {
 
   /**
    * Create a new instance of the renderer's drawer.
-   * @param {!BlockSvg} block The block to render.
-   * @param {!RenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!Blockly.blockRendering.RenderInfo} info An object containing all
    *   information needed to render this block.
-   * @return {!Drawer} The drawer.
+   * @return {!Blockly.blockRendering.Drawer} The drawer.
    * @protected
    */
   makeDrawer_(block, info) {
@@ -179,7 +179,7 @@ class Renderer {
 
   /**
    * Create a new instance of the renderer's debugger.
-   * @return {!Debug} The renderer debugger.
+   * @return {!Blockly.blockRendering.Debug} The renderer debugger.
    * @suppress {strictModuleDepCheck} Debug renderer only included in
    * playground.
    * @protected
@@ -194,9 +194,9 @@ class Renderer {
 
   /**
    * Create a new instance of the renderer's marker drawer.
-   * @param {!WorkspaceSvg} workspace The workspace the marker belongs to.
-   * @param {!Marker} marker The marker.
-   * @return {!MarkerSvg} The object in charge of drawing
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace the marker belongs to.
+   * @param {!Blockly.Marker} marker The marker.
+   * @return {!Blockly.blockRendering.MarkerSvg} The object in charge of drawing
    *     the marker.
    * @package
    */
@@ -207,29 +207,29 @@ class Renderer {
   /**
    * Create a new instance of a renderer path object.
    * @param {!SVGElement} root The root SVG element.
-   * @param {!Theme.BlockStyle} style The style object to use for
+   * @param {!Blockly.Theme.BlockStyle} style The style object to use for
    *     colouring.
-   * @return {!IPathObject} The renderer path object.
+   * @return {!Blockly.blockRendering.IPathObject} The renderer path object.
    * @package
    */
   makePathObject(root, style) {
     return new PathObject(
-        root, style, /** @type {!ConstantProvider} */ (this.constants_));
+        root, style, /** @type {!Blockly.blockRendering.ConstantProvider} */ (this.constants_));
   }
 
   /**
    * Get the current renderer's constant provider.  We assume that when this is
    * called, the renderer has already been initialized.
-   * @return {!ConstantProvider} The constant provider.
+   * @return {!Blockly.blockRendering.ConstantProvider} The constant provider.
    * @package
    */
   getConstants() {
-    return /** @type {!ConstantProvider} */ (this.constants_);
+    return /** @type {!Blockly.blockRendering.ConstantProvider} */ (this.constants_);
   }
 
   /**
    * Determine whether or not to highlight a connection.
-   * @param {Connection} _conn The connection to determine whether or not
+   * @param {Blockly.Connection} _conn The connection to determine whether or not
    *     to highlight.
    * @return {boolean} True if we should highlight the connection.
    * @package
@@ -243,9 +243,9 @@ class Renderer {
    * block-clump. If the clump is a row the end is the last input. If the clump
    * is a stack, the end is the last next connection. If the clump is neither,
    * then this returns false.
-   * @param {!BlockSvg} topBlock The top block of the block clump we want to try
+   * @param {!Blockly.BlockSvg} topBlock The top block of the block clump we want to try
    *     and connect to.
-   * @param {!BlockSvg} orphanBlock The orphan block that wants to find
+   * @param {!Blockly.BlockSvg} orphanBlock The orphan block that wants to find
    *     a home.
    * @param {number} localType The type of the connection being dragged.
    * @return {boolean} Whether there is a home for the orphan or not.
@@ -257,18 +257,18 @@ class Renderer {
              orphanBlock.outputConnection :
              orphanBlock.previousConnection);
     return !!Connection.getConnectionForOrphanedConnection(
-        /** @type {!Block} **/ (topBlock),
-        /** @type {!Connection} **/ (orphanConnection));
+        /** @type {!Block} **/ (topBlockly.Block),
+        /** @type {!Connection} **/ (orphanBlockly.Connection));
   }
 
   /**
    * Chooses a connection preview method based on the available connection, the
    * current dragged connection, and the block being dragged.
-   * @param {!RenderedConnection} closest The available connection.
-   * @param {!RenderedConnection} local The connection currently being
+   * @param {!Blockly.RenderedConnection} closest The available connection.
+   * @param {!Blockly.RenderedConnection} local The connection currently being
    *     dragged.
-   * @param {!BlockSvg} topBlock The block currently being dragged.
-   * @return {!InsertionMarkerManager.PREVIEW_TYPE} The preview type
+   * @param {!Blockly.BlockSvg} topBlock The block currently being dragged.
+   * @return {!Blockly.InsertionMarkerManager.PREVIEW_TYPE} The preview type
    *     to display.
    * @package
    */
@@ -278,7 +278,7 @@ class Renderer {
       if (!closest.isConnected() ||
           this.orphanCanConnectAtEnd(
               topBlock,
-              /** @type {!BlockSvg} */ (closest.targetBlock()), local.type)) {
+              /** @type {!Blockly.BlockSvg} */ (closest.targetBlock()), local.type)) {
         return InsertionMarkerManager.PREVIEW_TYPE.INSERTION_MARKER;
       }
       return InsertionMarkerManager.PREVIEW_TYPE.REPLACEMENT_FADE;
@@ -289,7 +289,7 @@ class Renderer {
 
   /**
    * Render the block.
-   * @param {!BlockSvg} block The block to render.
+   * @param {!Blockly.BlockSvg} block The block to render.
    * @package
    */
   render(block) {

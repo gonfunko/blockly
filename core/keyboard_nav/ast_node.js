@@ -45,9 +45,8 @@ class ASTNode {
   /**
    * @param {string} type The type of the location.
    *     Must be in ASTNode.types.
-   * @param {!IASTNodeLocation} location The position in the AST.
-   * @param {!ASTNode.Params=} opt_params Optional dictionary of options.
-   * @alias Blockly.ASTNode
+   * @param {!Blockly.IASTNodeLocation} location The position in the AST.
+   * @param {!Blockly.ASTNode.Params=} opt_params Optional dictionary of options.
    */
   constructor(type, location, opt_params) {
     if (!location) {
@@ -71,14 +70,14 @@ class ASTNode {
 
     /**
      * The location of the AST node.
-     * @type {!IASTNodeLocation}
+     * @type {!Blockly.IASTNodeLocation}
      * @private
      */
     this.location_ = location;
 
     /**
      * The coordinate on the workspace.
-     * @type {Coordinate}
+     * @type {Blockly.utils.Coordinate}
      * @private
      */
     this.wsCoordinate_ = null;
@@ -88,7 +87,7 @@ class ASTNode {
 
   /**
    * Parse the optional parameters.
-   * @param {?ASTNode.Params} params The user specified parameters.
+   * @param {?Blockly.ASTNode.Params} params The user specified parameters.
    * @private
    */
   processParams_(params) {
@@ -104,7 +103,7 @@ class ASTNode {
    * Gets the value pointed to by this node.
    * It is the callers responsibility to check the node type to figure out what
    * type of object they get back from this.
-   * @return {!IASTNodeLocation} The current field, connection, workspace, or
+   * @return {!Blockly.IASTNodeLocation} The current field, connection, workspace, or
    *     block the cursor is on.
    */
   getLocation() {
@@ -122,7 +121,7 @@ class ASTNode {
 
   /**
    * The coordinate on the workspace.
-   * @return {Coordinate} The workspace coordinate or null if the
+   * @return {Blockly.utils.Coordinate} The workspace coordinate or null if the
    *     location is not a workspace.
    */
   getWsCoordinate() {
@@ -142,13 +141,13 @@ class ASTNode {
    * Given an input find the next editable field or an input with a non null
    * connection in the same block. The current location must be an input
    * connection.
-   * @return {ASTNode} The AST node holding the next field or connection
+   * @return {Blockly.ASTNode} The AST node holding the next field or connection
    *     or null if there is no editable field or input connection after the
    * given input.
    * @private
    */
   findNextForInput_() {
-    const location = /** @type {!Connection} */ (this.location_);
+    const location = /** @type {!Blockly.Connection} */ (this.location_);
     const parentInput = location.getParentInput();
     const block = parentInput.getSourceBlock();
     const curIdx = block.inputList.indexOf(parentInput);
@@ -171,16 +170,16 @@ class ASTNode {
   /**
    * Given a field find the next editable field or an input with a non null
    * connection in the same block. The current location must be a field.
-   * @return {ASTNode} The AST node pointing to the next field or
+   * @return {Blockly.ASTNode} The AST node pointing to the next field or
    *     connection or null if there is no editable field or input connection
    *     after the given input.
    * @private
    */
   findNextForField_() {
-    const location = /** @type {!Field} */ (this.location_);
+    const location = /** @type {!Blockly.Field} */ (this.location_);
     const input = location.getParentInput();
     const block = location.getSourceBlock();
-    const curIdx = block.inputList.indexOf(/** @type {!Input} */ (input));
+    const curIdx = block.inputList.indexOf(/** @type {!Blockly.Input} */ (input));
     let fieldIdx = input.fieldRow.indexOf(location) + 1;
     for (let i = curIdx; i < block.inputList.length; i++) {
       const newInput = block.inputList[i];
@@ -203,12 +202,12 @@ class ASTNode {
    * Given an input find the previous editable field or an input with a non null
    * connection in the same block. The current location must be an input
    * connection.
-   * @return {ASTNode} The AST node holding the previous field or
+   * @return {Blockly.ASTNode} The AST node holding the previous field or
    *     connection.
    * @private
    */
   findPrevForInput_() {
-    const location = /** @type {!Connection} */ (this.location_);
+    const location = /** @type {!Blockly.Connection} */ (this.location_);
     const parentInput = location.getParentInput();
     const block = parentInput.getSourceBlock();
     const curIdx = block.inputList.indexOf(parentInput);
@@ -231,15 +230,15 @@ class ASTNode {
   /**
    * Given a field find the previous editable field or an input with a non null
    * connection in the same block. The current location must be a field.
-   * @return {ASTNode} The AST node holding the previous input or field.
+   * @return {Blockly.ASTNode} The AST node holding the previous input or field.
    * @private
    */
   findPrevForField_() {
-    const location = /** @type {!Field} */ (this.location_);
+    const location = /** @type {!Blockly.Field} */ (this.location_);
     const parentInput = location.getParentInput();
     const block = location.getSourceBlock();
     const curIdx = block.inputList.indexOf(
-        /** @type {!Input} */ (parentInput));
+        /** @type {!Input} */ (parentBlockly.Input));
     let fieldIdx = parentInput.fieldRow.indexOf(location) - 1;
     for (let i = curIdx; i >= 0; i--) {
       const input = block.inputList[i];
@@ -265,14 +264,14 @@ class ASTNode {
   /**
    * Navigate between stacks of blocks on the workspace.
    * @param {boolean} forward True to go forward. False to go backwards.
-   * @return {ASTNode} The first block of the next stack or null if there
+   * @return {Blockly.ASTNode} The first block of the next stack or null if there
    * are no blocks on the workspace.
    * @private
    */
   navigateBetweenStacks_(forward) {
     let curLocation = this.getLocation();
     if (curLocation.getSourceBlock) {
-      curLocation = /** @type {!IASTNodeLocationWithBlock} */ (curLocation)
+      curLocation = /** @type {!Blockly.IASTNodeLocationWithBlock} */ (curLocation)
                         .getSourceBlock();
     }
     if (!curLocation || !curLocation.workspace) {
@@ -299,26 +298,26 @@ class ASTNode {
    * Finds the top most AST node for a given block.
    * This is either the previous connection, output connection or block
    * depending on what kind of connections the block has.
-   * @param {!Block} block The block that we want to find the top
+   * @param {!Blockly.Block} block The block that we want to find the top
    *     connection on.
-   * @return {!ASTNode} The AST node containing the top connection.
+   * @return {!Blockly.ASTNode} The AST node containing the top connection.
    * @private
    */
   findTopASTNodeForBlock_(block) {
     const topConnection = getParentConnection(block);
     if (topConnection) {
-      return /** @type {!ASTNode} */ (
+      return /** @type {!Blockly.ASTNode} */ (
           ASTNode.createConnectionNode(topConnection));
     } else {
-      return /** @type {!ASTNode} */ (ASTNode.createBlockNode(block));
+      return /** @type {!Blockly.ASTNode} */ (ASTNode.createBlockNode(block));
     }
   }
 
   /**
    * Get the AST node pointing to the input that the block is nested under or if
    * the block is not nested then get the stack AST node.
-   * @param {Block} block The source block of the current location.
-   * @return {ASTNode} The AST node pointing to the input connection or
+   * @param {Blockly.Block} block The source block of the current location.
+   * @return {Blockly.ASTNode} The AST node pointing to the input connection or
    *     the top block of the stack this block is in.
    * @private
    */
@@ -344,8 +343,8 @@ class ASTNode {
 
   /**
    * Find the first editable field or input with a connection on a given block.
-   * @param {!Block} block The source block of the current location.
-   * @return {ASTNode} An AST node pointing to the first field or input.
+   * @param {!Blockly.Block} block The source block of the current location.
+   * @return {Blockly.ASTNode} An AST node pointing to the first field or input.
    * Null if there are no editable fields or inputs with connections on the
    * block.
    * @private
@@ -370,25 +369,25 @@ class ASTNode {
 
   /**
    * Finds the source block of the location of this node.
-   * @return {Block} The source block of the location, or null if the node
+   * @return {Blockly.Block} The source block of the location, or null if the node
    * is of type workspace.
    */
   getSourceBlock() {
     if (this.getType() === ASTNode.types.BLOCK) {
-      return /** @type {Block} */ (this.getLocation());
+      return /** @type {Blockly.Block} */ (this.getLocation());
     } else if (this.getType() === ASTNode.types.STACK) {
-      return /** @type {Block} */ (this.getLocation());
+      return /** @type {Blockly.Block} */ (this.getLocation());
     } else if (this.getType() === ASTNode.types.WORKSPACE) {
       return null;
     } else {
-      return /** @type {IASTNodeLocationWithBlock} */ (this.getLocation())
+      return /** @type {Blockly.IASTNodeLocationWithBlock} */ (this.getLocation())
           .getSourceBlock();
     }
   }
 
   /**
    * Find the element to the right of the current element in the AST.
-   * @return {ASTNode} An AST node that wraps the next field, connection,
+   * @return {Blockly.ASTNode} An AST node that wraps the next field, connection,
    *     block, or workspace. Or null if there is no node to the right.
    */
   next() {
@@ -397,7 +396,7 @@ class ASTNode {
         return this.navigateBetweenStacks_(true);
 
       case ASTNode.types.OUTPUT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         return ASTNode.createBlockNode(connection.getSourceBlock());
       }
       case ASTNode.types.FIELD:
@@ -407,16 +406,16 @@ class ASTNode {
         return this.findNextForInput_();
 
       case ASTNode.types.BLOCK: {
-        const block = /** @type {!Block} */ (this.location_);
+        const block = /** @type {!Blockly.Block} */ (this.location_);
         const nextConnection = block.nextConnection;
         return ASTNode.createConnectionNode(nextConnection);
       }
       case ASTNode.types.PREVIOUS: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         return ASTNode.createBlockNode(connection.getSourceBlock());
       }
       case ASTNode.types.NEXT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         const targetConnection = connection.targetConnection;
         return ASTNode.createConnectionNode(targetConnection);
       }
@@ -428,13 +427,13 @@ class ASTNode {
   /**
    * Find the element one level below and all the way to the left of the current
    * location.
-   * @return {ASTNode} An AST node that wraps the next field, connection,
+   * @return {Blockly.ASTNode} An AST node that wraps the next field, connection,
    * workspace, or block. Or null if there is nothing below this node.
    */
   in() {
     switch (this.type_) {
       case ASTNode.types.WORKSPACE: {
-        const workspace = /** @type {!Workspace} */ (this.location_);
+        const workspace = /** @type {!Blockly.Workspace} */ (this.location_);
         const topBlocks = workspace.getTopBlocks(true);
         if (topBlocks.length > 0) {
           return ASTNode.createStackNode(topBlocks[0]);
@@ -442,15 +441,15 @@ class ASTNode {
         break;
       }
       case ASTNode.types.STACK: {
-        const block = /** @type {!Block} */ (this.location_);
+        const block = /** @type {!Blockly.Block} */ (this.location_);
         return this.findTopASTNodeForBlock_(block);
       }
       case ASTNode.types.BLOCK: {
-        const block = /** @type {!Block} */ (this.location_);
+        const block = /** @type {!Blockly.Block} */ (this.location_);
         return this.findFirstFieldOrInput_(block);
       }
       case ASTNode.types.INPUT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         const targetConnection = connection.targetConnection;
         return ASTNode.createConnectionNode(targetConnection);
       }
@@ -461,7 +460,7 @@ class ASTNode {
 
   /**
    * Find the element to the left of the current element in the AST.
-   * @return {ASTNode} An AST node that wraps the previous field,
+   * @return {Blockly.ASTNode} An AST node that wraps the previous field,
    * connection, workspace or block. Or null if no node exists to the left.
    * null.
    */
@@ -480,12 +479,12 @@ class ASTNode {
         return this.findPrevForInput_();
 
       case ASTNode.types.BLOCK: {
-        const block = /** @type {!Block} */ (this.location_);
+        const block = /** @type {!Blockly.Block} */ (this.location_);
         const topConnection = getParentConnection(block);
         return ASTNode.createConnectionNode(topConnection);
       }
       case ASTNode.types.PREVIOUS: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         const targetConnection = connection.targetConnection;
         if (targetConnection && !targetConnection.getParentInput()) {
           return ASTNode.createConnectionNode(targetConnection);
@@ -493,7 +492,7 @@ class ASTNode {
         break;
       }
       case ASTNode.types.NEXT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         return ASTNode.createBlockNode(connection.getSourceBlock());
       }
     }
@@ -504,13 +503,13 @@ class ASTNode {
   /**
    * Find the next element that is one position above and all the way to the
    * left of the current location.
-   * @return {ASTNode} An AST node that wraps the next field, connection,
+   * @return {Blockly.ASTNode} An AST node that wraps the next field, connection,
    *     workspace or block. Or null if we are at the workspace level.
    */
   out() {
     switch (this.type_) {
       case ASTNode.types.STACK: {
-        const block = /** @type {!Block} */ (this.location_);
+        const block = /** @type {!Blockly.Block} */ (this.location_);
         const blockPos = block.getRelativeToSurfaceXY();
         // TODO: Make sure this is in the bounds of the workspace.
         const wsCoordinate =
@@ -518,7 +517,7 @@ class ASTNode {
         return ASTNode.createWorkspaceNode(block.workspace, wsCoordinate);
       }
       case ASTNode.types.OUTPUT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         const target = connection.targetConnection;
         if (target) {
           return ASTNode.createConnectionNode(target);
@@ -526,23 +525,23 @@ class ASTNode {
         return ASTNode.createStackNode(connection.getSourceBlock());
       }
       case ASTNode.types.FIELD: {
-        const field = /** @type {!Field} */ (this.location_);
+        const field = /** @type {!Blockly.Field} */ (this.location_);
         return ASTNode.createBlockNode(field.getSourceBlock());
       }
       case ASTNode.types.INPUT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         return ASTNode.createBlockNode(connection.getSourceBlock());
       }
       case ASTNode.types.BLOCK: {
-        const block = /** @type {!Block} */ (this.location_);
+        const block = /** @type {!Blockly.Block} */ (this.location_);
         return this.getOutAstNodeForBlock_(block);
       }
       case ASTNode.types.PREVIOUS: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         return this.getOutAstNodeForBlock_(connection.getSourceBlock());
       }
       case ASTNode.types.NEXT: {
-        const connection = /** @type {!Connection} */ (this.location_);
+        const connection = /** @type {!Blockly.Connection} */ (this.location_);
         return this.getOutAstNodeForBlock_(connection.getSourceBlock());
       }
     }
@@ -569,8 +568,8 @@ class ASTNode {
 
   /**
    * Create an AST node pointing to a field.
-   * @param {Field} field The location of the AST node.
-   * @return {ASTNode} An AST node pointing to a field.
+   * @param {Blockly.Field} field The location of the AST node.
+   * @return {Blockly.ASTNode} An AST node pointing to a field.
    */
   static createFieldNode(field) {
     if (!field) {
@@ -583,9 +582,9 @@ class ASTNode {
    * Creates an AST node pointing to a connection. If the connection has a
    * parent input then create an AST node of type input that will hold the
    * connection.
-   * @param {Connection} connection This is the connection the node will
+   * @param {Blockly.Connection} connection This is the connection the node will
    *     point to.
-   * @return {ASTNode} An AST node pointing to a connection.
+   * @return {Blockly.ASTNode} An AST node pointing to a connection.
    */
   static createConnectionNode(connection) {
     if (!connection) {
@@ -610,8 +609,8 @@ class ASTNode {
   /**
    * Creates an AST node pointing to an input. Stores the input connection as
    * the location.
-   * @param {Input} input The input used to create an AST node.
-   * @return {ASTNode} An AST node pointing to a input.
+   * @param {Blockly.Input} input The input used to create an AST node.
+   * @return {Blockly.ASTNode} An AST node pointing to a input.
    */
   static createInputNode(input) {
     if (!input || !input.connection) {
@@ -622,8 +621,8 @@ class ASTNode {
 
   /**
    * Creates an AST node pointing to a block.
-   * @param {Block} block The block used to create an AST node.
-   * @return {ASTNode} An AST node pointing to a block.
+   * @param {Blockly.Block} block The block used to create an AST node.
+   * @return {Blockly.ASTNode} An AST node pointing to a block.
    */
   static createBlockNode(block) {
     if (!block) {
@@ -636,9 +635,9 @@ class ASTNode {
    * Create an AST node of type stack. A stack, represented by its top block, is
    *     the set of all blocks connected to a top block, including the top
    * block.
-   * @param {Block} topBlock A top block has no parent and can be found
+   * @param {Blockly.Block} topBlock A top block has no parent and can be found
    *     in the list returned by workspace.getTopBlocks().
-   * @return {ASTNode} An AST node of type stack that points to the top
+   * @return {Blockly.ASTNode} An AST node of type stack that points to the top
    *     block on the stack.
    */
   static createStackNode(topBlock) {
@@ -650,10 +649,10 @@ class ASTNode {
 
   /**
    * Creates an AST node pointing to a workspace.
-   * @param {!Workspace} workspace The workspace that we are on.
-   * @param {Coordinate} wsCoordinate The position on the workspace
+   * @param {!Blockly.Workspace} workspace The workspace that we are on.
+   * @param {Blockly.utils.Coordinate} wsCoordinate The position on the workspace
    *     for this node.
-   * @return {ASTNode} An AST node pointing to a workspace and a position
+   * @return {Blockly.ASTNode} An AST node pointing to a workspace and a position
    *     on the workspace.
    */
   static createWorkspaceNode(workspace, wsCoordinate) {
@@ -667,8 +666,8 @@ class ASTNode {
   /**
    * Creates an AST node for the top position on a block.
    * This is either an output connection, previous connection, or block.
-   * @param {!Block} block The block to find the top most AST node on.
-   * @return {ASTNode} The AST node holding the top most position on the
+   * @param {!Blockly.Block} block The block to find the top most AST node on.
+   * @return {Blockly.ASTNode} The AST node holding the top most position on the
    *     block.
    */
   static createTopNode(block) {
@@ -685,7 +684,7 @@ class ASTNode {
 
 /**
  * @typedef {{
- *     wsCoordinate: Coordinate
+ *     wsCoordinate: Blockly.utils.Coordinate
  * }}
  */
 ASTNode.Params;
@@ -724,8 +723,8 @@ ASTNode.DEFAULT_OFFSET_Y = -20;
  * This is either an output connection, previous connection or undefined.
  * If both connections exist return the one that is actually connected
  * to another block.
- * @param {!Block} block The block to find the parent connection on.
- * @return {Connection} The connection connecting to the parent of the
+ * @param {!Blockly.Block} block The block to find the parent connection on.
+ * @return {Blockly.Connection} The connection connecting to the parent of the
  *     block.
  * @private
  */

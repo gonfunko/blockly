@@ -42,10 +42,11 @@ goog.require('Blockly.Events.BlockChange');
 /**
  * Class for an editable text field.
  * @alias Blockly.FieldTextInput
+ * @extends {Blockly.Field}
  */
 class FieldTextInput extends Field {
   /**
-   * @param {(string|!Sentinel)=} opt_value The initial value of the
+   * @param {(string|!Blockly.utils.Sentinel)=} opt_value The initial value of the
    *     field. Should cast to a string. Defaults to an empty string if null or
    *     undefined.
    *     Also accepts Field.SKIP_SETUP if you wish to skip setup (only used by
@@ -113,7 +114,7 @@ class FieldTextInput extends Field {
 
     /**
      * The workspace that this field belongs to.
-     * @type {?WorkspaceSvg}
+     * @type {?Blockly.WorkspaceSvg}
      * @protected
      */
     this.workspace_ = null;
@@ -296,7 +297,7 @@ class FieldTextInput extends Field {
    * @protected
    */
   showEditor_(_opt_e, opt_quietInput) {
-    this.workspace_ = (/** @type {!BlockSvg} */ (this.sourceBlock_)).workspace;
+    this.workspace_ = (/** @type {!Blockly.BlockSvg} */ (this.sourceBlock_)).workspace;
     const quietInput = opt_quietInput || false;
     if (!quietInput &&
         (userAgent.MOBILE || userAgent.ANDROID || userAgent.IPAD)) {
@@ -589,7 +590,7 @@ class FieldTextInput extends Field {
    * Construct a FieldTextInput from a JSON arg object,
    * dereferencing any string table references.
    * @param {!Object} options A JSON object with options (text, and spellcheck).
-   * @return {!FieldTextInput} The new field instance.
+   * @return {!Blockly.FieldTextInput} The new field instance.
    * @package
    * @nocollapse
    */

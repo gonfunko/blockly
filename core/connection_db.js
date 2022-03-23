@@ -38,21 +38,21 @@ goog.require('Blockly.constants');
  */
 class ConnectionDB {
   /**
-   * @param {!IConnectionChecker} checker The workspace's
+   * @param {!Blockly.IConnectionChecker} checker The workspace's
    *     connection type checker, used to decide if connections are valid during
    * a drag.
    */
   constructor(checker) {
     /**
      * Array of connections sorted by y position in workspace units.
-     * @type {!Array<!RenderedConnection>}
+     * @type {!Array<!Blockly.RenderedConnection>}
      * @private
      */
     this.connections_ = [];
     /**
      * The workspace's connection type checker, used to decide if connections
      * are valid during a drag.
-     * @type {!IConnectionChecker}
+     * @type {!Blockly.IConnectionChecker}
      * @private
      */
     this.connectionChecker_ = checker;
@@ -60,7 +60,7 @@ class ConnectionDB {
 
   /**
    * Add a connection to the database. Should not already exist in the database.
-   * @param {!RenderedConnection} connection The connection to be added.
+   * @param {!Blockly.RenderedConnection} connection The connection to be added.
    * @param {number} yPos The y position used to decide where to insert the
    *    connection.
    * @package
@@ -75,7 +75,7 @@ class ConnectionDB {
    *
    * Starts by doing a binary search to find the approximate location, then
    * linearly searches nearby for the exact connection.
-   * @param {!RenderedConnection} conn The connection to find.
+   * @param {!Blockly.RenderedConnection} conn The connection to find.
    * @param {number} yPos The y position used to find the index of the
    *     connection.
    * @return {number} The index of the connection, or -1 if the connection was
@@ -143,7 +143,7 @@ class ConnectionDB {
 
   /**
    * Remove a connection from the database.  Must already exist in DB.
-   * @param {!RenderedConnection} connection The connection to be removed.
+   * @param {!Blockly.RenderedConnection} connection The connection to be removed.
    * @param {number} yPos The y position used to find the index of the
    *     connection.
    * @throws {Error} If the connection cannot be found in the database.
@@ -159,10 +159,10 @@ class ConnectionDB {
   /**
    * Find all nearby connections to the given connection.
    * Type checking does not apply, since this function is used for bumping.
-   * @param {!RenderedConnection} connection The connection whose
+   * @param {!Blockly.RenderedConnection} connection The connection whose
    *     neighbours should be returned.
    * @param {number} maxRadius The maximum radius to another connection.
-   * @return {!Array<!RenderedConnection>} List of connections.
+   * @return {!Array<!Blockly.RenderedConnection>} List of connections.
    */
   getNeighbours(connection, maxRadius) {
     const db = this.connections_;
@@ -231,13 +231,13 @@ class ConnectionDB {
 
   /**
    * Find the closest compatible connection to this connection.
-   * @param {!RenderedConnection} conn The connection searching for a compatible
+   * @param {!Blockly.RenderedConnection} conn The connection searching for a compatible
    *     mate.
    * @param {number} maxRadius The maximum radius to another connection.
-   * @param {!Coordinate} dxy Offset between this connection's
+   * @param {!Blockly.utils.Coordinate} dxy Offset between this connection's
    *     location in the database and the current location (as a result of
    *     dragging).
-   * @return {!{connection: RenderedConnection, radius: number}}
+   * @return {!{connection: Blockly.RenderedConnection, radius: number}}
    *     Contains two properties: 'connection' which is either another
    *     connection or null, and 'radius' which is the distance.
    */
@@ -295,10 +295,10 @@ class ConnectionDB {
 
   /**
    * Initialize a set of connection DBs for a workspace.
-   * @param {!IConnectionChecker} checker The workspace's
+   * @param {!Blockly.IConnectionChecker} checker The workspace's
    *     connection checker, used to decide if connections are valid during a
    *     drag.
-   * @return {!Array<!ConnectionDB>} Array of databases.
+   * @return {!Array<!Blockly.ConnectionDB>} Array of databases.
    */
   static init(checker) {
     // Create four databases, one for each connection type.

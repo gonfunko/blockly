@@ -25,12 +25,12 @@ const {ConstantProvider} = goog.requireType('Blockly.blockRendering.ConstantProv
  * a block as well as spacing information for the top row.
  * Elements in a bottom row can consist of corners, spacers and next
  * connections.
- * @extends {BaseBottomRow}
+ * @extends {Blockly.blockRendering.BottomRow}
  * @alias Blockly.zelos.BottomRow
  */
 class BottomRow extends BaseBottomRow {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */

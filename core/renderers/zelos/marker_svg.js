@@ -36,20 +36,20 @@ const {ConstantProvider: ZelosConstantProvider} = goog.requireType('Blockly.zelo
 
 /**
  * Class to draw a marker.
- * @extends {BaseMarkerSvg}
+ * @extends {Blockly.blockRendering.MarkerSvg}
  * @alias Blockly.zelos.MarkerSvg
  */
 class MarkerSvg extends BaseMarkerSvg {
   /**
-   * @param {!WorkspaceSvg} workspace The workspace the marker belongs to.
-   * @param {!BaseConstantProvider} constants The constants for
+   * @param {!Blockly.WorkspaceSvg} workspace The workspace the marker belongs to.
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The constants for
    *     the renderer.
-   * @param {!Marker} marker The marker to draw.
+   * @param {!Blockly.Marker} marker The marker to draw.
    */
   constructor(workspace, constants, marker) {
     super(workspace, constants, marker);
 
-    /** @type {!ZelosConstantProvider} */
+    /** @type {!Blockly.zelos.ConstantProvider} */
     this.constants_;
 
     /**
@@ -61,13 +61,13 @@ class MarkerSvg extends BaseMarkerSvg {
 
   /**
    * Position and display the marker for an input or an output connection.
-   * @param {!ASTNode} curNode The node to draw the marker for.
+   * @param {!Blockly.ASTNode} curNode The node to draw the marker for.
    * @private
    */
   showWithInputOutput_(curNode) {
-    const block = /** @type {!BlockSvg} */ (curNode.getSourceBlock());
+    const block = /** @type {!Blockly.BlockSvg} */ (curNode.getSourceBlock());
     const connection =
-        /** @type {!RenderedConnection} */ (curNode.getLocation());
+        /** @type {!Blockly.RenderedConnection} */ (curNode.getLocation());
     const offsetInBlock = connection.getOffsetInBlock();
 
     this.positionCircle_(offsetInBlock.x, offsetInBlock.y);
@@ -91,10 +91,10 @@ class MarkerSvg extends BaseMarkerSvg {
 
   /**
    * Draw a rectangle around the block.
-   * @param {!ASTNode} curNode The current node of the marker.
+   * @param {!Blockly.ASTNode} curNode The current node of the marker.
    */
   showWithBlock_(curNode) {
-    const block = /** @type {!BlockSvg} */ (curNode.getLocation());
+    const block = /** @type {!Blockly.BlockSvg} */ (curNode.getLocation());
 
     // Gets the height and width of entire stack.
     const heightWidth = block.getHeightWidth();

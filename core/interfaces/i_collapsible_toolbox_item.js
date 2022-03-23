@@ -12,7 +12,7 @@
 
 /**
  * The interface for a collapsible toolbox item.
- * @namespace Blockly.ICollapsibleToolboxItem
+
  */
 goog.module('Blockly.ICollapsibleToolboxItem');
 
@@ -24,7 +24,7 @@ const {IToolboxItem} = goog.requireType('Blockly.IToolboxItem');
 
 /**
  * Interface for an item in the toolbox that can be collapsed.
- * @extends {ISelectableToolboxItem}
+ * @extends {Blockly.ISelectableToolboxItem}
  * @interface
  * @alias Blockly.ICollapsibleToolboxItem
  */
@@ -32,7 +32,7 @@ const ICollapsibleToolboxItem = function() {};
 
 /**
  * Gets any children toolbox items. (ex. Gets the subcategories)
- * @return {!Array<!IToolboxItem>} The child toolbox items.
+ * @return {!Array<!Blockly.IToolboxItem>} The child toolbox items.
  */
 ICollapsibleToolboxItem.prototype.getChildToolboxItems;
 

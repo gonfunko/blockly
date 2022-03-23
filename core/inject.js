@@ -44,8 +44,8 @@ const {Workspace} = goog.require('Blockly.Workspace');
  * Inject a Blockly editor into the specified container element (usually a div).
  * @param {Element|string} container Containing element, or its ID,
  *     or a CSS selector.
- * @param {BlocklyOptions=} opt_options Optional dictionary of options.
- * @return {!WorkspaceSvg} Newly created main workspace.
+ * @param {BlocklyBlockly.Options=} opt_options Optional dictionary of options.
+ * @return {!Blockly.WorkspaceSvg} Newly created main workspace.
  * @alias Blockly.inject
  */
 const inject = function(container, opt_options) {
@@ -58,7 +58,7 @@ const inject = function(container, opt_options) {
     throw Error('Error: container is not in current document.');
   }
   const options =
-      new Options(opt_options || (/** @type {!BlocklyOptions} */ ({})));
+      new Options(opt_options || (/** @type {!BlocklyBlockly.Options} */ ({})));
   const subContainer =
       /** @type {!HTMLDivElement} */ (document.createElement('div'));
   subContainer.className = 'injectionDiv';
@@ -95,7 +95,7 @@ const inject = function(container, opt_options) {
 /**
  * Create the SVG image.
  * @param {!Element} container Containing element.
- * @param {!Options} options Dictionary of options.
+ * @param {!Blockly.Options} options Dictionary of options.
  * @return {!Element} Newly created SVG image.
  */
 const createDom = function(container, options) {
@@ -146,12 +146,12 @@ const createDom = function(container, options) {
 /**
  * Create a main workspace and add it to the SVG.
  * @param {!Element} svg SVG element with pattern defined.
- * @param {!Options} options Dictionary of options.
- * @param {!BlockDragSurfaceSvg} blockDragSurface Drag surface SVG
+ * @param {!Blockly.Options} options Dictionary of options.
+ * @param {!BlockDragSurfaceBlockly.utils.Svg} blockDragSurface Drag surface SVG
  *     for the blocks.
- * @param {!WorkspaceDragSurfaceSvg} workspaceDragSurface Drag surface
+ * @param {!WorkspaceDragSurfaceBlockly.utils.Svg} workspaceDragSurface Drag surface
  *     SVG for the workspace.
- * @return {!WorkspaceSvg} Newly created main workspace.
+ * @return {!Blockly.WorkspaceSvg} Newly created main workspace.
  */
 const createMainWorkspace = function(
     svg, options, blockDragSurface, workspaceDragSurface) {
@@ -200,7 +200,7 @@ const createMainWorkspace = function(
 
 /**
  * Initialize Blockly with various handlers.
- * @param {!WorkspaceSvg} mainWorkspace Newly created main workspace.
+ * @param {!Blockly.WorkspaceSvg} mainWorkspace Newly created main workspace.
  */
 const init = function(mainWorkspace) {
   const options = mainWorkspace.options;
@@ -276,7 +276,7 @@ const init = function(mainWorkspace) {
 // are multiple workspaces and non-main workspaces are able to accept input.
 const onKeyDown = function(e) {
   const mainWorkspace =
-      /** @type {!WorkspaceSvg} */ (common.getMainWorkspace());
+      /** @type {!Blockly.WorkspaceSvg} */ (common.getMainWorkspace());
   if (!mainWorkspace) {
     return;
   }
@@ -328,7 +328,7 @@ const bindDocumentEvents = function() {
       browserEvents.conditionalBind(
           window, 'orientationchange', document, function() {
             // TODO (#397): Fix for multiple Blockly workspaces.
-            common.svgResize(/** @type {!WorkspaceSvg} */
+            common.svgResize(/** @type {!Blockly.WorkspaceSvg} */
                              (common.getMainWorkspace()));
           });
     }
@@ -339,7 +339,7 @@ const bindDocumentEvents = function() {
 /**
  * Load sounds for the given workspace.
  * @param {string} pathToMedia The path to the media directory.
- * @param {!WorkspaceSvg} workspace The workspace to load sounds for.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace to load sounds for.
  */
 const loadSounds = function(pathToMedia, workspace) {
   const audioMgr = workspace.getAudioManager();

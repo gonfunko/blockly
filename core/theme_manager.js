@@ -33,28 +33,28 @@ const {Workspace} = goog.requireType('Blockly.Workspace');
  */
 class ThemeManager {
   /**
-   * @param {!WorkspaceSvg} workspace The main workspace.
-   * @param {!Theme} theme The workspace theme.
+   * @param {!Blockly.WorkspaceSvg} workspace The main workspace.
+   * @param {!Blockly.Theme} theme The workspace theme.
    * @package
    */
   constructor(workspace, theme) {
     /**
      * The main workspace.
-     * @type {!WorkspaceSvg}
+     * @type {!Blockly.WorkspaceSvg}
      * @private
      */
     this.workspace_ = workspace;
 
     /**
      * The Blockly theme to use.
-     * @type {!Theme}
+     * @type {!Blockly.Theme}
      * @private
      */
     this.theme_ = theme;
 
     /**
      * A list of workspaces that are subscribed to this theme.
-     * @type {!Array<Workspace>}
+     * @type {!Array<Blockly.Workspace>}
      * @private
      */
     this.subscribedWorkspaces_ = [];
@@ -69,7 +69,7 @@ class ThemeManager {
 
   /**
    * Get the workspace theme.
-   * @return {!Theme} The workspace theme.
+   * @return {!Blockly.Theme} The workspace theme.
    * @package
    */
   getTheme() {
@@ -78,7 +78,7 @@ class ThemeManager {
 
   /**
    * Set the workspace theme, and refresh the workspace and all components.
-   * @param {!Theme} theme The workspace theme.
+   * @param {!Blockly.Theme} theme The workspace theme.
    * @package
    */
   setTheme(theme) {
@@ -97,7 +97,7 @@ class ThemeManager {
     // Refresh all subscribed workspaces.
     for (let i = 0, workspace; (workspace = this.subscribedWorkspaces_[i]);
          i++) {
-      /** @type {!WorkspaceSvg} */ (workspace).refreshTheme();
+      /** @type {!Blockly.WorkspaceSvg} */ (workspace).refreshTheme();
     }
 
     // Refresh all registered Blockly UI components.
@@ -112,14 +112,14 @@ class ThemeManager {
     }
 
     for (const workspace of this.subscribedWorkspaces_) {
-      /** @type {!WorkspaceSvg} */ (workspace).hideChaff();
+      /** @type {!Blockly.WorkspaceSvg} */ (workspace).hideChaff();
     }
   }
 
   /**
    * Subscribe a workspace to changes to the selected theme.  If a new theme is
    * set, the workspace is called to refresh its blocks.
-   * @param {!Workspace} workspace The workspace to subscribe.
+   * @param {!Blockly.Workspace} workspace The workspace to subscribe.
    * @package
    */
   subscribeWorkspace(workspace) {
@@ -128,7 +128,7 @@ class ThemeManager {
 
   /**
    * Unsubscribe a workspace to changes to the selected theme.
-   * @param {!Workspace} workspace The workspace to unsubscribe.
+   * @param {!Blockly.Workspace} workspace The workspace to unsubscribe.
    * @package
    */
   unsubscribeWorkspace(workspace) {

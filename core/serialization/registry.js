@@ -26,7 +26,7 @@ const {ISerializer} = goog.requireType('Blockly.serialization.ISerializer');
  * Registers the given serializer so that it can be used for serialization and
  * deserialization.
  * @param {string} name The name of the serializer to register.
- * @param {ISerializer} serializer The serializer to register.
+ * @param {Blockly.serialization.ISerializer} serializer The serializer to register.
  * @alias Blockly.serialization.registry.register
  */
 const register = function(name, serializer) {

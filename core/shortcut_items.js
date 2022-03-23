@@ -47,7 +47,7 @@ exports.names = names;
  * @alias Blockly.ShortcutItems.registerEscape
  */
 const registerEscape = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const escapeAction = {
     name: names.ESCAPE,
     preconditionFn: function(workspace) {
@@ -68,7 +68,7 @@ exports.registerEscape = registerEscape;
  * @alias Blockly.ShortcutItems.registerDelete
  */
 const registerDelete = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const deleteShortcut = {
     name: names.DELETE,
     preconditionFn: function(workspace) {
@@ -85,7 +85,7 @@ const registerDelete = function() {
       if (Gesture.inProgress()) {
         return false;
       }
-      (/** @type {!BlockSvg} */ (common.getSelected())).checkAndDelete();
+      (/** @type {!Blockly.BlockSvg} */ (common.getSelected())).checkAndDelete();
       return true;
     },
   };
@@ -101,7 +101,7 @@ exports.registerDelete = registerDelete;
  * @alias Blockly.ShortcutItems.registerCopy
  */
 const registerCopy = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const copyShortcut = {
     name: names.COPY,
     preconditionFn: function(workspace) {
@@ -114,7 +114,7 @@ const registerCopy = function() {
       // an error due to the lack of a selection.
       e.preventDefault();
       workspace.hideChaff();
-      clipboard.copy(/** @type {!ICopyable} */ (common.getSelected()));
+      clipboard.copy(/** @type {!Blockly.ICopyable} */ (common.getSelected()));
       return true;
     },
   };
@@ -139,7 +139,7 @@ exports.registerCopy = registerCopy;
  * @alias Blockly.ShortcutItems.registerCut
  */
 const registerCut = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const cutShortcut = {
     name: names.CUT,
     preconditionFn: function(workspace) {
@@ -155,7 +155,7 @@ const registerCut = function() {
         return false;
       }
       clipboard.copy(selected);
-      (/** @type {!BlockSvg} */ (selected)).checkAndDelete();
+      (/** @type {!Blockly.BlockSvg} */ (selected)).checkAndDelete();
       return true;
     },
   };
@@ -181,7 +181,7 @@ exports.registerCut = registerCut;
  * @alias Blockly.ShortcutItems.registerPaste
  */
 const registerPaste = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const pasteShortcut = {
     name: names.PASTE,
     preconditionFn: function(workspace) {
@@ -213,7 +213,7 @@ exports.registerPaste = registerPaste;
  * @alias Blockly.ShortcutItems.registerUndo
  */
 const registerUndo = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const undoShortcut = {
     name: names.UNDO,
     preconditionFn: function(workspace) {
@@ -248,7 +248,7 @@ exports.registerUndo = registerUndo;
  * @alias Blockly.ShortcutItems.registerRedo
  */
 const registerRedo = function() {
-  /** @type {!ShortcutRegistry.KeyboardShortcut} */
+  /** @type {!Blockly.ShortcutRegistry.KeyboardShortcut} */
   const redoShortcut = {
     name: names.REDO,
     preconditionFn: function(workspace) {

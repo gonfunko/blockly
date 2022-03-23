@@ -32,13 +32,13 @@ const {Types} = goog.require('Blockly.blockRendering.Types');
  * connections.
  * After this constructor is called, the row will contain all non-spacer
  * elements it needs.
- * @extends {Row}
+ * @extends {Blockly.blockRendering.Row}
  * @struct
  * @alias Blockly.blockRendering.TopRow
  */
 class TopRow extends Row {
   /**
-   * @param {!ConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
    * @package
    */
@@ -71,14 +71,14 @@ class TopRow extends Row {
 
     /**
      * The previous connection on the block, if any.
-     * @type {PreviousConnection}
+     * @type {Blockly.blockRendering.PreviousConnection}
      */
     this.connection = null;
   }
 
   /**
    * Returns whether or not the top row has a left square corner.
-   * @param {!BlockSvg} block The block whose top row this represents.
+   * @param {!Blockly.BlockSvg} block The block whose top row this represents.
    * @return {boolean} Whether or not the top row has a left square corner.
    */
   hasLeftSquareCorner(block) {
@@ -93,7 +93,7 @@ class TopRow extends Row {
 
   /**
    * Returns whether or not the top row has a right square corner.
-   * @param {!BlockSvg} _block The block whose top row this represents.
+   * @param {!Blockly.BlockSvg} _block The block whose top row this represents.
    * @return {boolean} Whether or not the top row has a right square corner.
    */
   hasRightSquareCorner(_block) {

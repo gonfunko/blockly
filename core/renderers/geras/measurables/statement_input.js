@@ -29,21 +29,21 @@ const {StatementInput: BaseStatementInput} = goog.require('Blockly.blockRenderin
 /**
  * An object containing information about the space a statement input takes up
  * during rendering.
- * @extends {BaseStatementInput}
+ * @extends {BaseStatementBlockly.Input}
  * @alias Blockly.geras.StatementInput
  */
 class StatementInput extends BaseStatementInput {
   /**
-   * @param {!BaseConstantProvider} constants The rendering
+   * @param {!Blockly.blockRendering.ConstantProvider} constants The rendering
    *   constants provider.
-   * @param {!Input} input The statement input to measure and store
+   * @param {!Blockly.Input} input The statement input to measure and store
    *     information for.
    * @package
    */
   constructor(constants, input) {
     super(constants, input);
 
-    /** @type {!GerasConstantProvider} */
+    /** @type {!Blockly.geras.ConstantProvider} */
     this.constants_;
 
     if (this.connectedBlock) {

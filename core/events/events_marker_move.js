@@ -27,24 +27,24 @@ const {Workspace} = goog.requireType('Blockly.Workspace');
 
 /**
  * Class for a marker move event.
- * @extends {UiBase}
+ * @extends {Blockly.Events.UiBase}
  * @alias Blockly.Events.MarkerMove
  */
 class MarkerMove extends UiBase {
   /**
-   * @param {?Block=} opt_block The affected block. Null if current node
+   * @param {?Blockly.Block=} opt_block The affected block. Null if current node
    *    is of type workspace. Undefined for a blank event.
    * @param {boolean=} isCursor Whether this is a cursor event. Undefined for a
    *    blank event.
-   * @param {?ASTNode=} opt_oldNode The old node the marker used to be on.
+   * @param {?Blockly.ASTNode=} opt_oldNode The old node the marker used to be on.
    *    Undefined for a blank event.
-   * @param {!ASTNode=} opt_newNode The new node the marker is now on.
+   * @param {!Blockly.ASTNode=} opt_newNode The new node the marker is now on.
    *    Undefined for a blank event.
    */
   constructor(opt_block, isCursor, opt_oldNode, opt_newNode) {
     let workspaceId = opt_block ? opt_block.workspace.id : undefined;
     if (opt_newNode && opt_newNode.getType() === ASTNode.types.WORKSPACE) {
-      workspaceId = (/** @type {!Workspace} */ (opt_newNode.getLocation())).id;
+      workspaceId = (/** @type {!Blockly.Workspace} */ (opt_newNode.getLocation())).id;
     }
     super(workspaceId);
 
@@ -56,13 +56,13 @@ class MarkerMove extends UiBase {
 
     /**
      * The old node the marker used to be on.
-     * @type {?ASTNode|undefined}
+     * @type {?Blockly.ASTNode|undefined}
      */
     this.oldNode = opt_oldNode;
 
     /**
      * The new node the  marker is now on.
-     * @type {ASTNode|undefined}
+     * @type {Blockly.ASTNode|undefined}
      */
     this.newNode = opt_newNode;
 

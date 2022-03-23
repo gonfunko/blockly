@@ -33,13 +33,13 @@ const {RenderInfo} = goog.requireType('Blockly.geras.RenderInfo');
 
 /**
  * An object that draws a block based on the given rendering information.
- * @extends {BaseDrawer}
+ * @extends {Blockly.blockRendering.Drawer}
  * @alias Blockly.geras.Drawer
  */
 class Drawer extends BaseDrawer {
   /**
-   * @param {!BlockSvg} block The block to render.
-   * @param {!RenderInfo} info An object containing all
+   * @param {!Blockly.BlockSvg} block The block to render.
+   * @param {!Blockly.geras.RenderInfo} info An object containing all
    *   information needed to render this block.
    * @package
    */
@@ -48,7 +48,7 @@ class Drawer extends BaseDrawer {
     // Unlike Thrasos, Geras has highlights and drop shadows.
     this.highlighter_ = new Highlighter(info);
 
-    /** @type {!ConstantProvider} */
+    /** @type {!Blockly.geras.ConstantProvider} */
     this.constants_;
   }
 
@@ -61,7 +61,7 @@ class Drawer extends BaseDrawer {
     this.drawInternals_();
 
     const pathObject =
-        /** @type {!PathObject} */ (this.block_.pathObject);
+        /** @type {!Blockly.geras.PathObject} */ (this.block_.pathObject);
     pathObject.setPath(this.outlinePath_ + '\n' + this.inlinePath_);
     pathObject.setHighlightPath(this.highlighter_.getPath());
     if (this.info_.RTL) {
@@ -145,7 +145,7 @@ class Drawer extends BaseDrawer {
    * @override
    */
   drawInlineInput_(input) {
-    this.highlighter_.drawInlineInput(/** @type {!InlineInput} */ (input));
+    this.highlighter_.drawInlineInput(/** @type {!Blockly.geras.InlineInput} */ (input));
 
     super.drawInlineInput_(input);
   }
