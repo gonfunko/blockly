@@ -28,7 +28,8 @@ import {Svg} from './utils/svg.js';
  * Class for an image on a block.
  * @alias Blockly.FieldImage
  */
-export class FieldImage extends Field {
+export class FieldImage extends Field<string> {
+  protected override DEFAULT_VALUE = '';
   /**
    * Vertical padding below the image, which is included in the reported height
    * of the field.
@@ -261,8 +262,6 @@ export class FieldImage extends Field {
 }
 
 fieldRegistry.register('field_image', FieldImage);
-
-(FieldImage.prototype as AnyDuringMigration).DEFAULT_VALUE = '';
 
 /**
  * Config options for the image field.

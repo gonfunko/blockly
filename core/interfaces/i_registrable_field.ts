@@ -18,7 +18,7 @@ goog.declareModuleId('Blockly.IRegistrableField');
 import type {Field} from '../field.js';
 
 
-type fromJson = (p1: object) => Field;
+type fromJson = (p1: object) => Field<any>;
 
 /**
  * A registrable field.

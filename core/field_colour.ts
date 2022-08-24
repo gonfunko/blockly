@@ -37,7 +37,7 @@ import {Size} from './utils/size.js';
  * Class for a colour input field.
  * @alias Blockly.FieldColour
  */
-export class FieldColour extends Field {
+export class FieldColour extends Field<string> {
   /**
    * An array of colour strings for the palette.
    * Copied from goog.ui.ColorPicker.SIMPLE_GRID_COLORS
@@ -66,6 +66,9 @@ export class FieldColour extends Field {
     '#ffccff', '#ff99ff', '#cc66cc', '#cc33cc',
     '#993399', '#663366', '#330033',
   ];
+
+  /** The default value for this field. */
+  protected override DEFAULT_VALUE = FieldColour.COLOURS[0];
 
   /**
    * An array of tooltip strings for the palette.  If not the same length as
@@ -574,12 +577,6 @@ export class FieldColour extends Field {
     return new this(options['colour'], undefined, options);
   }
 }
-
-/** The default value for this field. */
-// AnyDuringMigration because:  Property 'DEFAULT_VALUE' is protected and only
-// accessible within class 'FieldColour' and its subclasses.
-(FieldColour.prototype as AnyDuringMigration).DEFAULT_VALUE =
-    FieldColour.COLOURS[0];
 
 /** CSS for colour picker.  See css.js for use. */
 Css.register(`

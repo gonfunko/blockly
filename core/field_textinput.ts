@@ -41,7 +41,8 @@ import type {WorkspaceSvg} from './workspace_svg.js';
  * Class for an editable text field.
  * @alias Blockly.FieldTextInput
  */
-export class FieldTextInput extends Field {
+export class FieldTextInput<T extends number | string = string> extends Field<T> {
+  protected override DEFAULT_VALUE: T = '';
   /**
    * Pixel size of input border radius.
    * Should match blocklyText's border-radius in CSS.
@@ -86,7 +87,6 @@ export class FieldTextInput extends Field {
   /** Mouse cursor style when over the hotspot that initiates the editor. */
   override CURSOR = 'text';
   override clickTarget_: AnyDuringMigration;
-  override value_: AnyDuringMigration;
   override isDirty_: AnyDuringMigration;
 
   /**
@@ -564,7 +564,7 @@ export class FieldTextInput extends Field {
    * @nocollapse
    * @internal
    */
-  static fromJson(options: FieldTextInputFromJsonConfig): FieldTextInput {
+  static fromJson(options: FieldTextInputFromJsonConfig): FieldTextInput<T> {
     const text = parsing.replaceMessageReferences(options.text);
     // `this` might be a subclass of FieldTextInput if that class doesn't
     // override the static fromJson method.
@@ -573,8 +573,6 @@ export class FieldTextInput extends Field {
 }
 
 fieldRegistry.register('field_input', FieldTextInput);
-
-(FieldTextInput.prototype as AnyDuringMigration).DEFAULT_VALUE = '';
 
 /**
  * Config options for the text input field.

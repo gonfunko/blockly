@@ -60,11 +60,11 @@ import * as Xml from './xml.js';
  * Abstract class for an editable field.
  * @alias Blockly.Field
  */
-export abstract class Field implements IASTNodeLocationSvg,
-                                       IASTNodeLocationWithBlock,
-                                       IKeyboardAccessible, IRegistrable {
+export abstract class Field<T = string> implements IASTNodeLocationSvg,
+                                          IASTNodeLocationWithBlock,
+                                          IKeyboardAccessible, IRegistrable {
   /** The default value for this field. */
-  protected DEFAULT_VALUE: any = null;
+  protected abstract DEFAULT_VALUE: T;
 
   /** Non-breaking space. */
   static readonly NBSP = '\u00A0';
@@ -81,7 +81,7 @@ export abstract class Field implements IASTNodeLocationSvg,
    * Static labels are usually unnamed.
    */
   name?: string = undefined;
-  protected value_: AnyDuringMigration;
+  protected value_: T;
 
   /** Validation function called when user edits an editable field. */
   // AnyDuringMigration because:  Type 'null' is not assignable to type
@@ -383,7 +383,7 @@ export abstract class Field implements IASTNodeLocationSvg,
    * @internal
    */
   toXml(fieldElement: Element): Element {
-    fieldElement.textContent = this.getValue();
+    fieldElement.textContent = `${this.getValue()}`;
     return fieldElement;
   }
 
@@ -972,7 +972,7 @@ export abstract class Field implements IASTNodeLocationSvg,
    * Get the current value of the field.
    * @return Current value.
    */
-  getValue(): AnyDuringMigration {
+  getValue(): T {
     return this.value_;
   }
 
@@ -995,7 +995,7 @@ export abstract class Field implements IASTNodeLocationSvg,
    * custom storage of values/updating of external things.
    * @param newValue The value to be saved.
    */
-  protected doValueUpdate_(newValue: AnyDuringMigration) {
+  protected doValueUpdate_(newValue: T) {
     this.value_ = newValue;
     this.isDirty_ = true;
   }

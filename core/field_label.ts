@@ -28,7 +28,8 @@ import type {Sentinel} from './utils/sentinel.js';
  * Class for a non-editable, non-serializable text field.
  * @alias Blockly.FieldLabel
  */
-export class FieldLabel extends Field {
+export class FieldLabel extends Field<string> {
+  protected override DEFAULT_VALUE = '';
   /** The html class name to use for this field. */
   private class_: string|null = null;
 
@@ -130,8 +131,6 @@ export class FieldLabel extends Field {
 }
 
 fieldRegistry.register('field_label', FieldLabel);
-
-(FieldLabel.prototype as AnyDuringMigration).DEFAULT_VALUE = '';
 
 // clang-format off
 // Clang does not like the 'class' keyword being used as a property.

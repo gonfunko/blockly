@@ -26,7 +26,8 @@ import type {Sentinel} from './utils/sentinel.js';
  * Class for an editable number field.
  * @alias Blockly.FieldNumber
  */
-export class FieldNumber extends FieldTextInput {
+export class FieldNumber extends FieldTextInput<number> {
+  protected override DEFAULT_VALUE = 0;
   /** The minimum value this number field can contain. */
   protected min_ = -Infinity;
 
@@ -307,8 +308,6 @@ export class FieldNumber extends FieldTextInput {
 }
 
 fieldRegistry.register('field_number', FieldNumber);
-
-(FieldNumber.prototype as AnyDuringMigration).DEFAULT_VALUE = 0;
 
 /**
  * Config options for the number field.

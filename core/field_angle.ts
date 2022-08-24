@@ -35,9 +35,9 @@ import * as WidgetDiv from './widgetdiv.js';
  * Class for an editable angle field.
  * @alias Blockly.FieldAngle
  */
-export class FieldAngle extends FieldTextInput {
+export class FieldAngle extends FieldTextInput<number> {
   /** The default value for this field. */
-  // protected override DEFAULT_VALUE = 0;
+  protected override DEFAULT_VALUE = 0;
 
   /**
    * The default amount to round angles to when using a mouse or keyboard nav
@@ -522,8 +522,6 @@ Css.register(`
 `);
 
 fieldRegistry.register('field_angle', FieldAngle);
-
-(FieldAngle.prototype as AnyDuringMigration).DEFAULT_VALUE = 0;
 
 /**
  * The two main modes of the angle field.

@@ -28,7 +28,8 @@ import type {Sentinel} from './utils/sentinel.js';
  * Class for a checkbox field.
  * @alias Blockly.FieldCheckbox
  */
-export class FieldCheckbox extends Field {
+export class FieldCheckbox extends Field<boolean> {
+  protected override DEFAULT_VALUE = false;
   /** Default character for the checkmark. */
   static readonly CHECK_CHAR = '\u2713';
   private checkChar_: string;
@@ -43,7 +44,6 @@ export class FieldCheckbox extends Field {
    * Mouse cursor style when over the hotspot that initiates editability.
    */
   override CURSOR = 'default';
-  override value_: AnyDuringMigration;
 
   /**
    * @param opt_value The initial value of the field. Should either be 'TRUE',
@@ -225,8 +225,6 @@ export class FieldCheckbox extends Field {
 }
 
 fieldRegistry.register('field_checkbox', FieldCheckbox);
-
-(FieldCheckbox.prototype as AnyDuringMigration).DEFAULT_VALUE = false;
 
 /**
  * Config options for the checkbox field.
