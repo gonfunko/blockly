@@ -171,7 +171,7 @@ export class WorkspaceCommentSvg extends WorkspaceComment implements
 
     this.updateMovable();
     if (!this.getSvgRoot().parentNode) {
-      this.workspace.getBubbleCanvas().appendChild(this.getSvgRoot());
+      this.workspace.getCanvas().appendChild(this.getSvgRoot());
     }
 
     if (!opt_noSelect && this.textarea_) {
@@ -310,7 +310,7 @@ export class WorkspaceCommentSvg extends WorkspaceComment implements
         // AnyDuringMigration because:  Type 'ParentNode | null' is not
         // assignable to type 'SVGElement'.
         element = element.parentNode as AnyDuringMigration;
-      } while (element && element !== this.workspace.getBubbleCanvas() &&
+      } while (element && element !== this.workspace.getCanvas() &&
                element !== null);
     }
     this.xy_ = new Coordinate(x, y);

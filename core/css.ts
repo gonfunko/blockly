@@ -98,8 +98,7 @@ let content = `
   -webkit-user-select: none;
 }
 
-.blocklyBlockCanvas.blocklyCanvasTransitioning,
-.blocklyBubbleCanvas.blocklyCanvasTransitioning {
+.blocklyBlockCanvas.blocklyCanvasTransitioning {
   transition: transform .5s;
 }
 

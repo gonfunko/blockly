@@ -63,7 +63,7 @@ export class ScrollbarPair {
         'width': Scrollbar.scrollbarThickness,
         'class': 'blocklyScrollbarBackground',
       });
-      dom.insertAfter(this.corner_, workspace.getBubbleCanvas());
+      dom.insertAfter(this.corner_, workspace.getCanvas());
     }
   }
 

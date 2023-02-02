@@ -150,7 +150,7 @@ export class Bubble implements IBubble {
     }
     this.arrowRadians = math.toRadians(angle);
 
-    const canvas = workspace.getBubbleCanvas();
+    const canvas = workspace.getCanvas();
     canvas.appendChild(
         this.createDom(content, !!(bubbleWidth && bubbleHeight)));
 

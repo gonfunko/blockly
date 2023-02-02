@@ -63,6 +63,7 @@ import type {Metrics} from './utils/metrics.js';
 import {Rect} from './utils/rect.js';
 import {Size} from './utils/size.js';
 import {Svg} from './utils/svg.js';
+import * as deprecation from './utils/deprecation.js';
 import * as svgMath from './utils/svg_math.js';
 import * as toolbox from './utils/toolbox.js';
 import * as userAgent from './utils/useragent.js';
@@ -310,8 +311,6 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
   svgBackground_!: SVGElement;
   // TODO(b/109816955): remove '!', see go/strict-prop-init-fix.
   svgBlockCanvas_!: SVGElement;
-  // TODO(b/109816955): remove '!', see go/strict-prop-init-fix.
-  svgBubbleCanvas_!: SVGElement;
   zoomControls_: ZoomControls|null = null;
 
   /**
@@ -607,15 +606,14 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
     let x = 0;
     let y = 0;
     let scale = 1;
-    if (dom.containsNode(this.getCanvas(), element) ||
-        dom.containsNode(this.getBubbleCanvas(), element)) {
+    if (dom.containsNode(this.getCanvas(), element)) {
       // Before the SVG canvas, scale the coordinates.
       scale = this.scale;
     }
     do {
       // Loop through this block and every parent.
       const xy = svgMath.getRelativeXY(element);
-      if (element === this.getCanvas() || element === this.getBubbleCanvas()) {
+      if (element === this.getCanvas()) {
         // After the SVG canvas, don't scale the coordinates.
         scale = 1;
       }
@@ -708,7 +706,6 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
      *   <rect class="blocklyMainBackground" height="100%" width="100%"></rect>
      *   [Trashcan and/or flyout may go here]
      *   <g class="blocklyBlockCanvas"></g>
-     *   <g class="blocklyBubbleCanvas"></g>
      * </g>
      */
     this.svgGroup_ = dom.createSvgElement(Svg.G, {'class': 'blocklyWorkspace'});
@@ -732,8 +729,6 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
     }
     this.svgBlockCanvas_ = dom.createSvgElement(
         Svg.G, {'class': 'blocklyBlockCanvas'}, this.svgGroup_);
-    this.svgBubbleCanvas_ = dom.createSvgElement(
-        Svg.G, {'class': 'blocklyBubbleCanvas'}, this.svgGroup_);
 
     if (!this.isFlyout) {
       browserEvents.conditionalBind(
@@ -1056,7 +1051,10 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
    * @returns SVG group element.
    */
   getBubbleCanvas(): SVGGElement {
-    return this.svgBubbleCanvas_ as SVGGElement;
+    deprecation.warn(
+        'WorkspaceSvg.getBubbleCanvas()', 'v9', 'v10',
+        'WorkspaceSvg.getCanvas()');
+    return this.getCanvas();
   }
 
   /**
@@ -1119,7 +1117,6 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
     const translation = 'translate(' + x + ',' + y + ') ' +
         'scale(' + this.scale + ')';
     this.svgBlockCanvas_.setAttribute('transform', translation);
-    this.svgBubbleCanvas_.setAttribute('transform', translation);
     // And update the grid if we're using one.
     if (this.grid) {
       this.grid.moveTo(x, y);
@@ -1949,7 +1946,6 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
    */
   beginCanvasTransition() {
     dom.addClass(this.svgBlockCanvas_, 'blocklyCanvasTransitioning');
-    dom.addClass(this.svgBubbleCanvas_, 'blocklyCanvasTransitioning');
   }
 
   /**
@@ -1959,7 +1955,6 @@ export class WorkspaceSvg extends Workspace implements IASTNodeLocationSvg {
    */
   endCanvasTransition() {
     dom.removeClass(this.svgBlockCanvas_, 'blocklyCanvasTransitioning');
-    dom.removeClass(this.svgBubbleCanvas_, 'blocklyCanvasTransitioning');
   }
 
   /** Center the workspace. */
