@@ -83,6 +83,7 @@ export class InsertionMarkerManager {
    * Set in initAvailableConnections, if at all
    */
   private lastMarker: BlockSvg|null = null;
+  private lastMarkerSourceBlockId: string|null = null;
 
   /**
    * The insertion marker that shows up between blocks to show where a block
@@ -301,15 +302,21 @@ export class InsertionMarkerManager {
     if (lastOnStack && lastOnStack !== this.topBlock.nextConnection) {
       available.push(lastOnStack);
       this.lastOnStack = lastOnStack;
-      if (this.lastMarker) {
+      if (this.lastMarker &&
+          this.lastMarkerSourceBlockId !== lastOnStack.getSourceBlock().id) {
         eventUtils.disable();
         try {
           this.lastMarker.dispose();
+          this.lastMarker = null;
         } finally {
           eventUtils.enable();
         }
       }
-      this.lastMarker = this.createMarkerBlock(lastOnStack.getSourceBlock());
+
+      if (!this.lastMarker) {
+        this.lastMarker = this.createMarkerBlock(lastOnStack.getSourceBlock());
+        this.lastMarkerSourceBlockId = lastOnStack.getSourceBlock().id;
+      }
     }
     return available;
   }
